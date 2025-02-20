@@ -281,7 +281,7 @@ Status space_print(Space *space)
   }
 
   /* 3. Print if there is an object in the space or not */
-  if (space_get_object(space) != NULL)
+  if (space_get_objects(space) != NULL)
   {
     fprintf(stdout, "---> Objects in the space.\n");
   }
