@@ -56,8 +56,6 @@ Status set_destroy(Set *set)
 
 Status set_add(Set *set, Id id)
 {
-    int i = 0;
-
     if (!set || id == NO_ID)
     {
         return ERROR;
@@ -67,7 +65,7 @@ Status set_add(Set *set, Id id)
     {
         return ERROR;
     }
-    set->ids[set->n_ids] == id;
+    set->ids[set->n_ids] = id;
     set->n_ids++;
 
     return OK;
@@ -146,4 +144,6 @@ Status set_print(Set *set)
         fprintf(stdout, "Id %d: %ld;", i + 1, set->ids[i]);
     }
     fprintf(stdout, "Number of ids: %d)\n", set->n_ids);
+
+    return OK;
 }
