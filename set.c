@@ -62,23 +62,19 @@ Status set_add(Set *set, Id id)
     {
         return ERROR;
     }
-    for (i = 0; i < MAX_SET; i++)
-    {
-        if (set->ids[i] == NO_ID)
-        {
-            set->ids[i] = id;
-            set->n_ids++;
-            return OK;
-        }
-    }
-
     /*If there is no more free space in the set structure return ERROR*/
-    return ERROR;
+    if(set->n_ids==MAX_SET){
+        return ERROR;
+    }
+    set->ids[set->n_ids]==id;
+    set->n_ids++;
+
+    return OK;
 }
 
 Status set_del(Set *set, Id id)
 {
-    int i, position = MAX_SET;
+    int i, j;
 
     if (!set || id == NO_ID)
     {
@@ -89,7 +85,9 @@ Status set_del(Set *set, Id id)
     {
         if (set->ids[i] == id)
         {
-            set->ids[i] = NO_ID;
+            for (j=i; j<set->n_ids; j++){
+                set->ids[i]=set->ids[i+1];
+            }
             set->n_ids--;
             return OK;
         }
