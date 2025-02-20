@@ -35,6 +35,9 @@ object.o: object.c object.h types.h
 
 player.o: player.c player.h types.h
 	$(CC) $(CFLAGS) -c player.c
+	
+set.o: set.c set.h types.h
+	$(CC) $(CFLAGS) -c set.c
 
 clean :
 	rm -rf $(OBJ)
