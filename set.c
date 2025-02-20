@@ -63,10 +63,11 @@ Status set_add(Set *set, Id id)
         return ERROR;
     }
     /*If there is no more free space in the set structure return ERROR*/
-    if(set->n_ids==MAX_SET){
+    if (set->n_ids == MAX_SET)
+    {
         return ERROR;
     }
-    set->ids[set->n_ids]==id;
+    set->ids[set->n_ids] == id;
     set->n_ids++;
 
     return OK;
@@ -85,8 +86,9 @@ Status set_del(Set *set, Id id)
     {
         if (set->ids[i] == id)
         {
-            for (j=i; j<set->n_ids; j++){
-                set->ids[i]=set->ids[i+1];
+            for (j = i; j < set->n_ids; j++)
+            {
+                set->ids[i] = set->ids[i + 1];
             }
             set->n_ids--;
             return OK;
@@ -95,6 +97,38 @@ Status set_del(Set *set, Id id)
 
     /*If the given id does not appear in the set structure return ERROR*/
     return ERROR;
+}
+
+Id set_get_id(Set *set, int position)
+{
+    if (!set)
+    {
+        return NO_ID;
+    }
+    return set->ids[position];
+}
+
+int set_get_nids(Set *set)
+{
+    if (!set)
+    {
+        return 0;
+    }
+    return set->n_ids;
+}
+
+int set_get_position(Set *set, Id id)
+{
+    int i;
+
+    for (i = 0; i < MAX_SET; i++)
+    {
+        if (set->ids[i] == id)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 Status set_print(Set *set)
