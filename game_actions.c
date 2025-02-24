@@ -135,7 +135,7 @@ void game_actions_next(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    if (player_get_object(game->player)==object_get_id(game->object))
+    if (game_player_get_object(game)==game_object_get_id(game))
     {
       game_set_object_location(game, NO_ID);
     }
@@ -161,33 +161,32 @@ void game_actions_back(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    if (player_get_object(game->player)==object_get_id(game->object))
+    if (game_player_get_object(game)==game_object_get_id(game)) 
     {
       game_set_object_location(game, NO_ID);
     }
   }
 }
 
-void game_actions_take(Game *game)
-{
-  Player *player = game->player;
+void game_actions_take(Game *game) 
+{ 
   Space *space = game_get_space(game, game_get_player_location(game));
-  Id object_id = object_get_id(game->object);
+  Id object_id = game_object_get_id(game); 
 
   if (game == NULL)
   {
     return;
   }
 
-  if (game_get_player_location(game) == game_get_object_location(game))
+  if (game_get_player_location(game) == game_get_object_location(game)) 
   {
-    player_set_object(player, object_id);
+    game_player_set_object(game, object_id);
     space_set_object(space, NO_ID);
     game_set_object_location(game, NO_ID);  
   }
 }
 
-void game_actions_drop(Game *game)
+void game_actions_drop(Game *game) 
 {
   Id player_location = game_get_player_location(game);
 
@@ -196,10 +195,10 @@ void game_actions_drop(Game *game)
     return;
   }
 
-  if (player_get_object(game->player) != NO_ID)
+  if (game_player_get_object(game) != NO_ID) 
   {
     game_set_object_location(game, player_location);
-    player_set_object(game->player, NO_ID);
+    game_player_set_object(game, NO_ID);
     /*space_set_object(space, object_id);*/
   }
 }
