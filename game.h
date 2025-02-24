@@ -15,6 +15,7 @@
 #include "space.h"
 #include "player.h"
 #include "object.h"
+#include "game_reader.h"
 
 #define MAX_SPACES 100
 
