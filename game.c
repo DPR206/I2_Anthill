@@ -51,6 +51,31 @@ Id game_get_space_id_at(Game *game, int position);
 /**
    Game interface implementation
 */
+Game *game_create()
+{
+
+  Game *gm = NULL;
+
+  gm = (Game *)calloc(1, sizeof(Game));
+
+  if (!gm)
+  {
+    return NULL;
+  }
+
+  if (game_createspace(gm) == ERROR)
+  {
+    return NULL;
+  }
+
+  gm->object = object_create(1);
+  gm->player = player_create(2);
+  gm->last_cmd = command_create();
+  gm->finished = FALSE;
+
+  return gm;
+}
+
 Status game_createspace(Game *game)
 {
   int i;
@@ -87,6 +112,8 @@ Space *game_get_space(Game *game, Id id)
 
 Id game_get_player_location(Game *game) { return player_get_location(game->player); }
 
+Player *game_get_player(Game *game){return game->player;}
+
 Status game_set_player_location(Game *game, Id id)
 {
   if (id == NO_ID)
@@ -106,6 +133,8 @@ Id game_get_object_location(Game *game)
 {
   return object_get_id(game->object);
 }
+
+Object *game_get_object(Game *game){return game->object;}
 
 Status game_set_object_location(Game *game, Id id)
 {
@@ -129,31 +158,6 @@ Status game_set_object_location(Game *game, Id id)
   space_set_object(game->spaces[i], object_get_id(game->object));
 
   return OK;
-}
-
-Game *game_create()
-{
-
-  Game *gm = NULL;
-
-  gm = (Game *)calloc(1, sizeof(Game));
-
-  if (!gm)
-  {
-    return NULL;
-  }
-
-  if (game_createspace(gm) == ERROR)
-  {
-    return NULL;
-  }
-
-  gm->object = object_create(1);
-  gm->player = player_create(2);
-  gm->last_cmd = command_create();
-  gm->finished = FALSE;
-
-  return gm;
 }
 
 Status game_destroy(Game *game)
@@ -210,6 +214,30 @@ void game_print(Game *game)
 
   printf("=> Object location: %d\n", (int)object_get_id(game->object));
   printf("=> Player location: %d\n", (int)player_get_id(game->player));
+}
+
+Status game_create_from_file(Game *game, char *filename)
+{
+
+  game = game_create();
+
+  if (game == NULL)
+  {
+    return ERROR;
+  }
+
+  if (game_reader_load_spaces(game, filename) == ERROR)
+  {
+    return ERROR;
+  }
+
+  /* The player and the object are located in the first space */
+  game_set_player_location(game, game_get_space_id_at(game, 0));
+  game_set_object_location(game, game_get_space_id_at(game, 0));
+
+  free(game);
+
+  return OK;
 }
 
 Id game_player_get_object(Game *game)
@@ -279,28 +307,4 @@ Id game_get_space_id_at(Game *game, int position)
 
   return space_get_id(game_get_space(game, position));
   /*return space_get_id(game->spaces[position]);*/
-}
-
-Status game_create_from_file(Game *game, char *filename)
-{
-
-  game = game_create();
-
-  if (game == NULL)
-  {
-    return ERROR;
-  }
-
-  if (game_reader_load_spaces(game, filename) == ERROR)
-  {
-    return ERROR;
-  }
-
-  /* The player and the object are located in the first space */
-  game_set_player_location(game, game_get_space_id_at(game, 0));
-  game_set_object_location(game, game_get_space_id_at(game, 0));
-
-  free(game);
-
-  return OK;
 }
