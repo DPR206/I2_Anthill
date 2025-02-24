@@ -109,6 +109,8 @@ void game_loop_run(Game game, Graphic_engine *gengine)
     command_get_user_input(last_cmd);
     game_actions_update(&game, last_cmd);
   }
+
+  free(last_cmd);
 }
 
 void game_loop_cleanup(Game game, Graphic_engine *gengine)
