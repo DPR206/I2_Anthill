@@ -15,11 +15,22 @@
 #include "space.h"
 #include "player.h"
 #include "object.h"
-#include "game_reader.h"
 
 #define MAX_SPACES 100
 
-typedef struct _Game Game;
+/**
+ * @brief This struct stores all the information of a game
+ *
+ */
+typedef struct _Game
+{
+  Command *last_cmd;
+  Bool finished;
+  Player *player;
+  Object *object;
+  Space *spaces[MAX_SPACES];
+  int n_spaces;
+} Game;
 
 /**
  * @brief It creates a new game, initializing all its members
@@ -28,7 +39,7 @@ typedef struct _Game Game;
  * @param game Pointer to the game to initialize
  * @return Status of the operation: OK if successful
  */
-Game *game_create();
+Status game_create(Game *game);
 
 /**
  * @brief It creates a new game space, allocating memory and initializing its members
@@ -38,16 +49,6 @@ Game *game_create();
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
 Status game_createspace(Game *game);
-
-/**
- * @brief It gets the space ID at a specific position
- * @author Duna Puente
- *
- * @param game Pointer to the game
- * @param position Position to get its space ID
- * @return The space ID at the specified position, or NO_ID if the position is not valid
- */
-Id game_get_space_id_at(Game *game, int position);
 
 /**
  * @brief It gets a space from the game by its Id
@@ -161,10 +162,6 @@ void game_print(Game *game);
  * @return Status of the operation: ERROR if initialization fails, OK if successful
  */
 Status game_create_from_file(Game *game, char *filename);
-
-/*Status game_get_player(Game *game, Player *player);*/
-
-/*Player *game_get_player1(Game *game, Player *player);*/
 
 Id game_player_get_object(Game *game);
 
