@@ -9,6 +9,7 @@
  */
 
 #include "game.h"
+#include "game_reader.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -27,16 +28,6 @@ struct _Game
   Space *spaces[MAX_SPACES];
   int n_spaces;
 };
-
-/**
- * @brief It adds a space to the games space array
- * @author Profesores PPROG
- * 
- * @param game Pointer to the game
- * @param space Pointer to the space to add
- * @return Status of the operation: ERROR if failes, OK if successful 
- */
-Status game_add_space(Game *game, Space *space);
 
 /**
  * @brief It gets the space ID at a specific position
@@ -303,4 +294,17 @@ Id game_get_space_id_at(Game *game, int position)
 
   return space_get_id(game_get_space(game, position));
   /*return space_get_id(game->spaces[position]);*/
+}
+
+Status game_add_space(Game *game, Space *space)
+{
+  if ((space == NULL) || (game_get_numspaces(game) >= MAX_SPACES))
+  {
+    return ERROR;
+  }
+
+  game_add_newspace(game, space);
+  game_add_numspaces(game);
+
+  return OK;
 }
