@@ -140,7 +140,7 @@ Status space_set_west(Space *space, Id id);
 Id space_get_west(Space *space);
 
 /**
- * @brief It sets the Id of an object to the set structure of the space
+ * @brief It sets the Id of the object to the set structure of the space
  * @author Claudia Saiz
  *
  * @param space a pointer to the space
@@ -186,7 +186,7 @@ Id space_get_objects_id(Space *space, int position);
  * @param object Id of the object to search for
  * @return Bool, TRUE if the object is in the space, FALSE if not
  */
-Bool space_is_object(Space *space, Id object);
+Bool space_at_object(Space *space, Id object);
 
 /**
  * @brief It prints the space information

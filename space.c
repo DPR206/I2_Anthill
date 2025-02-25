@@ -65,7 +65,7 @@ Status space_destroy(Space *space)
   {
     return ERROR;
   }
-
+  set_destroy(space->objects);
   free(space);
   return OK;
 }
@@ -184,7 +184,7 @@ Status space_set_object(Space *space, Id object)
   {
     return ERROR;
   }
-  set_add(space->objects, object);
+  if(set_add(space->objects, object)==ERROR) {return ERROR;}
   return OK;
 }
 
@@ -216,7 +216,7 @@ Id space_get_objects_id(Space *space, int position)
   return set_get_id(space->objects, position);
 }
 
-Bool space_is_object(Space *space, Id object)
+Bool space_at_object(Space *space, Id object)
 {
   if (!space)
   {

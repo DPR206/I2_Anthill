@@ -103,6 +103,10 @@ Id set_get_id(Set *set, int position)
     {
         return NO_ID;
     }
+    if (position < 0 || position > MAX_SET)
+    {
+        return NO_ID;
+    }
     return set->ids[position];
 }
 
