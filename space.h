@@ -140,7 +140,7 @@ Status space_set_west(Space *space, Id id);
 Id space_get_west(Space *space);
 
 /**
- * @brief It sets the Id of the object in the space
+ * @brief It sets the Id of an object to the set structure of the space
  * @author Claudia Saiz
  *
  * @param space a pointer to the space
