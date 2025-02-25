@@ -163,6 +163,16 @@ void game_print(Game *game);
  */
 Status game_create_from_file(Game *game, char *filename);
 
+/**
+ * @brief It adds a space to the games space array
+ * @author Profesores PPROG
+ * 
+ * @param game Pointer to the game
+ * @param space Pointer to the space to add
+ * @return Status of the operation: ERROR if failes, OK if successful 
+ */
+Status game_add_space(Game *game, Space *space);
+
 Id game_player_get_object(Game *game);
 
 Id game_object_get_id(Game *game);
