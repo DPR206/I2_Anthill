@@ -35,7 +35,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name);
  * @param game The current game state
  * @param gengine The graphic engine being used for the current game
  */
-void game_loop_run(Game game, Graphic_engine *gengine);
+void game_loop_run(Game *game, Graphic_engine *gengine);
 
 /**
  * @brief Destroys the game and the graphic engine after the game loop finishes
@@ -44,7 +44,7 @@ void game_loop_run(Game game, Graphic_engine *gengine);
  * @param game Game to be destroyed
  * @param gengine Graphic engine to be destroyed
  */
-void game_loop_cleanup(Game game, Graphic_engine *gengine);
+void game_loop_cleanup(Game *game, Graphic_engine *gengine);
 
 /**
  * @brief Initializes the game loop, then runs the game loop
@@ -56,7 +56,7 @@ void game_loop_cleanup(Game game, Graphic_engine *gengine);
  */
 int main(int argc, char *argv[])
 {
-  Game game;
+  Game *game=NULL;
   Graphic_engine *gengine;
 
   if (argc < 2)
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
     return 1;
   }
 
-  if (!game_loop_init(&game, &gengine, argv[1]))
+  if (!game_loop_init(game, &gengine, argv[1]))
   {
     game_loop_run(game, gengine);
     game_loop_cleanup(game, gengine);
@@ -92,7 +92,7 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
   return 0;
 }
 
-void game_loop_run(Game game, Graphic_engine *gengine)
+void game_loop_run(Game *game, Graphic_engine *gengine)
 {
   Command *last_cmd;
 
@@ -101,20 +101,19 @@ void game_loop_run(Game game, Graphic_engine *gengine)
     return;
   }
 
-  last_cmd = game_get_last_command(&game);
+  last_cmd = game_get_last_command(game);
 
-  while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(&game) == FALSE))
+  while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(game) == FALSE))
   {
-    graphic_engine_paint_game(gengine, &game);
+    graphic_engine_paint_game(gengine, game);
     command_get_user_input(last_cmd);
-    game_actions_update(&game, last_cmd);
+    game_actions_update(game, last_cmd);
   }
 
-  free(last_cmd);
 }
 
-void game_loop_cleanup(Game game, Graphic_engine *gengine)
+void game_loop_cleanup(Game *game, Graphic_engine *gengine)
 {
-  game_destroy(&game);
+  game_destroy(game);
   graphic_engine_destroy(gengine);
 }
