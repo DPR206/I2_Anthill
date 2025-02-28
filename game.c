@@ -32,19 +32,47 @@ struct _Game
 /**
  * @brief It gets the space ID at a specific position
  * @author Profesores PPROG
- * 
+ *
  * @param game Pointer to the game
- * @param position Position to get its space ID 
+ * @param position Position to get its space ID
  * @return The ID at the specific position, or NO_ID if the position is not valid
  */
 Id game_get_space_id_at(Game *game, int position);
 
 /**
+   Implementation of private functions
+*/
+
+Id game_get_space_id_at(Game *game, int position)
+{
+  if (position < 0 || position >= game_get_numspaces(game))
+  {
+    return NO_ID;
+  }
+
+  return space_get_id(game_get_space(game, position));
+  /*return space_get_id(game->spaces[position]);*/
+}
+
+/**
    Game interface implementation
 */
+
+Status game_add_space(Game *game, Space *space)
+{
+  if ((space == NULL) || (game_get_numspaces(game) >= MAX_SPACES))
+  {
+    return ERROR;
+  }
+
+  game_add_newspace(game, space);
+  game_add_numspaces(game);
+
+  return OK;
+}
+
 Game *game_create()
 {
-
   Game *gm = NULL;
 
   gm = (Game *)calloc(1, sizeof(Game));
@@ -59,8 +87,8 @@ Game *game_create()
     return NULL;
   }
 
-  gm->object = object_create(1);
-  gm->player = player_create(2);
+  gm->object = object_create(NO_ID);/**/
+  gm->player = player_create(NO_ID);/**/
   gm->last_cmd = command_create();
   gm->finished = FALSE;
 
@@ -77,6 +105,27 @@ Status game_createspace(Game *game)
   }
 
   game->n_spaces = 0;
+
+  return OK;
+}
+
+Status game_create_from_file(Game *game, char *filename)
+{
+  game = game_create();
+
+  if (game == NULL)
+  {
+    return ERROR;
+  }
+
+  if (game_reader_load_spaces(game, filename) == ERROR)
+  {
+    return ERROR;
+  }
+
+  /* The player and the object are located in the first space */
+  game_set_player_location(game, game_get_space_id_at(game, 0));
+  game_set_object_location(game, game_get_space_id_at(game, 0));
 
   return OK;
 }
@@ -169,20 +218,20 @@ Status game_destroy(Game *game)
   return OK;
 }
 
-Command *game_get_last_command(Game *game) { return game->last_cmd; }
-
 Status game_set_last_command(Game *game, Command *command)
 {
-  game->last_cmd = command;
+  (game->last_cmd) = command;
 
   return OK;
 }
+
+Command *game_get_last_command(Game *game) { return game->last_cmd; }
 
 Bool game_get_finished(Game *game) { return game->finished; }
 
 Status game_set_finished(Game *game, Bool finished)
 {
-  game->finished = finished;
+  (game->finished) = finished;
 
   return OK;
 }
@@ -201,30 +250,6 @@ void game_print(Game *game)
 
   printf("=> Object location: %d\n", (int)object_get_id(game->object));
   printf("=> Player location: %d\n", (int)player_get_id(game->player));
-}
-
-Status game_create_from_file(Game *game, char *filename)
-{
-
-  game = game_create();
-
-  if (game == NULL)
-  {
-    return ERROR;
-  }
-
-  if (game_reader_load_spaces(game, filename) == ERROR)
-  {
-    return ERROR;
-  }
-
-  /* The player and the object are located in the first space */
-  game_set_player_location(game, game_get_space_id_at(game, 0));
-  game_set_object_location(game, game_get_space_id_at(game, 0));
-
-  free(game);
-
-  return OK;
 }
 
 Id game_player_get_object(Game *game)
@@ -264,47 +289,6 @@ Status game_add_newspace(Game *game, Space *space)
   }
 
   game->spaces[game->n_spaces] = space;
-
-  return OK;
-}
-
-/**
-   Implementation of private functions
-*/
-
-Status game_add_space(Game *game, Space *space)
-{
-  if ((space == NULL) || (game_get_numspaces(game) >= MAX_SPACES))
-  {
-    return ERROR;
-  }
-
-  game_add_newspace(game, space);
-  game_add_numspaces(game);
-
-  return OK;
-}
-
-Id game_get_space_id_at(Game *game, int position)
-{
-  if (position < 0 || position >= game_get_numspaces(game))
-  {
-    return NO_ID;
-  }
-
-  return space_get_id(game_get_space(game, position));
-  /*return space_get_id(game->spaces[position]);*/
-}
-
-Status game_add_space(Game *game, Space *space)
-{
-  if ((space == NULL) || (game_get_numspaces(game) >= MAX_SPACES))
-  {
-    return ERROR;
-  }
-
-  game_add_newspace(game, space);
-  game_add_numspaces(game);
 
   return OK;
 }
