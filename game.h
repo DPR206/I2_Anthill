@@ -18,19 +18,7 @@
 
 #define MAX_SPACES 100
 
-/**
- * @brief This struct stores all the information of a game
- *
- */
-typedef struct _Game
-{
-  Command *last_cmd;
-  Bool finished;
-  Player *player;
-  Object *object;
-  Space *spaces[MAX_SPACES];
-  int n_spaces;
-} Game;
+typedef struct _Game Game;
 
 /**
  * @brief It creates a new game, initializing all its members
@@ -39,7 +27,7 @@ typedef struct _Game
  * @param game Pointer to the game to initialize
  * @return Status of the operation: OK if successful
  */
-Status game_create(Game *game);
+Game *game_create();
 
 /**
  * @brief It creates a new game space, allocating memory and initializing its members
@@ -172,6 +160,10 @@ Status game_create_from_file(Game *game, char *filename);
  * @return Status of the operation: ERROR if failes, OK if successful 
  */
 Status game_add_space(Game *game, Space *space);
+
+/*Status game_get_player(Game *game, Player *player);*/
+
+/*Player *game_get_player1(Game *game, Player *player);*/
 
 Id game_player_get_object(Game *game);
 
