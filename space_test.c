@@ -2,8 +2,8 @@
  * @brief It tests space module
  * 
  * @file space_test.c
- * @author Profesores Pprog
- * @version 0.0 
+ * @author Claudia Saiz
+ * @version 2.0 
  * @date 17-02-2025
  * @copyright GNU Public License
  */
@@ -208,7 +208,6 @@ void test2_space_get_name() {
   PRINT_TEST_RESULT(space_get_name(s) == NULL);
 }
 
-/*Cambiar printf test result*/
 void test1_space_get_objects() {
   Space *s;
   s = space_create(1);
@@ -216,11 +215,11 @@ void test1_space_get_objects() {
   space_destroy(s);
 }
 
-/*Cambiar print test result*/
 void test2_space_get_objects() {
   Space *s;
+  Id id=5;
   s = space_create(1);
-  space_set_object(s,TRUE);
+  space_set_object(s,id);
   PRINT_TEST_RESULT(space_get_objects(s) != NULL);
   space_destroy(s);  
 }

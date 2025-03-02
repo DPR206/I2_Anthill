@@ -70,7 +70,7 @@ Id set_get_id(Set *set, int position);
  * @author Claudia Saiz
  *
  * @param set Pointer to the set structure
- * @return int, number of ids
+ * @return int, number of ids, or -1 if there is any error
  */
 int set_get_nids(Set *set);
 
