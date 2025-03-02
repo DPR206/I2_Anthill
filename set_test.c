@@ -181,7 +181,7 @@ void test1_set_get_nids(){
 void test2_set_get_nids(){
   Set *set=NULL;
   Id id=5;
-  set=set_create;
+  set=set_create();
   set_add(set, id);
   PRINT_TEST_RESULT(set_get_nids(set)==1);
   set_destroy(set);

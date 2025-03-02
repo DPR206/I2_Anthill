@@ -121,10 +121,10 @@ int set_get_nids(Set *set)
 
 int set_get_position(Set *set, Id id)
 {
+    int i;
     if(!set){
         return -1;
     }
-    int i;
 
     for (i = 0; i < MAX_SET; i++)
     {
