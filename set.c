@@ -84,9 +84,9 @@ Status set_del(Set *set, Id id)
     {
         if (set->ids[i] == id)
         {
-            for (j = i; j < set->n_ids; j++)
+            for (j = i; j < set->n_ids - 1; j++)
             {
-                set->ids[i] = set->ids[i + 1];
+                set->ids[j] = set->ids[j + 1];
             }
             set->n_ids--;
             return OK;
