@@ -9,7 +9,7 @@ Character *character_create();
 
 Status character_destroy(Character *character);
 
-Status player_set_id(Character *character, Id id);
+Status character_set_id(Character *character, Id id);
 
 Id character_get_id(Character *chartacer);
 
