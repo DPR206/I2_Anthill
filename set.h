@@ -85,6 +85,16 @@ int set_get_nids(Set *set);
 int set_get_position(Set *set, Id id);
 
 /**
+ * @brief It gets whether a set contains an specific id
+ * @author Claudia Saiz
+ * 
+ * @param set Pointer to the set structure
+ * @param id Id to search for in the set structure
+ * @return Bool, TRUE if the set contains the id, or FALSE if it doesnt or there is a problem
+ */
+Bool set_contains(Set *set, Id id);
+
+/**
  * @brief it prints all the information of the set structure
  * @author Claudia Saiz
  *

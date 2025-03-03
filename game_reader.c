@@ -100,9 +100,7 @@ Status game_reader_load_objects(Game *game, char *filename){
       object=object_create(id);
       if(object!=NULL){
         object_set_name(object, name);
-
-        /* No es lo mismo id y location?? */
-        object_set_id(object, location);
+        space_add_object(game_get_space(game, location), id);
       }
     }
   }

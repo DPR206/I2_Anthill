@@ -68,13 +68,14 @@ Id game_get_player_location(Game *game);
 Status game_set_player_location(Game *game, Id id);
 
 /**
- * @brief It gets the ID of the space where an object is located
+ * @brief It gets the ID of the space where an object is located by its identifier
  * @author Duna Puente
  *
  * @param game Pointer to the game
+ * @param id Id of the object to search for
  * @return The objects location ID
  */
-Id game_get_object_location(Game *game);
+Id game_get_object_location(Game *game, Id object);
 
 /**
  * @brief It sets the objects location to a specific ID
@@ -166,8 +167,6 @@ Status game_add_space(Game *game, Space *space);
 /*Player *game_get_player1(Game *game, Player *player);*/
 
 Id game_player_get_object(Game *game);
-
-Id game_object_get_id(Game *game);
 
 Status game_player_set_object(Game *game, Id id);
 

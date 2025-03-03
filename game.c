@@ -24,7 +24,7 @@ struct _Game
   Command *last_cmd;
   Bool finished;
   Player *player;
-  Object *object;
+  Set *objects;
   Space *spaces[MAX_SPACES];
   int n_spaces;
 };
@@ -51,7 +51,6 @@ Id game_get_space_id_at(Game *game, int position)
   }
 
   return space_get_id(game_get_space(game, position));
-  /*return space_get_id(game->spaces[position]);*/
 }
 
 /**
@@ -87,8 +86,8 @@ Game *game_create()
     return NULL;
   }
 
-  gm->object = object_create(NO_ID);/**/
-  gm->player = player_create(NO_ID);/**/
+  gm->objects = set_create();
+  gm->player = player_create(NO_ID);
   gm->last_cmd = command_create();
   gm->finished = FALSE;
 
@@ -123,9 +122,13 @@ Status game_create_from_file(Game *game, char *filename)
     return ERROR;
   }
 
-  /* The player and the object are located in the first space */
+  if (game_reader_load_objects(game, filename) == ERROR)
+  {
+    return ERROR;
+  }
+
+  /* The player is located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));
-  game_set_object_location(game, game_get_space_id_at(game, 0));
 
   return OK;
 }
@@ -167,31 +170,41 @@ Status game_set_player_location(Game *game, Id id)
   return OK;
 }
 
-Id game_get_object_location(Game *game)
-{
-  return object_get_id(game->object);
-}
-
-Status game_set_object_location(Game *game, Id id)
+Id game_get_object_location(Game *game, Id object)
 {
   int i = 0;
 
-  if (!game || !game->object)
+  if (object == NO_ID)
+  {
+    return NULL;
+  }
+
+  for (i = 0; i < game->n_spaces; i++)
+  {
+    if (set_contains(space_get_objects(game->spaces[i]), object)==TRUE)
+    {
+      return space_get_id(game->spaces[i]);
+    }
+  }
+
+  return NULL;
+}
+
+Status game_set_object_location(Game *game, Id object, Id location)
+{
+  int i = 0;
+
+  if (!game || !game->objects)
   {
     return ERROR;
   }
 
-  if ((object_set_id(game->object, id)) == ERROR)
-  {
-    return ERROR;
-  }
-
-  while (i < game->n_spaces && space_get_id(game->spaces[i]) != id)
+  while (i < game->n_spaces && space_get_id(game->spaces[i]) != location)
   {
     i++;
   }
 
-  space_set_object(game->spaces[i], object_get_id(game->object));
+  space_set_object(game->spaces[i], object);
 
   return OK;
 }
@@ -212,7 +225,7 @@ Status game_destroy(Game *game)
   }
 
   player_destroy(game->player);
-  object_destroy(game->object);
+  set_destroy(game->objects);
   command_destroy(game->last_cmd);
 
   return OK;
@@ -248,18 +261,16 @@ void game_print(Game *game)
     space_print(game->spaces[i]);
   }
 
-  printf("=> Object location: %d\n", (int)object_get_id(game->object));
+  printf("=> Grain location: %d\n", (int)game_object_get_id(set_get_id(game->objects, 0)));
+  printf("=> Miga location: %d\n", (int)game_object_get_id(set_get_id(game->objects, 1)));
+  printf("=> Hoja location: %d\n", (int)game_object_get_id(set_get_id(game->objects, 2)));
+  printf("=> Pipa location: %d\n", (int)game_object_get_id(set_get_id(game->objects, 3)));
   printf("=> Player location: %d\n", (int)player_get_id(game->player));
 }
 
 Id game_player_get_object(Game *game)
 {
   return player_get_object(game->player);
-}
-
-Id game_object_get_id(Game *game)
-{
-  return object_get_id(game->object);
 }
 
 Status game_player_set_object(Game *game, Id id)

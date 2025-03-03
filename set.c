@@ -122,7 +122,8 @@ int set_get_nids(Set *set)
 int set_get_position(Set *set, Id id)
 {
     int i;
-    if(!set){
+    if (!set)
+    {
         return -1;
     }
 
@@ -134,6 +135,24 @@ int set_get_position(Set *set, Id id)
         }
     }
     return -1;
+}
+
+Bool set_contains(Set *set, Id id)
+{
+    int i;
+    if (!set || id == NO_ID)
+    {
+        return FALSE;
+    }
+
+    for (i = 0; i < MAX_SET; i++)
+    {
+        if (set->ids[i] == id)
+        {
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 Status set_print(Set *set)
