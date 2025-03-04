@@ -49,7 +49,7 @@ Character *character_create()
     character_set_name(character, "\0");
     character_set_salud(character, 0);
     character_set_friendly(character, FALSE);
-    charcter_set_message(character, "\0");
+    character_set_message(character, "\0");
     
     return character;
 }
@@ -61,9 +61,6 @@ Status character_destroy(Character *character)
     {
         return ERROR;
     } else {
-        free(character->name);
-        free(character->gdec);
-        free(character->message);
         free(character);
     }
     
