@@ -247,6 +247,7 @@ Status game_destroy(Game *game)
   }
   command_destroy(game->last_cmd);
 
+  free(game);
   return OK;
 }
 
