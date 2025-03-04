@@ -31,7 +31,7 @@ struct _Graphic_engine
   Area *map, *descript, *banner, *help, *feedback;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*borrar*/
 void print_errors(char *error){
   FILE *fich=NULL;
   fich=fopen("error.txt", "w");
@@ -64,7 +64,7 @@ Graphic_engine *graphic_engine_create()
   ge->help = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + 2, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_HLP);
   ge->feedback = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + 3, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_FDB);
 
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /*borrar*/
   print_errors("graphic_engine_create");
 
   return ge;

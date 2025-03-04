@@ -29,7 +29,7 @@ struct _Game
   int n_spaces;
 };
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////
+/*borrar*/
 void print_errors(char *error){
   FILE *fich=NULL;
   fich=fopen("error.txt", "w");
@@ -132,14 +132,14 @@ Status game_create_from_file(Game *game, char *filename)
   {
     return ERROR;
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /*borrar*/
   print_errors("game_reader_load_spaces");
 
   if (game_reader_load_objects(game, filename) == ERROR)
   {
     return ERROR;
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  /*borrar*/
   print_errors("game_reader_load_objects");
 
 
