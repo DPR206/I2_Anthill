@@ -2,7 +2,7 @@ EXE = hormiguero
 CC = gcc
 CFLAGS = -g -Wall -ansi -pedantic
 LDLIBS = -L. -lscreen
-OBJ = command.o set.o space.o player.o object.o game.o game_actions.o graphic_engine.o game_reader.o game_loop.o
+OBJ = command.o set.o space.o player.o object.o character.o game.o game_actions.o graphic_engine.o game_reader.o game_loop.o
 
 
 $(EXE): $(OBJ)
@@ -23,6 +23,9 @@ player.o: player.c player.h types.h
 
 object.o: object.c object.h types.h
 	$(CC) $(CFLAGS) -c object.c
+
+character.o: character.c character.h types.h
+	$(CC) $(CFLAGS) -c character.c
 
 game.o: game.c game.h command.h types.h space.h game_reader.h player.h object.h
 	$(CC) $(CFLAGS) -c game.c
