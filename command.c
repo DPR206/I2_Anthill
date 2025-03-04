@@ -22,7 +22,7 @@
  *
  */
 char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "Exit"}, {"n", "Next"}, {"b", "Back"}, {"t", "Take"}, {"d", "Drop"}, 
-{"l", "Left"}, {"r", "Right"}};
+{"l", "Left"}, {"r", "Right"}, {"a", "attack"}, {"c", "chat"}};
 
 /**
  * @brief Command
