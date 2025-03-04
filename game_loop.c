@@ -104,6 +104,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine)
   }
 
   last_cmd = game_get_last_command(game);
+  print_errors("get_last_command");
 
   while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(game) == FALSE))
   {
