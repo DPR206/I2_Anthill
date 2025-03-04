@@ -67,22 +67,6 @@ void game_actions_take(Game *game);
 void game_actions_drop(Game *game);
 
 /**
- * @brief It moves the player to the space to the left
- * @author Duna Puente
- * 
- * @param game Pointer to the game
- */
-void game_actions_left(Game *game);
-
-/**
- * @brief It moves the player to the space to the right
- * @author Duna Puente
- * 
- * @param game A pointer to the game
- */
-void game_actions_right(Game *game);
-
-/**
    Game actions implementation
 */
 
@@ -220,58 +204,4 @@ void game_actions_drop(Game *game)
     game_set_object_location(game, object_id, player_location);
     game_player_set_object(game, NO_ID);
   }
-}
-
-void game_actions_left(Game *game)
-{
-
-  Id current_id = NO_ID, object_id=NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = game_get_player_location(game);
-  if (space_id == NO_ID)
-  {
-    return;
-  }
-
-  current_id = space_get_west(game_get_space(game, space_id));
-  if (current_id != NO_ID)
-  {
-    game_set_player_location(game, current_id);
-    object_id=game_player_get_object(game);
-    if (object_id!=NO_ID)
-    {
-      game_set_object_location(game, object_id, NO_ID);
-    }
-    
-  }
-
-  return;
-  
-}
-
-void game_actions_right(Game *game)
-{
-  Id current_id = NO_ID, object_id=NO_ID;
-  Id space_id = NO_ID;
-
-  space_id = game_get_player_location(game);
-  if (space_id == NO_ID)
-  {
-    return;
-  }
-
-  current_id = space_get_east(game_get_space(game, space_id));
-  if (current_id != NO_ID)
-  {
-    game_set_player_location(game, current_id);
-    object_id=game_player_get_object(game);
-    if (object_id!=NO_ID)
-    {
-      game_set_object_location(game, object_id, NO_ID);
-    }
-    
-  }
-
-  return;
 }

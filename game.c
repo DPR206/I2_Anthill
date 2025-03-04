@@ -29,6 +29,17 @@ struct _Game
   int n_spaces;
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+void print_errors(char *error){
+  FILE *fich=NULL;
+  fich=fopen("error.txt", "w");
+
+  fprintf(fich, "%s\n", error);
+  fclose(fich);
+}
+
+
+
 /**
  * @brief It gets the space ID at a specific position
  * @author Profesores PPROG
@@ -121,11 +132,17 @@ Status game_create_from_file(Game *game, char *filename)
   {
     return ERROR;
   }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  print_errors("game_reader_load_spaces");
 
   if (game_reader_load_objects(game, filename) == ERROR)
   {
     return ERROR;
   }
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  print_errors("game_reader_load_objects");
+
+
 
   /* The player is located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));

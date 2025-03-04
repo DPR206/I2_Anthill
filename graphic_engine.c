@@ -31,6 +31,17 @@ struct _Graphic_engine
   Area *map, *descript, *banner, *help, *feedback;
 };
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+void print_errors(char *error){
+  FILE *fich=NULL;
+  fich=fopen("error.txt", "w");
+
+  fprintf(fich, "%s\n", error);
+  fclose(fich);
+}
+
+
+
 Graphic_engine *graphic_engine_create()
 {
   static Graphic_engine *ge = NULL;
@@ -52,6 +63,9 @@ Graphic_engine *graphic_engine_create()
   ge->banner = screen_area_init((int)((WIDTH_MAP + WIDTH_DES + 1 - WIDTH_BAN) / 2), HEIGHT_MAP + 2, WIDTH_BAN, HEIGHT_BAN);
   ge->help = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + 2, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_HLP);
   ge->feedback = screen_area_init(1, HEIGHT_MAP + HEIGHT_BAN + HEIGHT_HLP + 3, WIDTH_MAP + WIDTH_DES + 1, HEIGHT_FDB);
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////
+  print_errors("graphic_engine_create");
 
   return ge;
 }
@@ -155,7 +169,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, "     next or n, back or b, left or l, right or r, exit or e, take or t, drop or d");
+  sprintf(str, "     next or n, back or b, exit or e, take or t, drop or d");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */

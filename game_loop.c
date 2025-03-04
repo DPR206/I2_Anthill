@@ -89,6 +89,8 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
     return 1;
   }
 
+
+
   return 0;
 }
 
