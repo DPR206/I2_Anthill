@@ -73,7 +73,7 @@ void graphic_engine_destroy(Graphic_engine *ge)
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID, obj_id=NO_ID;
   Space *space_act = NULL;
   char obj = '\0';
   char str[255];
@@ -88,7 +88,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
 
-    if (game_get_object_location(game) == id_back)
+    if (game_get_object_location(game, obj_id) == id_back)  /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
       obj = '*';
     else
       obj = ' ';
@@ -105,7 +105,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    if (game_get_object_location(game) == id_act)
+    if (game_get_object_location(game, obj_id) == id_act) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
       obj = '*';
     else
       obj = ' ';
@@ -122,7 +122,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    if (game_get_object_location(game) == id_next)
+    if (game_get_object_location(game, obj_id) == id_next) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
       obj = '*';
     else
       obj = ' ';
@@ -142,7 +142,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if ((obj_loc = game_get_object_location(game)) != NO_ID)
+  if ((obj_loc = game_get_object_location(game, obj_id)) != NO_ID) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
   {
     sprintf(str, "  Object location:%d", (int)obj_loc);
     screen_area_puts(ge->descript, str);
