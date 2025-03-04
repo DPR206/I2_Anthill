@@ -88,8 +88,8 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
     game_destroy(game);
     return 1;
   }
-
-
+  /*borrar*/
+  print_errors("graphic_engine_create");
 
   return 0;
 }
