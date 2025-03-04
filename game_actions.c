@@ -122,7 +122,7 @@ void game_actions_exit(Game *game) {}
 
 void game_actions_next(Game *game)
 {
-  Id current_id = NO_ID;
+  Id current_id = NO_ID, object_id=NO_ID;
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
@@ -135,9 +135,10 @@ void game_actions_next(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    if (game_player_get_object(game)==game_object_get_id(game))
+    object_id=game_player_get_object(game);
+    if (object_id!=NO_ID)
     {
-      game_set_object_location(game, NO_ID);
+      game_set_object_location(game, object_id, NO_ID);
     }
     
   }
@@ -147,7 +148,7 @@ void game_actions_next(Game *game)
 
 void game_actions_back(Game *game)
 {
-  Id current_id = NO_ID;
+  Id current_id = NO_ID, object_id=NO_ID;
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
@@ -161,14 +162,15 @@ void game_actions_back(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    if (game_player_get_object(game)==game_object_get_id(game)) 
+    object_id=game_player_get_object(game);
+    if (object_id!=NO_ID) 
     {
-      game_set_object_location(game, NO_ID);
+      game_set_object_location(game, object_id, NO_ID);
     }
   }
 }
 
-void game_actions_take(Game *game) 
+void game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos*/
 { 
   Space *space = game_get_space(game, game_get_player_location(game));
   Id object_id = game_object_get_id(game); 
@@ -178,27 +180,28 @@ void game_actions_take(Game *game)
     return;
   }
 
-  if (game_get_player_location(game) == game_get_object_location(game)) 
+  if (game_get_player_location(game) == game_get_object_location(game, object_id)) 
   {
     game_player_set_object(game, object_id);
     space_set_object(space, NO_ID);
-    game_set_object_location(game, NO_ID);  
+    game_set_object_location(game, NO_ID, NO_ID);  
   }
 }
 
 void game_actions_drop(Game *game) 
 {
   Id player_location = game_get_player_location(game);
+  Id object_id=NO_ID;
 
   if (game == NULL)
   {
     return;
   }
 
-  if (game_player_get_object(game) != NO_ID) 
+  object_id=game_player_get_object(game);
+  if (object_id != NO_ID) 
   {
-    game_set_object_location(game, player_location);
+    game_set_object_location(game, object_id, player_location);
     game_player_set_object(game, NO_ID);
-    /*space_set_object(space, object_id);*/
   }
 }
