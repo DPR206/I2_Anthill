@@ -101,6 +101,7 @@ Status game_reader_load_objects(Game *game, char *filename){
       if(object!=NULL){
         object_set_name(object, name);
         space_add_object(game_get_space(game, location), id);
+        game_add_object(game, object);
       }
     }
   }

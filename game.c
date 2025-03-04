@@ -27,6 +27,7 @@ struct _Game
   Object *objects[MAX_OBJECTS];
   Space *spaces[MAX_SPACES];
   int n_spaces;
+  int n_objects;
 };
 
 /*borrar*/
@@ -80,6 +81,18 @@ Status game_add_space(Game *game, Space *space)
   return OK;
 }
 
+Status game_add_object(Game *game, Object *object){
+  if (object == NULL)
+  {
+    return ERROR;
+  }
+
+  game->objects[game->n_objects] = object;
+  game->n_objects++;
+
+  return OK;
+}
+
 Game *game_create()
 {
   Game *gm = NULL;
@@ -101,6 +114,7 @@ Game *game_create()
   {
     gm->objects[i] = NULL;
   }
+  gm->n_objects=0;
   gm->player = player_create(NO_ID);
   gm->last_cmd = command_create();
   gm->finished = FALSE;
