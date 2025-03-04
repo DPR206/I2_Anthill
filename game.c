@@ -216,7 +216,7 @@ Status game_set_object_location(Game *game, Id object, Id location)
 {
   int i = 0;
 
-  if (!game || !game->objects)
+  if (!game)
   {
     return ERROR;
   }
@@ -286,10 +286,10 @@ void game_print(Game *game)
     space_print(game->spaces[i]);
   }
 
-  printf("=> Grain location: %d\n", (int)game_get_object_location(game, game->objects[0]));
-  printf("=> Miga location: %d\n", (int)game_get_object_location(game, game->objects[1]));
-  printf("=> Hoja location: %d\n", (int)game_get_object_location(game, game->objects[2]));
-  printf("=> Pipa location: %d\n", (int)game_get_object_location(game, game->objects[3]));
+  printf("=> Grain location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[0])));
+  printf("=> Miga location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[1])));
+  printf("=> Hoja location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[2])));
+  printf("=> Pipa location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[3])));
   printf("=> Player location: %d\n", (int)player_get_id(game->player));
 }
 
