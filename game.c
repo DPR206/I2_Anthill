@@ -30,15 +30,14 @@ struct _Game
 };
 
 /*borrar*/
-void print_errors(char *error){
-  FILE *fich=NULL;
-  fich=fopen("error.txt", "a+");
+void print_errors(char *error)
+{
+  FILE *fich = NULL;
+  fich = fopen("error.txt", "a+");
 
   fprintf(fich, "%s\n", error);
   fclose(fich);
 }
-
-
 
 /**
  * @brief It gets the space ID at a specific position
@@ -98,7 +97,6 @@ Game *game_create()
     return NULL;
   }
 
-
   for (i = 0; i < MAX_OBJECTS; i++)
   {
     gm->objects[i] = NULL;
@@ -146,8 +144,6 @@ Status game_create_from_file(Game *game, char *filename)
   }
   /*borrar*/
   print_errors("game_reader_load_objects");
-
-
 
   /* The player is located in the first space */
   game_set_player_location(game, game_get_space_id_at(game, 0));
@@ -203,7 +199,7 @@ Id game_get_object_location(Game *game, Id object)
 
   for (i = 0; i < game->n_spaces; i++)
   {
-    if (set_contains(space_get_objects(game->spaces[i]), object)==TRUE)
+    if (set_contains(space_get_objects(game->spaces[i]), object) == TRUE)
     {
       return space_get_id(game->spaces[i]);
     }
@@ -263,7 +259,16 @@ Status game_set_last_command(Game *game, Command *command)
   return OK;
 }
 
-Command *game_get_last_command(Game *game) { return game->last_cmd; }
+Command *game_get_last_command(Game *game)
+{
+  if (!game)
+  {
+    print_errors("game no inicializado en gaem_get_last_command");
+    return NULL;
+  }
+
+  return game->last_cmd;
+}
 
 Bool game_get_finished(Game *game) { return game->finished; }
 
