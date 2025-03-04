@@ -17,6 +17,7 @@
 #include "object.h"
 
 #define MAX_SPACES 100
+#define MAX_OBJECTS 4
 
 typedef struct _Game Game;
 
