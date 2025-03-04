@@ -67,7 +67,9 @@ int main(int argc, char *argv[])
 
   if (!game_loop_init(game, &gengine, argv[1]))
   {
+    print_errors("game_loop init");
     game_loop_run(game, gengine);
+    print_errors("game_loop_run");
     game_loop_cleanup(game, gengine);
   }
 
@@ -88,8 +90,6 @@ int game_loop_init(Game *game, Graphic_engine **gengine, char *file_name)
     game_destroy(game);
     return 1;
   }
-  /*borrar*/
-  print_errors("graphic_engine_create");
 
   return 0;
 }

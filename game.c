@@ -32,7 +32,7 @@ struct _Game
 /*borrar*/
 void print_errors(char *error){
   FILE *fich=NULL;
-  fich=fopen("error.txt", "w");
+  fich=fopen("error.txt", "w+");
 
   fprintf(fich, "%s\n", error);
   fclose(fich);

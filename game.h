@@ -20,6 +20,7 @@
 
 typedef struct _Game Game;
 
+/*borrar*/
 void print_errors(char *error);
 
 
