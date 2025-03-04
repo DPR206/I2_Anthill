@@ -33,6 +33,8 @@ typedef enum {CMDS, CMDL} CommandType;
  * - BACK: back command
  * - TAKE: take an object from the space command
  * - DROP: drop the object it is carrying in the space
+ * - LEFT: left command
+ * - RIGHT: right command
  */
 typedef enum {NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, TAKE, DROP, LEFT, RIGHT} CommandCode;
 
