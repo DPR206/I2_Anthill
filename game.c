@@ -24,7 +24,7 @@ struct _Game
   Command *last_cmd;
   Bool finished;
   Player *player;
-  Set *objects;
+  Object *objects[MAX_OBJECTS];
   Space *spaces[MAX_SPACES];
   int n_spaces;
 };
@@ -84,6 +84,7 @@ Status game_add_space(Game *game, Space *space)
 Game *game_create()
 {
   Game *gm = NULL;
+  int i;
 
   gm = (Game *)calloc(1, sizeof(Game));
 
@@ -97,7 +98,11 @@ Game *game_create()
     return NULL;
   }
 
-  gm->objects = set_create();
+
+  for (i = 0; i < MAX_OBJECTS; i++)
+  {
+    gm->objects[i] = NULL;
+  }
   gm->player = player_create(NO_ID);
   gm->last_cmd = command_create();
   gm->finished = FALSE;
@@ -242,7 +247,10 @@ Status game_destroy(Game *game)
   }
 
   player_destroy(game->player);
-  set_destroy(game->objects);
+  for (i = 0; i < MAX_OBJECTS; i++)
+  {
+    object_destroy(game->objects[i]);
+  }
   command_destroy(game->last_cmd);
 
   return OK;
@@ -278,10 +286,10 @@ void game_print(Game *game)
     space_print(game->spaces[i]);
   }
 
-  printf("=> Grain location: %d\n", (int)game_get_object_location(game, set_get_id(game->objects, 0)));
-  printf("=> Miga location: %d\n", (int)game_get_object_location(game, set_get_id(game->objects, 0)));
-  printf("=> Hoja location: %d\n", (int)game_get_object_location(game, set_get_id(game->objects, 0)));
-  printf("=> Pipa location: %d\n", (int)game_get_object_location(game, set_get_id(game->objects, 0)));
+  printf("=> Grain location: %d\n", (int)game_get_object_location(game, game->objects[0]));
+  printf("=> Miga location: %d\n", (int)game_get_object_location(game, game->objects[1]));
+  printf("=> Hoja location: %d\n", (int)game_get_object_location(game, game->objects[2]));
+  printf("=> Pipa location: %d\n", (int)game_get_object_location(game, game->objects[3]));
   printf("=> Player location: %d\n", (int)player_get_id(game->player));
 }
 
