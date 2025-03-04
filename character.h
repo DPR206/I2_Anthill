@@ -1,3 +1,12 @@
+/**
+ * @brief It defines the character module interface
+ *
+ * @file character.h
+ * @author Duna Puente
+ * @version 0
+ * @date 03-03-2025
+ * @copyright GNU Public License
+ */
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
