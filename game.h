@@ -85,7 +85,7 @@ Id game_get_object_location(Game *game, Id object);
  * @param id The new space ID where the object will be located
  * @return Status of the operation: ERROR if no ID, OK if successful
  */
-Status game_set_object_location(Game *game, Id id);
+Status game_set_object_location(Game *game, Id object, Id location);
 
 /**
  * @brief Destroys a game structure, free the memory of all spaces and the last command
