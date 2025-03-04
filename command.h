@@ -35,8 +35,9 @@ typedef enum {CMDS, CMDL} CommandType;
  * - DROP: drop the object it is carrying in the space
  * - LEFT: left command
  * - RIGHT: right command
+ * - ATTACK: attack a character who isn't a friend in the space
  */
-typedef enum {NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, TAKE, DROP, LEFT, RIGHT} CommandCode;
+typedef enum {NO_CMD = -1, UNKNOWN, EXIT, NEXT, BACK, TAKE, DROP, LEFT, RIGHT, ATTACK, CHAT} CommandCode;
 
 /**
  * @brief This struct holds the information of a command, the code that represents the command type
