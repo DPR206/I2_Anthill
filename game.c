@@ -124,8 +124,6 @@ Status game_createspace(Game *game)
 
 Status game_create_from_file(Game *game, char *filename)
 {
-  game = game_create();
-
   if (game == NULL)
   {
     return ERROR;
@@ -263,7 +261,7 @@ Command *game_get_last_command(Game *game)
 {
   if (!game)
   {
-    print_errors("game no inicializado en gaem_get_last_command");
+    print_errors("game no inicializado en game_get_last_command");
     return NULL;
   }
 

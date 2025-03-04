@@ -65,6 +65,10 @@ int main(int argc, char *argv[])
     return 1;
   }
 
+  if(!(game = game_create())) {
+    return -1;
+  }
+
   if (!game_loop_init(game, &gengine, argv[1]))
   {
     print_errors("game_loop init");
@@ -98,7 +102,7 @@ void game_loop_run(Game *game, Graphic_engine *gengine)
 {
   Command *last_cmd;
 
-  if (!gengine)
+  if (!gengine || !game)
   {
     return;
   }
