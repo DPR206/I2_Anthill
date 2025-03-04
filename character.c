@@ -1,3 +1,13 @@
+/**
+ * @brief It implements the character module
+ * 
+ * @file character.c 
+ * @author Duna Puente
+ * @version 0
+ * @date 03-03-2025
+ * @copyright GNU Public License
+ * 
+ */
 #include "character.h"
 
 #include <stdio.h>
@@ -6,6 +16,12 @@
 
 #define G_SIZE 7
 
+/**
+ * @brief Character
+ * 
+ * This struct stores all the information of character
+ * 
+ */
 struct _Character
 {
     Id id;
@@ -22,11 +38,13 @@ Character *character_create()
 
     character=(Character *)calloc(1, sizeof(Character));
 
+    /* Error control */
     if (!character)
     {
         return NULL;
     }
 
+    /* Initializing new character */
     character_set_id(character, NO_ID);
     character_set_name(character, "\0");
     character_set_salud(character, 0);
@@ -38,6 +56,7 @@ Character *character_create()
 
 Status character_destroy(Character *character)
 {
+    /* Error control */
     if (!character)
     {
         return ERROR;
@@ -53,6 +72,7 @@ Status character_destroy(Character *character)
 
 Status character_set_id(Character *character, Id id)
 {
+    /* Error control */
     if (!character)
     {
         return ERROR;
@@ -64,10 +84,20 @@ Status character_set_id(Character *character, Id id)
     
 }
 
-Id character_get_id(Character *character) { return character->id; }
+Id character_get_id(Character *character) 
+{ 
+    /* Error control */
+    if (!character)
+    {
+        return NO_ID;
+    }
+    
+    return character->id; 
+}
 
 Status character_set_name(Character *character, char *name)
 {
+    /* Error control */
     if (!character || !name || strlen(name)>WORD_SIZE)
     {
         return ERROR;
@@ -79,10 +109,20 @@ Status character_set_name(Character *character, char *name)
     
 }
 
-const char *character_get_name(Character *character) { return character->name; }
+const char *character_get_name(Character *character) 
+{ 
+    /* Error control */
+    if (!character)
+    {
+        return NULL;
+    }
+    
+    return character->name; 
+}
 
 Status character_set_gdesc(Character *character, char *gdesc)
 {
+    /* Error control */
     if (!character || !gdesc || gdesc>G_SIZE)
     {
         return ERROR;
@@ -94,10 +134,20 @@ Status character_set_gdesc(Character *character, char *gdesc)
     
 }
 
-const char *character_get_gdesc(Character *character) { return character->gdec; }
+const char *character_get_gdesc(Character *character) 
+{ 
+    /* Error control */
+    if (!character)
+    {
+        return NULL;
+    }
+    
+    return character->gdec; 
+}
 
 Status character_set_salud(Character *character, int salud)
 {
+    /* Error control */
     if (!character)
     {
         return ERROR;
@@ -109,10 +159,20 @@ Status character_set_salud(Character *character, int salud)
     
 }
 
-int character_get_salud(Character *character) { return character->salud; }
+int character_get_salud(Character *character) 
+{ 
+    /* Error control */
+    if (!character)
+    {
+        return -1;
+    }
+    
+    return character->salud; 
+}
 
 Status character_set_friendly(Character *character, Bool friendly)
 {
+    /* Error control */
     if (!character)
     {
         return ERROR;
@@ -128,6 +188,7 @@ Bool character_get_friendly(Character *character) { return character->friendly; 
 
 Status character_set_message(Character *character, char *message)
 {
+    /* Error control */
     if (!character || !message)
     {
         return ERROR;
@@ -139,4 +200,13 @@ Status character_set_message(Character *character, char *message)
     
 }
 
-const char *character_get_message(Character *character) { return character->message; }
+const char *character_get_message(Character *character) 
+{ 
+    /* Error control */
+    if (!character)
+    {
+        return NULL;
+    }
+    
+    return character->message; 
+}
