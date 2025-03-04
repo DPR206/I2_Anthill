@@ -11,7 +11,7 @@ Status character_destroy(Character *character);
 
 Status character_set_id(Character *character, Id id);
 
-Id character_get_id(Character *chartacer);
+Id character_get_id(Character *character);
 
 Status character_set_name(Character *character, char *name);
 
@@ -30,5 +30,7 @@ Status character_set_friendly(Character *character, Bool friendly);
 Bool character_get_friendly(Character *character);
 
 Status character_set_message(Character *character, char *message);
+
+const char *character_get_message(Character *character);
 
 #endif
