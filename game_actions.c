@@ -173,7 +173,7 @@ void game_actions_back(Game *game)
 void game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos*/
 { 
   Space *space = game_get_space(game, game_get_player_location(game));
-  Id object_id = game_object_get_id(game); 
+  Id object_id = NO_ID;/*game_get_object_id(game);*/ 
 
   if (game == NULL)
   {
