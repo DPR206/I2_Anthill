@@ -235,7 +235,7 @@ Id game_get_object_location(Game *game, Id object)
 Id game_get_object_location_from_name(Game *game, char *object)
 {
   int i;
-  Id object_id = -2;
+  Id object_id = NO_ID;
 
   if (object == NULL)
   {
@@ -244,7 +244,7 @@ Id game_get_object_location_from_name(Game *game, char *object)
 
   for (i = 0; i < MAX_OBJECTS; i++)
   {
-    if (object_get_name(game->objects[i]) == object)
+    if (strcmp(object_get_name(game->objects[i]), object)==0)
     {
       object_id = object_get_id(game->objects[i]);
     }
