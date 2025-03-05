@@ -13,6 +13,7 @@
 
 #include "types.h"
 #include "set.h"
+#include "character.h"
 
 typedef struct _Space Space;
 
@@ -187,6 +188,16 @@ Id space_get_objects_id(Space *space, int position);
  * @return Bool, TRUE if the object is in the space, FALSE if not
  */
 Bool space_at_object(Space *space, Id object);
+
+/**
+ * @brief It sets a character in the space given
+ * @author Claudia Saiz
+ * 
+ * @param space Pointer to the space
+ * @param character Pointer to the character
+ * @return Status of the operation, OK if successful, or ERROR if not
+ */
+Status space_set_character(Space *space, Character *character);
 
 /**
  * @brief It prints the space information

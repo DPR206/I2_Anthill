@@ -169,6 +169,8 @@ Status game_add_space(Game *game, Space *space);
 
 Status game_add_object(Game *game, Object *object);
 
+Status game_add_character(Game *game, Character *character);
+
 /*Status game_get_player(Game *game, Player *player);*/
 
 /*Player *game_get_player1(Game *game, Player *player);*/

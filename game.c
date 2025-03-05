@@ -86,6 +86,21 @@ Status game_add_object(Game *game, Object *object)
   return OK;
 }
 
+Status game_add_character(Game *game, Character *character)
+{
+
+
+  if (character == NULL)
+  {
+    return ERROR;
+  }
+
+  game->characters[game->n_characters] = character;
+  game->n_characters++;
+
+  return OK;
+}
+
 Game *game_create()
 {
   Game *gm = NULL;
@@ -148,6 +163,9 @@ Status game_create_from_file(Game *game, char *filename)
 
   if (game_reader_load_objects(game, filename) == ERROR)
   {
+    return ERROR;
+  }
+  if(game_reader_load_characters(game, filename)==ERROR){
     return ERROR;
   }
 
