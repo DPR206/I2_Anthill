@@ -306,7 +306,6 @@ Command *game_get_last_command(Game *game)
 {
   if (!game)
   {
-    print_errors("game no inicializado en game_get_last_command");
     return NULL;
   }
 
