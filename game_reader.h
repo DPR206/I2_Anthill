@@ -15,8 +15,6 @@
 #include "types.h"
 #include "game.h"
 
-#define MAX_SPACES 100
-
 /**
  * @brief It loads game spaces from a file
  * @author Duna Puente

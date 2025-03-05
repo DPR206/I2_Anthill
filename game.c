@@ -26,8 +26,10 @@ struct _Game
   Player *player;
   Object *objects[MAX_OBJECTS];
   Space *spaces[MAX_SPACES];
+  Character *characters[MAX_CHARACTERS];
   int n_spaces;
   int n_objects;
+  int n_characters;
 };
 
 
@@ -106,6 +108,10 @@ Game *game_create()
     gm->objects[i] = NULL;
   }
   gm->n_objects=0;
+  for (i=0; i<MAX_CHARACTERS;i++){
+    gm->characters[i]=character_create();
+  }
+  gm->n_characters=0;
   gm->player = player_create(NO_ID);
   gm->last_cmd = command_create();
   gm->finished = FALSE;
@@ -240,11 +246,14 @@ Status game_destroy(Game *game)
   {
     space_destroy(game->spaces[i]);
   }
-
   player_destroy(game->player);
   for (i = 0; i < MAX_OBJECTS; i++)
   {
     object_destroy(game->objects[i]);
+  }
+  for (i = 0; i < MAX_CHARACTERS; i++)
+  {
+    character_destroy(game->characters[i]);
   }
   command_destroy(game->last_cmd);
 
