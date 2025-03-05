@@ -121,7 +121,7 @@ const char *game_get_character_gdesc(Game *game, char *character){
 
 Id game_get_character_location(Game *game, char *character){
   int i;
-  Id character_id = NO_ID;
+  /*Id character_id = NO_ID;*/
 
   if (character == NULL||!game)
   {
@@ -132,11 +132,12 @@ Id game_get_character_location(Game *game, char *character){
   {
     if (strcmp(character_get_name(game->characters[i]), character)==0)
     {
-      character_id = character_get_id(game->characters[i]);
+      return character_get_id(game->characters[i]);
     }
   }
+  return NO_ID;
 
-  if (character_id == NO_ID)
+  /*if (character_id == NO_ID)
   {
     return NO_ID;
   }
@@ -149,7 +150,7 @@ Id game_get_character_location(Game *game, char *character){
     }
   }
 
-  return NO_ID;
+  return NO_ID;*/
 }
 
 int game_get_character_salud(Game *game, char *character){
