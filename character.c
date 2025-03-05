@@ -120,7 +120,7 @@ const char *character_get_name(Character *character)
 Status character_set_gdesc(Character *character, char *gdesc)
 {
     /* Error control */
-    if (!character || !gdesc || gdesc>G_SIZE)
+    if (!character || !gdesc || strlen(gdesc)>G_SIZE)
     {
         return ERROR;
     }
