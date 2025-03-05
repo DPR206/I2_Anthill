@@ -203,7 +203,7 @@ Status game_add_character(Game *game, Character *character);
  * @param character Name of the character 
  * @return char*, graphic descrition of the character
  */
-char *game_get_character_gdesc(Game *game, char *character);
+const char *game_get_character_gdesc(Game *game, char *character);
 
 /**
  * @brief It gets the location of a character from its name
