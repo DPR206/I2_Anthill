@@ -21,10 +21,6 @@
 
 typedef struct _Game Game;
 
-/*borrar*/
-void print_errors(char *error);
-
-
 /**
  * @brief It creates a new game, initializing all its members
  * @author Duna Puente

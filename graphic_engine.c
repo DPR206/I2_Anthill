@@ -73,7 +73,8 @@ void graphic_engine_destroy(Graphic_engine *ge)
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_loc = NO_ID, obj_id=NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_id=NO_ID;
+  Id grain_loc=NO_ID, crumb_loc=NO_ID, leaf_loc=NO_ID, seed_loc=NO_ID;
   Space *space_act = NULL;
   char obj = '\0';
   char str[255];
@@ -142,9 +143,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  if ((obj_loc = game_get_object_location(game, obj_id)) != NO_ID) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
+  grain_loc = game_get_object_location(game, obj_id); /*Apaño de obj_id, deberia ser el id de cada uno de los objetos*/
+  crumb_loc = game_get_object_location(game, obj_id);
+  leaf_loc = game_get_object_location(game, obj_id);
+  seed_loc = game_get_object_location(game, obj_id);
+  if ((grain_loc!= NO_ID)||(crumb_loc!= NO_ID)||(leaf_loc!= NO_ID)||(seed_loc!= NO_ID))
   {
-    sprintf(str, "  Object location:%d", (int)obj_loc);
+    sprintf(str, "  Grain:%d\n  Crumb:%d\n  Leaf:%d\n  Seed:%d\n", (int)grain_loc, (int)crumb_loc, (int)leaf_loc, (int)seed_loc);
+    
+    /*Falta poner los characters y player (posicion y salud), y message*/
     screen_area_puts(ge->descript, str);
   }
 

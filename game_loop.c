@@ -71,9 +71,7 @@ int main(int argc, char *argv[])
 
   if (!game_loop_init(game, &gengine, argv[1]))
   {
-    print_errors("game_loop init");
     game_loop_run(game, gengine);
-    print_errors("game_loop_run");
     game_loop_cleanup(game, gengine);
   }
 
@@ -108,7 +106,6 @@ void game_loop_run(Game *game, Graphic_engine *gengine)
   }
 
   last_cmd = game_get_last_command(game);
-  print_errors("get_last_command");
 
   while ((command_get_code(last_cmd) != EXIT) && (game_get_finished(game) == FALSE))
   {
