@@ -78,7 +78,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   Id spider_loc=NO_ID, ant_loc=NO_ID;
   int spider_salud=0, ant_salud=0;
   Space *space_act = NULL;
-  char *spider_gdesc, *ant_gdesc;
+  const char *spider_gdesc, *ant_gdesc;
   char obj = '\0';
   char str[255];
   CommandCode last_cmd = UNKNOWN;
