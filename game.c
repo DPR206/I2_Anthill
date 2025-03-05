@@ -125,7 +125,7 @@ Game *game_create()
   gm->n_objects = 0;
   for (i = 0; i < MAX_CHARACTERS; i++)
   {
-    gm->characters[i] = character_create();
+    gm->characters[i] = NULL;
   }
   gm->n_characters = 0;
   gm->player = player_create(NO_ID);
