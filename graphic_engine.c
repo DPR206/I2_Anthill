@@ -169,9 +169,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_puts(ge->descript, str);
   sprintf(str, "Characters:  ");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "  %s :%d (%d)", spider_gdesc, spider_loc, spider_salud);
+  sprintf(str, "  %s :%d (%d)", spider_gdesc, (int)spider_loc, spider_salud);
   screen_area_puts(ge->descript, str);
-  sprintf(str, "  %s :%d (%d)", ant_gdesc, ant_loc, ant_salud);
+  sprintf(str, "  %s :%d (%d)", ant_gdesc, (int)ant_loc, ant_salud);
   screen_area_puts(ge->descript, str);
   /*Falta poner los characters y player (posicion y salud), y message*/
   
