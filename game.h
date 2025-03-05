@@ -211,9 +211,19 @@ const char *game_get_character_gdesc(Game *game, char *character);
  * 
  * @param game Pointer to the game
  * @param character Name of the character
- * @return Id of the character
+ * @return Id, location of the character
  */
-Id game_get_character_location(Game *game, char *character);
+Id game_get_character_location_from_name(Game *game, char *character);
+
+/**
+ * @brief It gets the location of a character from its id
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param character Id of the character
+ * @return Id, location of the character
+ */
+Id game_get_character_location(Game *game, Id *character);
 
 /**
  * @brief It gets the health of a character fron its name

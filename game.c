@@ -119,7 +119,7 @@ const char *game_get_character_gdesc(Game *game, char *character){
   return NULL;
 }
 
-Id game_get_character_location(Game *game, char *character){
+Id game_get_character_location_from_name(Game *game, char *character){
   int i;
   Id character_id = NO_ID;
 
@@ -132,25 +132,31 @@ Id game_get_character_location(Game *game, char *character){
   {
     if (strcmp(character_get_name(game->characters[i]), character)==0)
     {
-      character_id = character_get_id(game->characters[i]);
+      return game_get_character_location(game, character_get_id(game->characters[i]));
     }
   }
 
-  if (character_id == NO_ID)
+  return NO_ID;
+}
+
+Id game_get_character_location(Game *game, Id *character){
+  int i;
+
+  if (character == NO_ID||!game)
   {
     return NO_ID;
   }
 
   for (i = 0; i < game->n_spaces; i++)
   {
-    if (character_get_id(space_get_character(game->spaces[i])) == character_id)
+    if (character_get_id(space_get_character(game->spaces[i])) == character)
     {
       return space_get_id(game->spaces[i]);
     }
   }
-
   return NO_ID;
 }
+
 
 int game_get_character_salud(Game *game, char *character){
   int i;
