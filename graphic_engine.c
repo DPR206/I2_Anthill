@@ -149,10 +149,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   seed_loc = game_get_object_location_from_name(game, "Seed");
   if (/*(grain_loc!= NO_ID)&&(crumb_loc!= NO_ID)&&(leaf_loc!= NO_ID)&&(seed_loc!= NO_ID)*/ 1)
   {
-    sprintf(str, "Objects:  Grain:%d  Crumb:%d  Leaf:%d  Seed:%d", (int)grain_loc, (int)crumb_loc, (int)leaf_loc, (int)seed_loc);
-    sprintf(str, "Characters:  ");
-    /*Falta poner los characters y player (posicion y salud), y message*/
+    sprintf(str, "Objects:");
     screen_area_puts(ge->descript, str);
+    sprintf(str, "  Grain:%d", (int)grain_loc);
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "  Crumb:%d", (int)crumb_loc);
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "  Leaf:%d", (int)leaf_loc);
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "  Seed:%d", (int)seed_loc);
+    screen_area_puts(ge->descript, str);
+    sprintf(str, "Characters:  ");
+    screen_area_puts(ge->descript, str);
+    /*Falta poner los characters y player (posicion y salud), y message*/
   }
 
   /* Paint in the banner area */
@@ -162,7 +171,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_clear(ge->help);
   sprintf(str, " The commands you can use are:");
   screen_area_puts(ge->help, str);
-  sprintf(str, "     next or n, back or b, left or l, right or r, exit or e, take or t, drop or d, attack or a, chat or c");
+  sprintf(str, "     next or n, back or b, left or l, right or r, exit or e, take or t, drop  or d, attack or a, chat or c");
   screen_area_puts(ge->help, str);
 
   /* Paint in the feedback area */
