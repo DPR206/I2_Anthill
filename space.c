@@ -56,7 +56,7 @@ Space *space_create(Id id)
   newSpace->east = NO_ID;
   newSpace->west = NO_ID;
   newSpace->objects = set_create();
-  newSpace->character= character_create();
+  newSpace->character= NULL;
 
   return newSpace;
 }
