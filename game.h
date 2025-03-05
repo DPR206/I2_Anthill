@@ -80,6 +80,8 @@ Status game_set_player_location(Game *game, Id id);
  */
 Id game_get_object_location(Game *game, Id object);
 
+Id game_get_object_location_from_name(Game *game, char *object);
+
 /**
  * @brief It sets the objects location to a specific ID
  * @author Duna Puente

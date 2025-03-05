@@ -32,7 +32,6 @@ struct _Game
   int n_characters;
 };
 
-
 /**
  * @brief It gets the space ID at a specific position
  * @author Profesores PPROG
@@ -74,7 +73,8 @@ Status game_add_space(Game *game, Space *space)
   return OK;
 }
 
-Status game_add_object(Game *game, Object *object){
+Status game_add_object(Game *game, Object *object)
+{
   if (object == NULL)
   {
     return ERROR;
@@ -107,11 +107,12 @@ Game *game_create()
   {
     gm->objects[i] = NULL;
   }
-  gm->n_objects=0;
-  for (i=0; i<MAX_CHARACTERS;i++){
-    gm->characters[i]=character_create();
+  gm->n_objects = 0;
+  for (i = 0; i < MAX_CHARACTERS; i++)
+  {
+    gm->characters[i] = character_create();
   }
-  gm->n_characters=0;
+  gm->n_characters = 0;
   gm->player = player_create(NO_ID);
   gm->last_cmd = command_create();
   gm->finished = FALSE;
@@ -213,6 +214,39 @@ Id game_get_object_location(Game *game, Id object)
   return NO_ID;
 }
 
+Id game_get_object_location_from_name(Game *game, char *object)
+{
+  int i = 0;
+  Id object_id = NO_ID;
+
+  if (object == NULL)
+  {
+    return NO_ID;
+  }
+
+  for (i = 0; i < MAX_OBJECTS; i++)
+  {
+    if (object_get_name(game->objects[i]) == object)
+    {
+      object_id = object_get_id(game->objects[i]);
+    }
+  }
+  if (object_id == NO_ID)
+  {
+    return NO_ID;
+  }
+
+  for (i = 0; i < game->n_spaces; i++)
+  {
+    if (set_contains(space_get_objects(game->spaces[i]), object_id) == TRUE)
+    {
+      return space_get_id(game->spaces[i]);
+    }
+  }
+
+  return NO_ID;
+}
+
 Status game_set_object_location(Game *game, Id object, Id location)
 {
   int i = 0;
@@ -300,10 +334,10 @@ void game_print(Game *game)
     space_print(game->spaces[i]);
   }
 
-  printf("=> Grain location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[0])));
-  printf("=> Miga location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[1])));
-  printf("=> Hoja location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[2])));
-  printf("=> Pipa location: %d\n", (int)game_get_object_location(game, object_get_id(game->objects[3])));
+  printf("=> Grain location: %d\n", (int)game_get_object_location_from_name(game, "Grain"));
+  printf("=> Crumb location: %d\n", (int)game_get_object_location_from_name(game, "Crumb"));
+  printf("=> Leaf location: %d\n", (int)game_get_object_location_from_name(game, "Leaf"));
+  printf("=> Seed location: %d\n", (int)game_get_object_location_from_name(game, "Seed"));
   printf("=> Player location: %d\n", (int)player_get_id(game->player));
 }
 
