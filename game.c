@@ -139,7 +139,7 @@ Id game_get_character_location_from_name(Game *game, char *character){
   return NO_ID;
 }
 
-Id game_get_character_location(Game *game, Id *character){
+Id game_get_character_location(Game *game, Id character){
   int i;
 
   if (character == NO_ID||!game)
