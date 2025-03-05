@@ -249,6 +249,8 @@ Id game_get_object_location_from_name(Game *game, char *object)
       object_id = object_get_id(game->objects[i]);
     }
   }
+
+  return object_id;
   /*if (object_id == NO_ID)
   {
     return NO_ID;
