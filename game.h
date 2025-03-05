@@ -80,6 +80,14 @@ Status game_set_player_location(Game *game, Id id);
  */
 Id game_get_object_location(Game *game, Id object);
 
+/**
+ * @brief It gets the location of an object from its name
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param object Name of the object
+ * @return Id of the object
+ */
 Id game_get_object_location_from_name(Game *game, char *object);
 
 /**
@@ -167,13 +175,55 @@ Status game_create_from_file(Game *game, char *filename);
  */
 Status game_add_space(Game *game, Space *space);
 
+/**
+ * @brief It adds an object to the object array of the game
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param object Pointer to the object
+ * @return Status of the operation: ERROR if failes, OK if successful 
+ */
 Status game_add_object(Game *game, Object *object);
 
+/**
+ * @brief It adds a character to the character array of the game
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param character Pointer to the character
+ * @return Status of the operation: ERROR if failes, OK if successful 
+ */
 Status game_add_character(Game *game, Character *character);
 
-/*Status game_get_player(Game *game, Player *player);*/
+/**
+ * @brief It gets the graphic description of a character from its name
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character 
+ * @return char*, graphic descrition of the character
+ */
+char *game_get_character_gdesc(Game *game, char *character);
 
-/*Player *game_get_player1(Game *game, Player *player);*/
+/**
+ * @brief It gets the location of a character from its name
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character
+ * @return Id of the character
+ */
+Id game_get_character_location(Game *game, char *character);
+
+/**
+ * @brief It gets the health of a character fron its name
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character
+ * @return int, Health of the character
+ */
+int game_get_character_salud(Game *game, char *character);
 
 Id game_player_get_object(Game *game);
 
