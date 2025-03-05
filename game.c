@@ -104,7 +104,7 @@ Status game_add_character(Game *game, Character *character)
 const char *game_get_character_gdesc(Game *game, char *character){
   int i;
 
-  if (character == NULL)
+  if (character == NULL||!game)
   {
     return NULL;
   }
@@ -123,7 +123,7 @@ Id game_get_character_location(Game *game, char *character){
   int i;
   Id character_id = NO_ID;
 
-  if (character == NULL)
+  if (character == NULL||!game)
   {
     return NO_ID;
   }
