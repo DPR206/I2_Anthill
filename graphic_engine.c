@@ -147,7 +147,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   crumb_loc = game_get_object_location_from_name(game, "Crumb");
   leaf_loc = game_get_object_location_from_name(game, "Leaf");
   seed_loc = game_get_object_location_from_name(game, "Seed");
-  if ((grain_loc!= NO_ID)||(crumb_loc!= NO_ID)||(leaf_loc!= NO_ID)||(seed_loc!= NO_ID))
+  if (/*(grain_loc!= NO_ID)&&(crumb_loc!= NO_ID)&&(leaf_loc!= NO_ID)&&(seed_loc!= NO_ID)*/ 1)
   {
     sprintf(str, "Objects:\n  Grain:%d\n  Crumb:%d\n  Leaf:%d\n  Seed:%d\n", (int)grain_loc, (int)crumb_loc, (int)leaf_loc, (int)seed_loc);
     sprintf(str, "Characters:\n  ");
