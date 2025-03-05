@@ -151,10 +151,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   leaf_loc = game_get_object_location_from_name(game, "Leaf");
   seed_loc = game_get_object_location_from_name(game, "Seed");
   spider_gdesc=game_get_character_gdesc(game, "Spider");
-  spider_loc=game_get_character_location(game, "Spider");
+  /*spider_loc=game_get_character_location(game, "Spider");*/
   spider_salud=game_get_character_salud(game, "Spider");
   ant_gdesc=game_get_character_gdesc(game, "Ant");
-  ant_loc=game_get_character_location(game, "Ant");
+  /*ant_loc=game_get_character_location(game, "Ant");^*/
   ant_salud=game_get_character_salud(game, "Ant");
   
   sprintf(str, "Objects:");
