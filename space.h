@@ -200,6 +200,15 @@ Bool space_at_object(Space *space, Id object);
 Status space_set_character(Space *space, Character *character);
 
 /**
+ * @brief It gets pointer to the character in a space
+ * @author Claudia Saiz
+ * 
+ * @param space Pointer to the space
+ * @return Character*, pointer to the character
+ */
+Character *space_get_character(Space *space);
+
+/**
  * @brief It prints the space information
  * @author Profesores PPROG
  *

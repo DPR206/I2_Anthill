@@ -75,7 +75,10 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_id=NO_ID;
   Id grain_loc=NO_ID, crumb_loc=NO_ID, leaf_loc=NO_ID, seed_loc=NO_ID;
+  Id spider_loc=NO_ID, ant_loc=NO_ID;
+  int spider_salud=0, ant_salud=0;
   Space *space_act = NULL;
+  char *spider_gdesc, *ant_gdesc;
   char obj = '\0';
   char str[255];
   CommandCode last_cmd = UNKNOWN;
@@ -147,22 +150,31 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   crumb_loc = game_get_object_location_from_name(game, "Crumb");
   leaf_loc = game_get_object_location_from_name(game, "Leaf");
   seed_loc = game_get_object_location_from_name(game, "Seed");
-  if (/*(grain_loc!= NO_ID)&&(crumb_loc!= NO_ID)&&(leaf_loc!= NO_ID)&&(seed_loc!= NO_ID)*/ 1)
-  {
-    sprintf(str, "Objects:");
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "  Grain:%d", (int)grain_loc);
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "  Crumb:%d", (int)crumb_loc);
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "  Leaf:%d", (int)leaf_loc);
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "  Seed:%d", (int)seed_loc);
-    screen_area_puts(ge->descript, str);
-    sprintf(str, "Characters:  ");
-    screen_area_puts(ge->descript, str);
-    /*Falta poner los characters y player (posicion y salud), y message*/
-  }
+  spider_gdesc=game_get_character_gdesc(game, "Spider");
+  spider_loc=game_get_character_location(game, "Spider");
+  spider_salud=game_get_character_salud(game, "Spider");
+  ant_gdesc=game_get_character_gdesc(game, "Ant");
+  ant_loc=game_get_character_location(game, "Ant");
+  ant_salud=game_get_character_salud(game, "Ant");
+  
+  sprintf(str, "Objects:");
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "  Grain:%d", (int)grain_loc);
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "  Crumb:%d", (int)crumb_loc);
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "  Leaf:%d", (int)leaf_loc);
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "  Seed:%d", (int)seed_loc);
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "Characters:  ");
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "  %s :%d (%d)", spider_gdesc, spider_loc, spider_salud);
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "  %s :%d (%d)", ant_gdesc, ant_loc, ant_salud);
+  screen_area_puts(ge->descript, str);
+  /*Falta poner los characters y player (posicion y salud), y message*/
+  
 
   /* Paint in the banner area */
   screen_area_puts(ge->banner, "    The anthill game ");

@@ -101,6 +101,73 @@ Status game_add_character(Game *game, Character *character)
   return OK;
 }
 
+char *game_get_character_gdesc(Game *game, char *character){
+  int i;
+
+  if (character == NULL)
+  {
+    return NO_ID;
+  }
+
+  for (i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    {
+      return character_get_gdesc(game->characters[i]);
+    }
+  }
+}
+
+Id game_get_character_location(Game *game, char *character){
+  int i;
+  Id character_id = NO_ID;
+
+  if (character == NULL)
+  {
+    return NO_ID;
+  }
+
+  for (i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    {
+      character_id = character_get_id(game->characters[i]);
+    }
+  }
+
+  if (character_id == NO_ID)
+  {
+    return NO_ID;
+  }
+
+  for (i = 0; i < game->n_spaces; i++)
+  {
+    if (character_get_id(space_get_character(game->spaces[i])) == character_id)
+    {
+      return space_get_id(game->spaces[i]);
+    }
+  }
+
+  return NO_ID;
+}
+
+int game_get_character_salud(Game *game, char *character){
+  int i;
+
+  if (character == NULL)
+  {
+    return NO_ID;
+  }
+
+  for (i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    {
+      return character_get_salud(game->characters[i]);
+    }
+  }
+}
+
 Game *game_create()
 {
   Game *gm = NULL;

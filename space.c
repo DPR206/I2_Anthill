@@ -241,6 +241,13 @@ Status space_set_character(Space *space, Character *character)
   return OK;
 }
 
+Character *space_get_character(Space *space){
+  if(!space){
+    return NULL;
+  }
+  return space->character;
+}
+
 Status space_print(Space *space)
 {
   Id idaux = NO_ID;
