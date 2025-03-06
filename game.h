@@ -38,7 +38,7 @@ Game *game_create();
 
 /**
  * @brief creates a new game from a file, loads spaces from a specified file, and sets the initial player and object locations to the first space
- * @author Profesores PPROG
+ * @author Claudia Saiz
  *
  * @param game Pointer to the game to initialize
  * @param filename Name of the file with the space data
@@ -97,7 +97,7 @@ Status game_createspace(Game *game);
 
 /**
  * @brief It adds a space to the games space array
- * @author Profesores PPROG
+ * @author Duna Puente
  * 
  * @param game Pointer to the game
  * @param space Pointer to the space to add
