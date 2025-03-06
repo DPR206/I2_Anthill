@@ -280,8 +280,6 @@ Command *game_get_last_command(Game *game);
  */
 Status game_set_last_command(Game *game, Command *command);
 
-Status game_get_command_state(Game *game, Command *command);
-
 
 
 /*Funciones de tipo game_character*/

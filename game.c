@@ -10,7 +10,6 @@
 
 #include "game.h"
 #include "game_reader.h"
-#include "game_actions.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -435,10 +434,6 @@ Status game_set_last_command(Game *game, Command *command)
   (game->last_cmd) = command;
 
   return OK;
-}
-
-Status game_get_command_state(Game *game, Command *command){
-  return game_actions_update(game, command);
 }
 
 
