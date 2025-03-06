@@ -21,7 +21,7 @@
 #define WIDTH_MAP 48
 #define WIDTH_DES 29
 #define WIDTH_BAN 23
-#define HEIGHT_MAP 13
+#define HEIGHT_MAP 30
 #define HEIGHT_BAN 1
 #define HEIGHT_HLP 2
 #define HEIGHT_FDB 3
@@ -171,11 +171,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_puts(ge->descript, str);
   sprintf(str, "  Seed:%d", (int)seed_loc);
   screen_area_puts(ge->descript, str);
+  sprintf(str, "");
+  screen_area_puts(ge->descript, str);
   sprintf(str, "Characters:  ");
   screen_area_puts(ge->descript, str);
   sprintf(str, "  %s : %d (%d)", spider_gdesc, (int)spider_loc, spider_health);
   screen_area_puts(ge->descript, str);
   sprintf(str, "  %s    : %d (%d)", ant_gdesc, (int)ant_loc, ant_health);
+  screen_area_puts(ge->descript, str);
+  sprintf(str, "");
   screen_area_puts(ge->descript, str);
   sprintf(str, "Player   : %d (%d)", (int)player_loc, player_health);
   screen_area_puts(ge->descript, str);
@@ -186,6 +190,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     sprintf(str, "Player has object: %s", game_get_object_name(game, player_object));
     screen_area_puts(ge->descript, str);
   }
+  sprintf(str, "");
+  screen_area_puts(ge->descript, str);
   /*Falta poner los characters y player (posicion y health), y message*/
   
 
