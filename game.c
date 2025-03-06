@@ -450,7 +450,7 @@ Status game_set_last_command_status(Game *game, const char *status)
     return ERROR;
   }
 
-  game->last_cmd_status=status;
+  strcpy(game->last_cmd_status, status);
   return OK;
 }
 
