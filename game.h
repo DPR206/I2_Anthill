@@ -16,6 +16,7 @@
 #include "player.h"
 #include "object.h"
 #include "character.h"
+#include "game_actions.h"
 
 #define MAX_SPACES 100
 #define MAX_OBJECTS 4
@@ -279,6 +280,8 @@ Command *game_get_last_command(Game *game);
  * @return Status of the operation: OK if succesful
  */
 Status game_set_last_command(Game *game, Command *command);
+
+Status game_get_command_state(Game *game, Command *command);
 
 
 
