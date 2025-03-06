@@ -1,6 +1,6 @@
 /**
  * @brief It implements the player module
- * 
+ *
  * @file player.c
  * @author Duna Puente
  * @version 0
@@ -16,7 +16,7 @@
 
 /**
  * @brief Player
- * 
+ *
  * This struct stores all the information of player
  */
 struct _Player
@@ -49,7 +49,7 @@ Player *player_create(Id id)
   /* Initializing new player */
   newplayer->id = id;
   newplayer->name[0] = '\0';
-  newplayer->object=NO_ID;
+  newplayer->object = NO_ID;
 
   return newplayer;
 }
@@ -113,10 +113,9 @@ Status player_set_object(Player *player, Id object)
     return ERROR;
   }
 
-  player->object=object;
+  player->object = object;
 
   return OK;
-  
 }
 
 Id player_get_object(Player *player)
@@ -143,14 +142,14 @@ Status player_set_location(Player *player, Id id)
   return OK;
 }
 
-Id player_get_location (Player *player)
+Id player_get_location(Player *player)
 {
   /* Error control */
   if (!player)
   {
     return NO_ID;
   }
-  
+
   return player->location;
 }
 
@@ -177,10 +176,16 @@ Status player_set_health(Player *player, int health)
     return ERROR;
   }
 
-  player->health=health;
+  player->health = health;
 
   return OK;
-  
 }
 
-int player_get_health(Player *player) { return player->health; }
+int player_get_health(Player *player)
+{
+  if (!player)
+  {
+    return -1;
+  }
+  return player->health;
+}
