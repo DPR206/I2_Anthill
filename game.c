@@ -22,7 +22,7 @@
 struct _Game
 {
   Command *last_cmd;
-  Status last_cmd_status;
+  const char *last_cmd_status;
   Bool finished;
   Player *player;
   Object *objects[MAX_OBJECTS];
@@ -90,7 +90,7 @@ Game *game_create()
   gm->n_characters = 0;
   gm->player = NULL;
   gm->last_cmd = command_create();
-  gm->last_cmd_status = OK;
+  gm->last_cmd_status = NULL;
   gm->finished = FALSE;
 
   return gm;
@@ -434,7 +434,7 @@ Status game_set_last_command(Game *game, Command *command)
   return OK;
 }
 
-Status game_get_last_command_status(Game *game)
+const char *game_get_last_command_status(Game *game)
 {
   if (!game)
   {
@@ -444,9 +444,9 @@ Status game_get_last_command_status(Game *game)
   return game->last_cmd_status;
 }
 
-Status game_set_last_command_status(Game *game, Status status)
+Status game_set_last_command_status(Game *game, char *status)
 {
-  if(!game){
+  if(!game||!status){
     return ERROR;
   }
 

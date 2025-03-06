@@ -80,7 +80,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   int spider_health=0, ant_health=0, player_health=0;
   Space *space_act = NULL;
   const char *spider_gdesc=NULL, *ant_gdesc=NULL;
-  Status command_result = ERROR;
+  const char *command_result = NULL;
   char obj = '\0';
   char str[255];
   CommandCode last_cmd = UNKNOWN;
@@ -210,11 +210,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   /* Paint in the feedback area */
   last_cmd = command_get_code(game_get_last_command(game));
   command_result = game_get_last_command_status(game);
-  if(command_result==OK){
-    sprintf(str, " %s (%s): OK", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
-  } else {
-    sprintf(str, " %s (%s): ERROR", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
-  }
+  sprintf(str, " %s (%s): %s", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS], command_result);
   screen_area_puts(ge->feedback, str);
 
   /* Dump to the terminal */
