@@ -93,6 +93,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
 
+    grain_loc = game_get_object_location_from_name(game, "Grain");
+    crumb_loc = game_get_object_location_from_name(game, "Crumb");
+    leaf_loc = game_get_object_location_from_name(game, "Leaf");
+    seed_loc = game_get_object_location_from_name(game, "Seed");
+
     if (game_get_object_location(game, obj_id) == id_back)  /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
       obj = '*';
     else
@@ -147,10 +152,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  grain_loc = game_get_object_location_from_name(game, "Grain");
-  crumb_loc = game_get_object_location_from_name(game, "Crumb");
-  leaf_loc = game_get_object_location_from_name(game, "Leaf");
-  seed_loc = game_get_object_location_from_name(game, "Seed");
   spider_gdesc=game_get_character_gdesc(game, "Spider");
   spider_loc=game_get_character_location_from_name(game, "Spider");
   spider_health=game_get_character_health(game, "Spider");
