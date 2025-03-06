@@ -80,7 +80,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   int spider_health=0, ant_health=0, player_health=0;
   Space *space_act = NULL;
   const char *spider_gdesc=NULL, *ant_gdesc=NULL;
-  const char *command_result = NULL;
+  const char *command_result = "ERROR";
   char obj = '\0';
   char str[255];
   CommandCode last_cmd = UNKNOWN;
