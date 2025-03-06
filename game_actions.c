@@ -116,7 +116,7 @@ Status game_actions_update(Game *game, Command *command)
    Calls implementation for each action
 */
 
-void game_actions_unknown(Game *game) {game_set_last_command_status(game, "ERROR");}
+void game_actions_unknown(Game *game) { game_set_last_command_status(game, "ERROR"); }
 
 void game_actions_exit(Game *game) {}
 
@@ -142,7 +142,10 @@ void game_actions_next(Game *game)
     }
     game_set_last_command_status(game, "OK");
   }
-  game_set_last_command_status(game, "ERROR");
+  else
+  {
+    game_set_last_command_status(game, "ERROR");
+  }
 }
 
 void game_actions_back(Game *game)
@@ -168,7 +171,10 @@ void game_actions_back(Game *game)
     }
     game_set_last_command_status(game, "OK");
   }
-  game_set_last_command_status(game, "ERROR");
+  else
+  {
+    game_set_last_command_status(game, "ERROR");
+  }
 }
 
 void game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos*/
@@ -188,7 +194,10 @@ void game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos*/
     game_set_object_location(game, NO_ID, NO_ID);
     game_set_last_command_status(game, "OK");
   }
-  game_set_last_command_status(game, "ERROR");
+  else
+  {
+    game_set_last_command_status(game, "ERROR");
+  }
 }
 
 void game_actions_drop(Game *game)
@@ -208,5 +217,8 @@ void game_actions_drop(Game *game)
     game_player_set_object(game, NO_ID);
     game_set_last_command_status(game, "OK");
   }
-  game_set_last_command_status(game, "ERROR");
+  else
+  {
+    game_set_last_command_status(game, "ERROR");
+  }
 }
