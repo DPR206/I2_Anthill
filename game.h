@@ -23,6 +23,10 @@
 
 typedef struct _Game Game;
 
+
+
+/*Funciones de tipo game*/
+
 /**
  * @brief It creates a new game, initializing all its members
  * @author Duna Puente
@@ -31,6 +35,56 @@ typedef struct _Game Game;
  * @return Status of the operation: OK if successful
  */
 Game *game_create();
+
+/**
+ * @brief creates a new game from a file, loads spaces from a specified file, and sets the initial player and object locations to the first space
+ * @author Profesores PPROG
+ *
+ * @param game Pointer to the game to initialize
+ * @param filename Name of the file with the space data
+ * @return Status of the operation: ERROR if initialization fails, OK if successful
+ */
+Status game_create_from_file(Game *game, char *filename);
+
+/**
+ * @brief It gets whether the game is finished or not
+ * @author Profesores PPROG
+ *
+ * @param game Pointer to the game
+ * @return The state of the game: TRUE if finished, FALSE if not
+ */
+Bool game_get_finished(Game *game);
+
+/**
+ * @brief It updates whether the game is finished or not
+ * @author Profesores PPROG
+ *
+ * @param game Pointer to the game
+ * @param finished The new finished state to set
+ * @return Status of the operation: OK if succesful
+ */
+Status game_set_finished(Game *game, Bool finished);
+
+/**
+ * @brief It prints information about the current game
+ * @author Duna Puente
+ *
+ * @param game Pointer to the game
+ */
+void game_print(Game *game);
+
+/**
+ * @brief Destroys a game structure, free the memory of all spaces and the last command
+ * @author Duna Puente
+ *
+ * @param game Pointer to the game to destroy
+ * @return Status of the operation: OK if successful
+ */
+Status game_destroy(Game *game);
+
+
+
+/*Funciones de tipo game_space*/
 
 /**
  * @brief It creates a new game space, allocating memory and initializing its members
@@ -42,6 +96,16 @@ Game *game_create();
 Status game_createspace(Game *game);
 
 /**
+ * @brief It adds a space to the games space array
+ * @author Profesores PPROG
+ * 
+ * @param game Pointer to the game
+ * @param space Pointer to the space to add
+ * @return Status of the operation: ERROR if failes, OK if successful 
+ */
+Status game_add_space(Game *game, Space *space);
+
+/**
  * @brief It gets a space from the game by its Id
  * @author Duna Puente
  *
@@ -50,6 +114,38 @@ Status game_createspace(Game *game);
  * @return Pointer to the space, or NULL if the space is not found.
  */
 Space *game_get_space(Game *game, Id id);
+
+/**
+ * @brief It gets the number of spaces in the game->spaces array
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @return int, number of spaces
+ */
+int game_get_numspaces(Game *game);
+
+/**
+ * @brief It adds one to the number of spaces in the game
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @return Status of the operation, OK if successful, ERROR if not
+ */
+Status game_add_numspaces(Game *game);
+
+/**
+ * @brief It adds a new space to the game->spaces array
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param space Pointer to the space to be added
+ * @return Status of the operation, OK if successful, ERROR if not
+ */
+Status game_add_newspace(Game *game, Space *space);
+
+
+
+/*Funciones de tipo game_player*/
 
 /**
  * @brief It gets the id of the space where the player is located
@@ -69,6 +165,47 @@ Id game_get_player_location(Game *game);
  * @return Status of the operation: ERROR if no ID, OK if successful
  */
 Status game_set_player_location(Game *game, Id id);
+
+/**
+ * @brief It gets the health of the player
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @return int, health of the player
+ */
+int game_get_player_health(Game *game);
+
+/**
+ * @brief It adds the player to the game
+ * @author Claudia Saiz
+ * 
+ * @param game POinter to the game
+ * @return Status of the operation, OK id successful or ERROR if not
+ */
+Status game_add_player(Game *game);
+
+/**
+ * @brief It gets the id of the object the player is carrying
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @return Id of the object the player carries, or NO_ID if it doesnt carry an object or there is any problem
+ */
+Id game_player_get_object(Game *game);
+
+/**
+ * @brief It sets the id of the object that the player is carrying
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param id Id of the object to be set
+ * @return Status of the operation, OK id successful or ERROR if not 
+ */
+Status game_player_set_object(Game *game, Id id);
+
+
+
+/*Funciones de tipo game_object*/
 
 /**
  * @brief It gets the ID of the space where an object is located by its identifier
@@ -101,13 +238,18 @@ Id game_get_object_location_from_name(Game *game, char *object);
 Status game_set_object_location(Game *game, Id object, Id location);
 
 /**
- * @brief Destroys a game structure, free the memory of all spaces and the last command
- * @author Duna Puente
- *
- * @param game Pointer to the game to destroy
- * @return Status of the operation: OK if successful
+ * @brief It adds an object to the object array of the game
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param object Pointer to the object
+ * @return Status of the operation: ERROR if failes, OK if successful 
  */
-Status game_destroy(Game *game);
+Status game_add_object(Game *game, Object *object);
+
+
+
+/*Funciones de tipo game_command*/
 
 /**
  * @brief It gets the last command executed
@@ -128,62 +270,9 @@ Command *game_get_last_command(Game *game);
  */
 Status game_set_last_command(Game *game, Command *command);
 
-/**
- * @brief It gets whether the game is finished or not
- * @author Profesores PPROG
- *
- * @param game Pointer to the game
- * @return The state of the game: TRUE if finished, FALSE if not
- */
-Bool game_get_finished(Game *game);
 
-/**
- * @brief It updates whether the game is finished or not
- * @author Profesores PPROG
- *
- * @param game Pointer to the game
- * @param finished The new finished state to set
- * @return Status of the operation: OK if succesful
- */
-Status game_set_finished(Game *game, Bool finished);
 
-/**
- * @brief It prints information about the current game
- * @author Duna Puente
- *
- * @param game Pointer to the game
- */
-void game_print(Game *game);
-
-/**
- * @brief creates a new game from a file, loads spaces from a specified file, and sets the initial player and object locations to the first space
- * @author Profesores PPROG
- *
- * @param game Pointer to the game to initialize
- * @param filename Name of the file with the space data
- * @return Status of the operation: ERROR if initialization fails, OK if successful
- */
-Status game_create_from_file(Game *game, char *filename);
-
-/**
- * @brief It adds a space to the games space array
- * @author Profesores PPROG
- * 
- * @param game Pointer to the game
- * @param space Pointer to the space to add
- * @return Status of the operation: ERROR if failes, OK if successful 
- */
-Status game_add_space(Game *game, Space *space);
-
-/**
- * @brief It adds an object to the object array of the game
- * @author Claudia Saiz
- * 
- * @param game Pointer to the game
- * @param object Pointer to the object
- * @return Status of the operation: ERROR if failes, OK if successful 
- */
-Status game_add_object(Game *game, Object *object);
+/*Funciones de tipo game_character*/
 
 /**
  * @brief It adds a character to the character array of the game
@@ -226,24 +315,6 @@ Id game_get_character_location_from_name(Game *game, char *character);
 Id game_get_character_location(Game *game, Id character);
 
 /**
- * @brief It gets the health of the player
- * @author Claudia Saiz
- * 
- * @param game Pointer to the game
- * @return int, health of the player
- */
-int game_get_player_health(Game *game);
-
-/**
- * @brief It adds the player to the game
- * @author Claudia Saiz
- * 
- * @param game POinter to the game
- * @return Status of the operation, OK id successful or ERROR if not
- */
-Status game_add_player(Game *game);
-
-/**
  * @brief It gets the health of a character fron its name
  * @author Claudia Saiz
  * 
@@ -252,15 +323,5 @@ Status game_add_player(Game *game);
  * @return int, Health of the character
  */
 int game_get_character_health(Game *game, char *character);
-
-Id game_player_get_object(Game *game);
-
-Status game_player_set_object(Game *game, Id id);
-
-int game_get_numspaces(Game *game);
-
-Status game_add_numspaces(Game *game);
-
-Status game_add_newspace(Game *game, Space *space);
 
 #endif
