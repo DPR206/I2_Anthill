@@ -75,8 +75,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_id=NO_ID;
   Id grain_loc=NO_ID, crumb_loc=NO_ID, leaf_loc=NO_ID, seed_loc=NO_ID;
-  Id spider_loc=NO_ID, ant_loc=NO_ID;
-  int spider_salud=0, ant_salud=0;
+  Id spider_loc=NO_ID, ant_loc=NO_ID, player_loc=NO_ID;
+  int spider_health=0, ant_health=0, player_health=0;
   Space *space_act = NULL;
   const char *spider_gdesc, *ant_gdesc;
   char obj = '\0';
@@ -152,10 +152,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   seed_loc = game_get_object_location_from_name(game, "Seed");
   spider_gdesc=game_get_character_gdesc(game, "Spider");
   spider_loc=game_get_character_location_from_name(game, "Spider");
-  spider_salud=game_get_character_salud(game, "Spider");
+  spider_health=game_get_character_health(game, "Spider");
   ant_gdesc=game_get_character_gdesc(game, "Ant");
   ant_loc=game_get_character_location_from_name(game, "Ant");
-  ant_salud=game_get_character_salud(game, "Ant");
+  ant_health=game_get_character_health(game, "Ant");
+  player_loc=game_get_player_location(game);
+  player_health=game_get_player_health(game);
   
   sprintf(str, "Objects:");
   screen_area_puts(ge->descript, str);
@@ -169,11 +171,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_puts(ge->descript, str);
   sprintf(str, "Characters:  ");
   screen_area_puts(ge->descript, str);
-  sprintf(str, "  %s :%d (%d)", spider_gdesc, (int)spider_loc, spider_salud);
+  sprintf(str, "  %s : %d (%d)", spider_gdesc, (int)spider_loc, spider_health);
   screen_area_puts(ge->descript, str);
-  sprintf(str, "  %s :%d (%d)", ant_gdesc, (int)ant_loc, ant_salud);
+  sprintf(str, "  %s    : %d (%d)", ant_gdesc, (int)ant_loc, ant_health);
   screen_area_puts(ge->descript, str);
-  /*Falta poner los characters y player (posicion y salud), y message*/
+  sprintf(str, "Player   : %d (%d)", (int)player_loc, player_health);
+  screen_area_puts(ge->descript, str);
+  /*Falta poner los characters y player (posicion y health), y message*/
   
 
   /* Paint in the banner area */

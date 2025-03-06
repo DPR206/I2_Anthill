@@ -25,7 +25,7 @@ struct _Player
   char name[WORD_SIZE + 1];
   Id location;
   Id object;
-  int life;
+  int health;
 };
 
 Player *player_create(Id id)
@@ -169,7 +169,7 @@ Status player_print(Player *player)
   return OK;
 }
 
-Status player_set_life(Player *player, int life)
+Status player_set_health(Player *player, int health)
 {
   /* Error control */
   if (!player)
@@ -177,10 +177,10 @@ Status player_set_life(Player *player, int life)
     return ERROR;
   }
 
-  player->life=life;
+  player->health=health;
 
   return OK;
   
 }
 
-int player_get_life(Player *player) { return player->life; }
+int player_get_health(Player *player) { return player->health; }

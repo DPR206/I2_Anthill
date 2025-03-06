@@ -110,21 +110,21 @@ Id player_get_location (Player *player);
 Status player_print(Player *player);
 
 /**
- * @brief It sets the player's life
+ * @brief It sets the player's health
  * @author Duna Puente
  * 
  * @param player A pointer to the player
- * @param life The player's lifes
+ * @param health The player's health
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status player_set_life(Player *player, int life);
+Status player_set_health(Player *player, int health);
 
 /**
- * @brief It gets the player's life
+ * @brief It gets the player's health
  * 
  * @param player A pointer to the player
- * @return The player's lifes
+ * @return The player's health
  */
-int player_get_life(Player *player);
+int player_get_health(Player *player);
 
 #endif

@@ -223,7 +223,16 @@ Id game_get_character_location_from_name(Game *game, char *character);
  * @param character Id of the character
  * @return Id, location of the character
  */
-Id game_get_character_location(Game *game, Id character);
+Id game_get_character_location(Game *game, Id *character);
+
+/**
+ * @brief It gets the health of the player
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @return int, health of the player
+ */
+int game_get_player_health(Game *game);
 
 /**
  * @brief It gets the health of a character fron its name
@@ -233,7 +242,7 @@ Id game_get_character_location(Game *game, Id character);
  * @param character Name of the character
  * @return int, Health of the character
  */
-int game_get_character_salud(Game *game, char *character);
+int game_get_character_health(Game *game, char *character);
 
 Id game_player_get_object(Game *game);
 

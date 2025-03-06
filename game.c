@@ -158,7 +158,7 @@ Id game_get_character_location(Game *game, Id character){
 }
 
 
-int game_get_character_salud(Game *game, char *character){
+int game_get_character_health(Game *game, char *character){
   int i;
 
   if (character == NULL)
@@ -170,7 +170,7 @@ int game_get_character_salud(Game *game, char *character){
   {
     if (strcmp(character_get_name(game->characters[i]), character)==0)
     {
-      return character_get_salud(game->characters[i]);
+      return character_get_health(game->characters[i]);
     }
   }
   return -1;
@@ -271,6 +271,14 @@ Space *game_get_space(Game *game, Id id)
 }
 
 Id game_get_player_location(Game *game) { return player_get_location(game->player); }
+
+int game_get_player_health(Game *game){
+  if(!game){
+    return -1;
+  }
+
+  return player_get_health(game->player);
+}
 
 Status game_set_player_location(Game *game, Id id)
 {
