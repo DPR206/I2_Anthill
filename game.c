@@ -22,7 +22,7 @@
 struct _Game
 {
   Command *last_cmd;
-  const char *last_cmd_status;
+  char *last_cmd_status;
   Bool finished;
   Player *player;
   Object *objects[MAX_OBJECTS];
@@ -444,7 +444,7 @@ const char *game_get_last_command_status(Game *game)
   return game->last_cmd_status;
 }
 
-Status game_set_last_command_status(Game *game, const char *status)
+Status game_set_last_command_status(Game *game, char *status)
 {
   if(!game||!status){
     return ERROR;

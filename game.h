@@ -297,7 +297,7 @@ const char *game_get_last_command_status(Game *game);
  * @param const char* status to be set
  * @return Status of the operation, OK if successful or ERROR if not
  */
-Status game_set_last_command_status(Game *game, const char *status);
+Status game_set_last_command_status(Game *game, char *status);
 
 
 
