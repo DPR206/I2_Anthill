@@ -16,7 +16,6 @@
 #include "player.h"
 #include "object.h"
 #include "character.h"
-#include "game_actions.h"
 
 #define MAX_SPACES 100
 #define MAX_OBJECTS 4

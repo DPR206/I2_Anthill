@@ -10,6 +10,7 @@
 
 #include "game.h"
 #include "game_reader.h"
+#include "game_actions.h"
 
 #include <stdio.h>
 #include <stdlib.h>
