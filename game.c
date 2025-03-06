@@ -121,7 +121,6 @@ const char *game_get_character_gdesc(Game *game, char *character){
 
 Id game_get_character_location_from_name(Game *game, char *character){
   int i;
-  Id character_id = NO_ID;
 
   if (character == NULL||!game)
   {

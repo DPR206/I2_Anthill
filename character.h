@@ -92,10 +92,10 @@ const char *character_get_gdesc(Character *character);
  * @author Duna Puente
  * 
  * @param character A pointer to the character
- * @param salud The amount of health
+ * @param health The amount of health
  * @return OK, if everything goes well or ERROR if there was some mistake
  */
-Status character_set_salud(Character *character, int salud);
+Status character_set_health(Character *character, int health);
 
 /**
  * @brief It gets the character's health
@@ -104,7 +104,7 @@ Status character_set_salud(Character *character, int salud);
  * @param character A pointer to the character
  * @return The character's health
  */
-int character_get_salud(Character *character);
+int character_get_health(Character *character);
 
 /**
  * @brief It sets if the character is friendly or not

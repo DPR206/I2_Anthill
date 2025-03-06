@@ -223,7 +223,7 @@ Id game_get_character_location_from_name(Game *game, char *character);
  * @param character Id of the character
  * @return Id, location of the character
  */
-Id game_get_character_location(Game *game, Id *character);
+Id game_get_character_location(Game *game, Id character);
 
 /**
  * @brief It gets the health of the player

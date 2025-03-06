@@ -27,7 +27,7 @@ struct _Character
     Id id;
     char name[WORD_SIZE+1];
     char gdec[G_SIZE];
-    int salud;
+    int health;
     Bool friendly;
     char message[WORD_SIZE];
 };
@@ -47,7 +47,7 @@ Character *character_create()
     /* Initializing new character */
     character_set_id(character, NO_ID);
     character_set_name(character, "\0");
-    character_set_salud(character, 0);
+    character_set_health(character, 0);
     character_set_friendly(character, FALSE);
     character_set_message(character, "\0");
     
@@ -142,7 +142,7 @@ const char *character_get_gdesc(Character *character)
     return character->gdec; 
 }
 
-Status character_set_salud(Character *character, int salud)
+Status character_set_health(Character *character, int health)
 {
     /* Error control */
     if (!character)
@@ -150,13 +150,13 @@ Status character_set_salud(Character *character, int salud)
         return ERROR;
     }
 
-    character->salud=salud;
+    character->health=health;
 
     return OK;
     
 }
 
-int character_get_salud(Character *character) 
+int character_get_health(Character *character) 
 { 
     /* Error control */
     if (!character)
@@ -164,7 +164,7 @@ int character_get_salud(Character *character)
         return -1;
     }
     
-    return character->salud; 
+    return character->health; 
 }
 
 Status character_set_friendly(Character *character, Bool friendly)
