@@ -24,7 +24,7 @@
  *
  * @param game Pointer to the game
  */
-Status game_actions_unknown(Game *game);
+void game_actions_unknown(Game *game);
 
 /**
  * @brief It is used to exit the game
@@ -32,7 +32,7 @@ Status game_actions_unknown(Game *game);
  *
  * @param game Pointer to the game
  */
-Status game_actions_exit(Game *game);
+void game_actions_exit(Game *game);
 
 /**
  * @brief It moves the player to the next space in the game, if available
@@ -40,7 +40,7 @@ Status game_actions_exit(Game *game);
  *
  * @param game Pointer to the game
  */
-Status game_actions_next(Game *game);
+void game_actions_next(Game *game);
 
 /**
  * @brief It moves the player to the previous space in the game, if available
@@ -48,7 +48,7 @@ Status game_actions_next(Game *game);
  *
  * @param game Pointer to the game
  */
-Status game_actions_back(Game *game);
+void game_actions_back(Game *game);
 
 /**
  * @brief It lets the player take the object from a  space
@@ -56,7 +56,7 @@ Status game_actions_back(Game *game);
  *
  * @param game Pointer to the game
  */
-Status game_actions_take(Game *game);
+void game_actions_take(Game *game);
 
 /**
  * @brief It lets the player drop the object it carries in the space it is in
@@ -64,7 +64,7 @@ Status game_actions_take(Game *game);
  *
  * @param game Pointer to the game
  */
-Status game_actions_drop(Game *game);
+void game_actions_drop(Game *game);
 
 /**
    Game actions implementation
@@ -74,7 +74,6 @@ Status game_actions_drop(Game *game);
 Status game_actions_update(Game *game, Command *command)
 {
   CommandCode cmd;
-  Status result=ERROR;
 
   game_set_last_command(game, command);
 
@@ -83,45 +82,45 @@ Status game_actions_update(Game *game, Command *command)
   switch (cmd)
   {
   case UNKNOWN:
-    result=game_actions_unknown(game);
+    game_actions_unknown(game);
     break;
 
   case EXIT:
-    result=game_actions_exit(game);
+    game_actions_exit(game);
     break;
 
   case NEXT:
-    result=game_actions_next(game);
+    game_actions_next(game);
     break;
 
   case BACK:
-   result=game_actions_back(game);
+    game_actions_back(game);
     break;
 
   case TAKE:
-    result=game_actions_take(game);
+    game_actions_take(game);
     break;
 
   case DROP:
-    result=game_actions_drop(game);
+    game_actions_drop(game);
     break;
 
   default:
     break;
   }
 
-  return result;
+  return OK;
 }
 
 /**
    Calls implementation for each action
 */
 
-Status game_actions_unknown(Game *game) {return ERROR;}
+void game_actions_unknown(Game *game) {}
 
-Status game_actions_exit(Game *game) {return ERROR;}
+void game_actions_exit(Game *game) {}
 
-Status game_actions_next(Game *game)
+void game_actions_next(Game *game)
 {
   Id current_id = NO_ID, object_id = NO_ID;
   Id space_id = NO_ID;
@@ -129,7 +128,7 @@ Status game_actions_next(Game *game)
   space_id = game_get_player_location(game);
   if (space_id == NO_ID)
   {
-    return ERROR;
+    return;
   }
 
   current_id = space_get_south(game_get_space(game, space_id));
@@ -141,13 +140,10 @@ Status game_actions_next(Game *game)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
-    return OK;
   }
-
-  return ERROR;
 }
 
-Status game_actions_back(Game *game)
+void game_actions_back(Game *game)
 {
   Id current_id = NO_ID, object_id = NO_ID;
   Id space_id = NO_ID;
@@ -156,7 +152,7 @@ Status game_actions_back(Game *game)
 
   if (NO_ID == space_id)
   {
-    return ERROR;
+    return;
   }
 
   current_id = space_get_north(game_get_space(game, space_id));
@@ -168,19 +164,17 @@ Status game_actions_back(Game *game)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
-    return OK;
   }
-  return ERROR;
 }
 
-Status game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos*/
+void game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos*/
 {
   Space *space = game_get_space(game, game_get_player_location(game));
   Id object_id = NO_ID; /*game_get_object_id(game);*/
 
   if (game == NULL)
   {
-    return ERROR;
+    return;
   }
 
   if (game_get_player_location(game) == game_get_object_location(game, object_id))
@@ -188,19 +182,17 @@ Status game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos
     game_player_set_object(game, object_id);
     space_set_object(space, NO_ID);
     game_set_object_location(game, NO_ID, NO_ID);
-    return OK;
   }
-  return ERROR;
 }
 
-Status game_actions_drop(Game *game)
+void game_actions_drop(Game *game)
 {
   Id player_location = game_get_player_location(game);
   Id object_id = NO_ID;
 
   if (game == NULL)
   {
-    return ERROR;
+    return;
   }
 
   object_id = game_player_get_object(game);
@@ -208,7 +200,5 @@ Status game_actions_drop(Game *game)
   {
     game_set_object_location(game, object_id, player_location);
     game_player_set_object(game, NO_ID);
-    return OK;
   }
-  return ERROR;
 }
