@@ -22,7 +22,7 @@
 struct _Game
 {
   Command *last_cmd;
-  char *last_cmd_status;
+  char last_cmd_status[WORD_SIZE];
   Bool finished;
   Player *player;
   Object *objects[MAX_OBJECTS];
@@ -90,7 +90,7 @@ Game *game_create()
   gm->n_characters = 0;
   gm->player = NULL;
   gm->last_cmd = command_create();
-  gm->last_cmd_status = NULL;
+  strcpy(gm->last_cmd_status, "\0");
   gm->finished = FALSE;
 
   return gm;
@@ -446,7 +446,8 @@ const char *game_get_last_command_status(Game *game)
 
 Status game_set_last_command_status(Game *game, char *status)
 {
-  if(!game||!status){
+  if (!game || !status)
+  {
     return ERROR;
   }
 
