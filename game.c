@@ -446,19 +446,12 @@ const char *game_get_last_command_status(Game *game)
 
 Status game_set_last_command_status(Game *game, char *status)
 {
-  FILE *fich=NULL;
   if (!game || !status)
   {
-    fich = fopen("error.txt", "a+");
-    fprintf(fich, "!game||!status");
-    fclose(fich);
     return ERROR;
   }
 
   strcpy(game->last_cmd_status, status);
-  fich = fopen("error.txt", "a+");
-  fprintf(fich, "status of operation: %s\n", game->last_cmd_status);
-  fclose(fich);
   return OK;
 }
 
