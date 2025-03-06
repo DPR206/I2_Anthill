@@ -235,6 +235,15 @@ Id game_get_character_location(Game *game, Id character);
 int game_get_player_health(Game *game);
 
 /**
+ * @brief It adds the player to the game
+ * @author Claudia Saiz
+ * 
+ * @param game POinter to the game
+ * @return Status of the operation, OK id successful or ERROR if not
+ */
+Status game_add_player(Game *game);
+
+/**
  * @brief It gets the health of a character fron its name
  * @author Claudia Saiz
  * 
