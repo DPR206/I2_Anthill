@@ -280,6 +280,25 @@ Command *game_get_last_command(Game *game);
  */
 Status game_set_last_command(Game *game, Command *command);
 
+/**
+ * @brief It gets the status of the last command executed
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @return Status of the last command executed
+ */
+Status game_get_last_command_status(Game *game);
+
+/**
+ * @brief It sets the last command status to the provided status
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param status status to be set
+ * @return Status of the operation, OK if successful or ERROR if not
+ */
+Status game_set_last_command_status(Game *game, Status status);
+
 
 
 /*Funciones de tipo game_character*/

@@ -22,6 +22,7 @@
 struct _Game
 {
   Command *last_cmd;
+  Status last_cmd_status;
   Bool finished;
   Player *player;
   Object *objects[MAX_OBJECTS];
@@ -89,6 +90,7 @@ Game *game_create()
   gm->n_characters = 0;
   gm->player = NULL;
   gm->last_cmd = command_create();
+  gm->last_cmd_status = ERROR;
   gm->finished = FALSE;
 
   return gm;
@@ -179,8 +181,6 @@ Status game_destroy(Game *game)
   return OK;
 }
 
-
-
 Status game_createspace(Game *game)
 {
   int i;
@@ -248,8 +248,6 @@ Status game_add_newspace(Game *game, Space *space)
   return OK;
 }
 
-
-
 Id game_get_player_location(Game *game) { return player_get_location(game->player); }
 
 Status game_set_player_location(Game *game, Id id)
@@ -308,9 +306,6 @@ Status game_player_set_object(Game *game, Id id)
   return OK;
 }
 
-
-
-
 Id game_get_object_location(Game *game, Id object)
 {
   int i = 0;
@@ -365,7 +360,8 @@ Id game_get_object_location_from_name(Game *game, char *object)
   return NO_ID;
 }
 
-const char *game_get_object_name(Game *game, Id object){
+const char *game_get_object_name(Game *game, Id object)
+{
   int i;
 
   if (object == NO_ID)
@@ -375,7 +371,7 @@ const char *game_get_object_name(Game *game, Id object){
 
   for (i = 0; i < MAX_OBJECTS; i++)
   {
-    if (object_get_id(game->objects[i])==object)
+    if (object_get_id(game->objects[i]) == object)
     {
       return object_get_name(game->objects[i]);
     }
@@ -416,9 +412,6 @@ Status game_add_object(Game *game, Object *object)
   return OK;
 }
 
-
-
-
 Command *game_get_last_command(Game *game)
 {
   if (!game)
@@ -431,13 +424,35 @@ Command *game_get_last_command(Game *game)
 
 Status game_set_last_command(Game *game, Command *command)
 {
+  if (!game || !command)
+  {
+    return ERROR;
+  }
+
   (game->last_cmd) = command;
 
   return OK;
 }
 
+Status game_get_last_command_status(Game *game)
+{
+  if (!game)
+  {
+    return ERROR;
+  }
 
+  return game->last_cmd_status;
+}
 
+Status game_set_last_command_status(Game *game, Status status)
+{
+  if(!game){
+    return ERROR;
+  }
+
+  game->last_cmd_status=status;
+  return OK;
+}
 
 Status game_add_character(Game *game, Character *character)
 {

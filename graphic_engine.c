@@ -209,6 +209,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
   /* Paint in the feedback area */
   last_cmd = command_get_code(game_get_last_command(game));
+  command_result = game_get_last_command_status(game);
   if(command_result==OK){
     sprintf(str, " %s (%s): OK", cmd_to_str[last_cmd - NO_CMD][CMDL], cmd_to_str[last_cmd - NO_CMD][CMDS]);
   } else {
