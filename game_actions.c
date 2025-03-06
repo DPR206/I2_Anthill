@@ -117,9 +117,9 @@ Status game_actions_update(Game *game, Command *command)
    Calls implementation for each action
 */
 
-Status game_actions_unknown(Game *game) {}
+Status game_actions_unknown(Game *game) {return ERROR;}
 
-Status game_actions_exit(Game *game) {}
+Status game_actions_exit(Game *game) {return ERROR;}
 
 Status game_actions_next(Game *game)
 {
