@@ -90,7 +90,7 @@ Game *game_create()
   gm->n_characters = 0;
   gm->player = NULL;
   gm->last_cmd = command_create();
-  gm->last_cmd_status = ERROR;
+  gm->last_cmd_status = OK;
   gm->finished = FALSE;
 
   return gm;
