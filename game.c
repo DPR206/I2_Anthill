@@ -53,7 +53,7 @@ Id game_get_space_id_at(Game *game, int position)
     return NO_ID;
   }
 
-  return space_get_id(game_get_space(game, position));
+  return space_get_id(game->spaces[position]);
 }
 
 /**
