@@ -89,7 +89,6 @@ Status game_add_object(Game *game, Object *object)
 Status game_add_character(Game *game, Character *character)
 {
 
-
   if (character == NULL)
   {
     return ERROR;
@@ -101,17 +100,18 @@ Status game_add_character(Game *game, Character *character)
   return OK;
 }
 
-const char *game_get_character_gdesc(Game *game, char *character){
+const char *game_get_character_gdesc(Game *game, char *character)
+{
   int i;
 
-  if (character == NULL||!game)
+  if (character == NULL || !game)
   {
     return NULL;
   }
 
   for (i = 0; i < MAX_CHARACTERS; i++)
   {
-    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
       return character_get_gdesc(game->characters[i]);
     }
@@ -119,17 +119,18 @@ const char *game_get_character_gdesc(Game *game, char *character){
   return NULL;
 }
 
-Id game_get_character_location_from_name(Game *game, char *character){
+Id game_get_character_location_from_name(Game *game, char *character)
+{
   int i;
 
-  if (character == NULL||!game)
+  if (character == NULL || !game)
   {
     return NO_ID;
   }
 
   for (i = 0; i < MAX_CHARACTERS; i++)
   {
-    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
       return game_get_character_location(game, character_get_id(game->characters[i]));
     }
@@ -138,10 +139,11 @@ Id game_get_character_location_from_name(Game *game, char *character){
   return NO_ID;
 }
 
-Id game_get_character_location(Game *game, Id character){
+Id game_get_character_location(Game *game, Id character)
+{
   int i;
 
-  if (character == NO_ID||!game)
+  if (character == NO_ID || !game)
   {
     return NO_ID;
   }
@@ -156,8 +158,8 @@ Id game_get_character_location(Game *game, Id character){
   return NO_ID;
 }
 
-
-int game_get_character_health(Game *game, char *character){
+int game_get_character_health(Game *game, char *character)
+{
   int i;
 
   if (character == NULL)
@@ -167,7 +169,7 @@ int game_get_character_health(Game *game, char *character){
 
   for (i = 0; i < MAX_CHARACTERS; i++)
   {
-    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
       return character_get_health(game->characters[i]);
     }
@@ -202,7 +204,7 @@ Game *game_create()
     gm->characters[i] = NULL;
   }
   gm->n_characters = 0;
-  gm->player = player_create(NO_ID);
+  gm->player = NULL;
   gm->last_cmd = command_create();
   gm->finished = FALSE;
 
@@ -239,12 +241,14 @@ Status game_create_from_file(Game *game, char *filename)
   {
     return ERROR;
   }
-  if(game_reader_load_characters(game, filename)==ERROR){
+  if (game_reader_load_characters(game, filename) == ERROR)
+  {
     return ERROR;
   }
-
-  /* The player is located in the first space */
-  game_set_player_location(game, game_get_space_id_at(game, 0));
+  if (game_add_player(game) == ERROR)
+  {
+    return ERROR;
+  }
 
   return OK;
 }
@@ -269,10 +273,27 @@ Space *game_get_space(Game *game, Id id)
   return NULL;
 }
 
+Status game_add_player(Game *game)
+{
+  Player *player = NULL;
+
+  player = player_create(1);
+  if (!player)
+  {
+    return ERROR;
+  }
+  game->player = player;
+  game_set_player_location(game, game_get_space_id_at(game, 0));
+
+  return OK;
+}
+
 Id game_get_player_location(Game *game) { return player_get_location(game->player); }
 
-int game_get_player_health(Game *game){
-  if(!game){
+int game_get_player_health(Game *game)
+{
+  if (!game)
+  {
     return -1;
   }
 
@@ -326,7 +347,7 @@ Id game_get_object_location_from_name(Game *game, char *object)
 
   for (i = 0; i < MAX_OBJECTS; i++)
   {
-    if (strcmp(object_get_name(game->objects[i]), object)==0)
+    if (strcmp(object_get_name(game->objects[i]), object) == 0)
     {
       object_id = object_get_id(game->objects[i]);
     }
@@ -381,7 +402,6 @@ Status game_destroy(Game *game)
   {
     space_destroy(game->spaces[i]);
   }
-  player_destroy(game->player);
   for (i = 0; i < MAX_OBJECTS; i++)
   {
     object_destroy(game->objects[i]);
@@ -391,6 +411,7 @@ Status game_destroy(Game *game)
     character_destroy(game->characters[i]);
   }
   command_destroy(game->last_cmd);
+  player_destroy(game->player);
 
   free(game);
   return OK;
