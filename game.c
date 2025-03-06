@@ -444,7 +444,7 @@ const char *game_get_last_command_status(Game *game)
   return game->last_cmd_status;
 }
 
-Status game_set_last_command_status(Game *game, char *status)
+Status game_set_last_command_status(Game *game, const char *status)
 {
   if(!game||!status){
     return ERROR;
