@@ -122,7 +122,7 @@ Status game_reader_load_characters(Game *game, char *filename){
   char name[WORD_SIZE] = "", gdesc[WORD_SIZE]="", message[WORD_SIZE]="";
   char *toks = NULL;
   Id id = NO_ID, location=NO_ID;
-  int salud;
+  int health;
   Bool friendly;
   Character *character=NULL;
   Status status = OK;
@@ -150,7 +150,7 @@ Status game_reader_load_characters(Game *game, char *filename){
       toks = strtok(NULL, "|");
       strcpy(gdesc, toks);
       toks = strtok(NULL, "|");
-      salud = atol(toks);
+      health = atol(toks);
       toks = strtok(NULL, "|");
       friendly = atol(toks);
       toks = strtok(NULL, "|");
@@ -161,7 +161,7 @@ Status game_reader_load_characters(Game *game, char *filename){
         character_set_id(character, id);
         character_set_name(character, name);
         character_set_gdesc(character, gdesc);
-        character_set_salud(character, salud);
+        character_set_health(character, health);
         character_set_friendly(character, friendly);
         character_set_message(character, message);
         space_set_character(game_get_space(game, location), character);
