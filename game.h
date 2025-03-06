@@ -228,6 +228,16 @@ Id game_get_object_location(Game *game, Id object);
 Id game_get_object_location_from_name(Game *game, char *object);
 
 /**
+ * @brief It gets the name of an object from its id
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param object Id of the object
+ * @return const char*, name of the object
+ */
+const char *game_get_object_name(Game *game, Id object);
+
+/**
  * @brief It sets the objects location to a specific ID
  * @author Duna Puente
  *

@@ -76,6 +76,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_id=NO_ID;
   Id grain_loc=NO_ID, crumb_loc=NO_ID, leaf_loc=NO_ID, seed_loc=NO_ID;
   Id spider_loc=NO_ID, ant_loc=NO_ID, player_loc=NO_ID;
+  Id player_object=NO_ID;
   int spider_health=0, ant_health=0, player_health=0;
   Space *space_act = NULL;
   const char *spider_gdesc, *ant_gdesc;
@@ -158,6 +159,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   ant_health=game_get_character_health(game, "Ant");
   player_loc=game_get_player_location(game);
   player_health=game_get_player_health(game);
+  player_object=game_player_get_object(game);
   
   sprintf(str, "Objects:");
   screen_area_puts(ge->descript, str);
@@ -177,6 +179,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_puts(ge->descript, str);
   sprintf(str, "Player   : %d (%d)", (int)player_loc, player_health);
   screen_area_puts(ge->descript, str);
+  if(player_object==NO_ID){
+    sprintf(str, "Player has no object");
+    screen_area_puts(ge->descript, str);
+  } else {
+    sprintf(str, "Player has object: %s", game_get_object_name(game, player_object));
+    screen_area_puts(ge->descript, str);
+  }
   /*Falta poner los characters y player (posicion y health), y message*/
   
 

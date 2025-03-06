@@ -365,6 +365,25 @@ Id game_get_object_location_from_name(Game *game, char *object)
   return NO_ID;
 }
 
+const char *game_get_object_name(Game *game, Id object){
+  int i;
+
+  if (object == NO_ID)
+  {
+    return NULL;
+  }
+
+  for (i = 0; i < MAX_OBJECTS; i++)
+  {
+    if (object_get_id(game->objects[i])==object)
+    {
+      return object_get_name(game->objects[i]);
+    }
+  }
+
+  return NULL;
+}
+
 Status game_set_object_location(Game *game, Id object, Id location)
 {
   int i = 0;
