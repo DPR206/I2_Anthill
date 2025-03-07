@@ -79,7 +79,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   Id player_object=NO_ID;
   int spider_health=0, ant_health=0, player_health=0;
   Space *space_act = NULL;
-  const char *spider_gdesc=NULL, *ant_gdesc=NULL;
+  const char *spider_gdesc=NULL, *ant_gdesc=NULL, *character_gdesc=NULL;
   const char *command_result = "ERROR";
   char obj = '\0';
   char str[255];
@@ -109,12 +109,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       obj = '*';
     else
       obj = ' ';
-
+    if(spider_loc==id_back){
+      character_gdesc=spider_gdesc;
+    } else if(ant_loc==id_back){
+      character_gdesc=ant_gdesc;
+    } else{
+      character_gdesc=' ';
+    }
     if (id_back != NO_ID)
     {
-      sprintf(str, "  | m0^  %6s   %3d|", spider_gdesc, (int)id_back); /*cambiar ant_gdesc por g_desc correspondiente*/
+      sprintf(str, "  | m0^  %-6s %3d|", character_gdesc, (int)id_back);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c        |", obj);
+      sprintf(str, "  |     %c         |", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
@@ -126,14 +132,20 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       obj = '*';
     else
       obj = ' ';
-
+      if(spider_loc==id_act){
+        character_gdesc=spider_gdesc;
+      } else if(ant_loc==id_act){
+        character_gdesc=ant_gdesc;
+      } else{
+        character_gdesc=' ';
+      }
     if (id_act != NO_ID)
     {
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  | m0^  %6s   %3d|", ant_gdesc, (int)id_act); /*cambiar ant_gdesc por g_desc correspondiente*/
+      sprintf(str, "  | m0^  %-6s %3d|", character_gdesc, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c        |", obj);
+      sprintf(str, "  |     %c         |", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
@@ -143,16 +155,22 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       obj = '*';
     else
       obj = ' ';
-
+      if(spider_loc==id_next){
+        character_gdesc=spider_gdesc;
+      } else if(ant_loc==id_next){
+        character_gdesc=ant_gdesc;
+      } else{
+        character_gdesc=' ';
+      }
     if (id_next != NO_ID)
     {
       sprintf(str, "        v");
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  | m0^           %3d|", (int)id_next);/*añadir character en medio como en los demas*/
+      sprintf(str, "  | m0^  %-6s %3d|", character_gdesc, (int)id_next);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c        |", obj);
+      sprintf(str, "  |     %c         |", obj);
       screen_area_puts(ge->map, str);
     }
   }
