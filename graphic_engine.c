@@ -80,8 +80,9 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   Id player_object = NO_ID;
   int spider_health = 0, ant_health = 0, player_health = 0;
   Space *space_act = NULL;
-  const char *spider_gdesc = NULL, *ant_gdesc = NULL, *character_gdesc = NULL;
+  const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
+  char *character_gdesc=NULL;
   char obj = '\0';
   char str[255];
   CommandCode last_cmd = UNKNOWN;
@@ -122,7 +123,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     }
     else
     {
-      strcpy(character_gdesc, ' ');
+      strcpy(character_gdesc, " ");
     }
     if (id_back != NO_ID)
     {
@@ -152,7 +153,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     }
     else
     {
-      strcpy(character_gdesc, ' ');
+      strcpy(character_gdesc, " ");
     }
     if (id_act != NO_ID)
     {
@@ -182,7 +183,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     }
     else
     {
-      strcpy(character_gdesc, ' ');
+      strcpy(character_gdesc, " ");
     }
     if (id_next != NO_ID)
     {
