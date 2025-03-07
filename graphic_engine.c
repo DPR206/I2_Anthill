@@ -12,6 +12,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "command.h"
 #include "libscreen.h"
@@ -73,24 +74,24 @@ void graphic_engine_destroy(Graphic_engine *ge)
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_id=NO_ID;
-  Id grain_loc=NO_ID, crumb_loc=NO_ID, leaf_loc=NO_ID, seed_loc=NO_ID;
-  Id spider_loc=NO_ID, ant_loc=NO_ID, player_loc=NO_ID;
-  Id player_object=NO_ID;
-  int spider_health=0, ant_health=0, player_health=0;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, obj_id = NO_ID;
+  Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
+  Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
+  Id player_object = NO_ID;
+  int spider_health = 0, ant_health = 0, player_health = 0;
   Space *space_act = NULL;
-  const char *spider_gdesc=NULL, *ant_gdesc=NULL, *character_gdesc=NULL;
+  const char *spider_gdesc = NULL, *ant_gdesc = NULL, *character_gdesc = NULL;
   const char *command_result = "ERROR";
   char obj = '\0';
   char str[255];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
-  spider_gdesc=game_get_character_gdesc(game, "Spider");
-  spider_loc=game_get_character_location_from_name(game, "Spider");
-  spider_health=game_get_character_health(game, "Spider");
-  ant_gdesc=game_get_character_gdesc(game, "Ant");
-  ant_loc=game_get_character_location_from_name(game, "Ant");
+  spider_gdesc = game_get_character_gdesc(game, "Spider");
+  spider_loc = game_get_character_location_from_name(game, "Spider");
+  spider_health = game_get_character_health(game, "Spider");
+  ant_gdesc = game_get_character_gdesc(game, "Ant");
+  ant_loc = game_get_character_location_from_name(game, "Ant");
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
@@ -105,16 +106,23 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
-    if (game_get_object_location(game, obj_id) == id_back)  /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
+    if (game_get_object_location(game, obj_id) == id_back) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
       obj = '*';
     else
+    {
       obj = ' ';
-    if(spider_loc==id_back){
-      character_gdesc=spider_gdesc;
-    } else if(ant_loc==id_back){
-      character_gdesc=ant_gdesc;
-    } else{
-      character_gdesc=' ';
+    }
+    if (spider_loc == id_back)
+    {
+      strcpy(character_gdesc, spider_gdesc);
+    }
+    else if (ant_loc == id_back)
+    {
+      strcpy(character_gdesc, ant_gdesc);
+    }
+    else
+    {
+      strcpy(character_gdesc, ' ');
     }
     if (id_back != NO_ID)
     {
@@ -131,14 +139,21 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     if (game_get_object_location(game, obj_id) == id_act) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
       obj = '*';
     else
+    {
       obj = ' ';
-      if(spider_loc==id_act){
-        character_gdesc=spider_gdesc;
-      } else if(ant_loc==id_act){
-        character_gdesc=ant_gdesc;
-      } else{
-        character_gdesc=' ';
-      }
+    }
+    if (spider_loc == id_act)
+    {
+      strcpy(character_gdesc, spider_gdesc);
+    }
+    else if (ant_loc == id_act)
+    {
+      strcpy(character_gdesc, ant_gdesc);
+    }
+    else
+    {
+      strcpy(character_gdesc, ' ');
+    }
     if (id_act != NO_ID)
     {
       sprintf(str, "  +---------------+");
@@ -154,14 +169,21 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     if (game_get_object_location(game, obj_id) == id_next) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
       obj = '*';
     else
+    {
       obj = ' ';
-      if(spider_loc==id_next){
-        character_gdesc=spider_gdesc;
-      } else if(ant_loc==id_next){
-        character_gdesc=ant_gdesc;
-      } else{
-        character_gdesc=' ';
-      }
+    }
+    if (spider_loc == id_next)
+    {
+      strcpy(character_gdesc, spider_gdesc);
+    }
+    else if (ant_loc == id_next)
+    {
+      strcpy(character_gdesc, ant_gdesc);
+    }
+    else
+    {
+      strcpy(character_gdesc, ' ');
+    }
     if (id_next != NO_ID)
     {
       sprintf(str, "        v");
@@ -177,11 +199,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  ant_health=game_get_character_health(game, "Ant");
-  player_loc=game_get_player_location(game);
-  player_health=game_get_player_health(game);
-  player_object=game_player_get_object(game);
-  
+  ant_health = game_get_character_health(game, "Ant");
+  player_loc = game_get_player_location(game);
+  player_health = game_get_player_health(game);
+  player_object = game_player_get_object(game);
+
   sprintf(str, "Objects:");
   screen_area_puts(ge->descript, str);
   sprintf(str, "  Grain:%d", (int)grain_loc);
@@ -204,17 +226,19 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_puts(ge->descript, str);
   sprintf(str, "Player   : %d (%d)", (int)player_loc, player_health);
   screen_area_puts(ge->descript, str);
-  if(player_object==NO_ID){
+  if (player_object == NO_ID)
+  {
     sprintf(str, "Player has no object");
     screen_area_puts(ge->descript, str);
-  } else {
+  }
+  else
+  {
     sprintf(str, "Player has object: %s", game_get_object_name(game, player_object));
     screen_area_puts(ge->descript, str);
   }
   sprintf(str, " ");
   screen_area_puts(ge->descript, str);
   /*Falta poner  message*/
-  
 
   /* Paint in the banner area */
   screen_area_puts(ge->banner, "    The anthill game ");
