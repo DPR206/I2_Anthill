@@ -86,6 +86,12 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
+  spider_gdesc=game_get_character_gdesc(game, "Spider");
+  spider_loc=game_get_character_location_from_name(game, "Spider");
+  spider_health=game_get_character_health(game, "Spider");
+  ant_gdesc=game_get_character_gdesc(game, "Ant");
+  ant_loc=game_get_character_location_from_name(game, "Ant");
+
   /* Paint the in the map area */
   screen_area_clear(ge->map);
   if ((id_act = game_get_player_location(game)) != NO_ID)
@@ -106,11 +112,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
     if (id_back != NO_ID)
     {
-      sprintf(str, "  |         %2d|", (int)id_back);
+      sprintf(str, "  | m0^  %6s   %3d|", spider_gdesc, (int)id_back); /*cambiar ant_gdesc por g_desc correspondiente*/
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
+      sprintf(str, "  |     %c        |", obj);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "        ^");
       screen_area_puts(ge->map, str);
@@ -123,13 +129,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
     if (id_act != NO_ID)
     {
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  | m0^     %2d|", (int)id_act);
+      sprintf(str, "  | m0^  %6s   %3d|", ant_gdesc, (int)id_act); /*cambiar ant_gdesc por g_desc correspondiente*/
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
+      sprintf(str, "  |     %c        |", obj);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
     }
 
@@ -142,22 +148,17 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     {
       sprintf(str, "        v");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  +-----------+");
+      sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |         %2d|", (int)id_next);
+      sprintf(str, "  | m0^           %3d|", (int)id_next);/*añadir character en medio como en los demas*/
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c     |", obj);
+      sprintf(str, "  |     %c        |", obj);
       screen_area_puts(ge->map, str);
     }
   }
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  spider_gdesc=game_get_character_gdesc(game, "Spider");
-  spider_loc=game_get_character_location_from_name(game, "Spider");
-  spider_health=game_get_character_health(game, "Spider");
-  ant_gdesc=game_get_character_gdesc(game, "Ant");
-  ant_loc=game_get_character_location_from_name(game, "Ant");
   ant_health=game_get_character_health(game, "Ant");
   player_loc=game_get_player_location(game);
   player_health=game_get_player_health(game);
