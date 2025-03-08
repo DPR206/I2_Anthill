@@ -90,7 +90,7 @@ void game_actions_right(Game *game);
  * @param character The name of a character
  * @return A string with the character's name
  */
-char *game_actions_chat(Game *game, char *character);
+const char *game_actions_chat(Game *game, char *character);
 
 /**
    Game actions implementation
@@ -303,22 +303,23 @@ void game_actions_right(Game *game)
   return;
 }
 
-char *game_actions_chat(Game *game, char *character)
+const char *game_actions_chat(Game *game, char *character)
 {
   char default_message[]="This character isn't friendly or there is no character.\n";
 
   if (!game || !character)
   {
-    return default_message;
+    return NULL;
   }
 
-  if ((game_get_character_location(game, character)==game_get_player_location(game)) && (game_get_charatcter_friendly(game, character)))
+  if ((game_get_character_location_from_name(game, character)==game_get_player_location(game)) && 
+      (game_get_charatcter_friendly(game, character)==TRUE))
   {
     game_set_last_message(game, game_get_character_message(game, character));
     return game_get_character_message(game, character);
   } else
   {
     game_set_last_message(game, default_message);
-    return default_message;
+    return NULL;
   }
 }
