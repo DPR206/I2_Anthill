@@ -67,6 +67,32 @@ void game_actions_take(Game *game);
 void game_actions_drop(Game *game);
 
 /**
+ * @brief It moves the player to the space to the left
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ */
+void game_actions_left(Game *game);
+
+/**
+ * @brief It moves the player to the space to the right
+ * @author Duna Puente
+ * 
+ * @param game A pointer to the game
+ */
+void game_actions_right(Game *game);
+
+/**
+ * @brief It lets the player talk to other characters
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param character The name of a character
+ * @return A string with the character's name
+ */
+char *game_actions_chat(Game *game, char *character);
+
+/**
    Game actions implementation
 */
 
@@ -220,5 +246,79 @@ void game_actions_drop(Game *game)
   else
   {
     game_set_last_command_status(game, "ERROR");
+  }
+}
+
+void game_actions_left(Game *game)
+{
+
+  Id current_id = NO_ID, object_id=NO_ID;
+  Id space_id = NO_ID;
+
+  space_id = game_get_player_location(game);
+  if (space_id == NO_ID)
+  {
+    return;
+  }
+
+  current_id = space_get_west(game_get_space(game, space_id));
+  if (current_id != NO_ID)
+  {
+    game_set_player_location(game, current_id);
+    object_id=game_player_get_object(game);
+    if (object_id!=NO_ID)
+    {
+      game_set_object_location(game, object_id, NO_ID);
+    }
+    
+  }
+
+  return;
+  
+}
+
+void game_actions_right(Game *game)
+{
+  Id current_id = NO_ID, object_id=NO_ID;
+  Id space_id = NO_ID;
+
+  space_id = game_get_player_location(game);
+  if (space_id == NO_ID)
+  {
+    return;
+  }
+
+  current_id = space_get_east(game_get_space(game, space_id));
+  if (current_id != NO_ID)
+  {
+    game_set_player_location(game, current_id);
+    object_id=game_player_get_object(game);
+    if (object_id!=NO_ID)
+    {
+      game_set_object_location(game, object_id, NO_ID);
+    }
+    
+  }
+
+  return;
+}
+
+char *game_actions_chat(Game *game, char *character)
+{
+  char default_message[]="This character isn't friendly or there is no character.\n";
+
+  if (!game || !character)
+  {
+    return default_message;
+  }
+
+  if ((game_get_character_location(game, character)==game_get_player_location(game)) && (game_get_charatcter_friendly(game, character)))
+  {
+    game_set_last_message(game, game_get_character_message(game, character));
+    return game_get_character_message(game, character);
+  } else
+  {
+    game_set_last_message(game, default_message);
+    return default_message;
   }
 }
