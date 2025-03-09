@@ -654,7 +654,7 @@ Status game_character_set_health(Game *game, char *character, int health)
   return ERROR;
 }
 
-const char *game_space_get_character_name(Game *game)
+char *game_space_get_character_name(Game *game)
 {
   Character *character=NULL;
 
