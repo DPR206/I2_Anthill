@@ -83,14 +83,22 @@ void game_actions_left(Game *game);
 void game_actions_right(Game *game);
 
 /**
+ * @brief It attacks an unfriendly character
+ * @author Duna Puente
+ *
+ * @param game A pointer to the game
+ * @param character The name of the character
+ */
+void game_actions_attack(Game *game, char *character);
+
+/**
  * @brief It lets the player talk to other characters
  * @author Duna Puente
- * 
+ *
  * @param game Pointer to the game
  * @param character The name of a character
- * @return A string with the character's name
  */
-const char *game_actions_chat(Game *game, char *character);
+void game_actions_chat(Game *game, char *character);
 
 /**
    Game actions implementation
@@ -303,23 +311,55 @@ void game_actions_right(Game *game)
   return;
 }
 
-const char *game_actions_chat(Game *game, char *character)
+void game_actions_attack(Game *game, char *character)
 {
-  char default_message[]="This character isn't friendly or there is no character.\n";
+  int n;
+  time_t t;
 
   if (!game || !character)
   {
-    return NULL;
+    return;
   }
 
-  if ((game_get_character_location_from_name(game, character)==game_get_player_location(game)) && 
-      (game_get_charatcter_friendly(game, character)==TRUE))
+  if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
+      (game_get_charatcter_friendly(game, character) == FALSE))
+  {
+    if (game_get_character_health(game, character) != 0 && game_get_player_health(game) != 0)
+    {
+      srand((unsigned)time(&t));
+      n = 0 + rand() % (9 - 0 + 1);
+      if (0 <= n && n <= 4)
+      {
+        game_player_set_health(game, (game_get_player_health(game) - 1));
+      }
+      else if (5 <= n && n <= 9)
+      {
+        game_character_set_health(game, character, (game_get_character_health(game, character) - 1));
+      }
+    }
+  }
+
+  return;
+}
+
+void game_actions_chat(Game *game, char *character)
+{
+  char default_message[] = "This character isn't friendly or there is no character.\n";
+
+  if (!game || !character)
+  {
+    return;
+  }
+
+  if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
+      (game_get_charatcter_friendly(game, character) == TRUE))
   {
     game_set_last_message(game, game_get_character_message(game, character));
-    return game_get_character_message(game, character);
-  } else
+    return;
+  }
+  else
   {
     game_set_last_message(game, default_message);
-    return NULL;
+    return;
   }
 }
