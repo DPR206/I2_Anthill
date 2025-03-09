@@ -420,6 +420,6 @@ Status game_character_set_health(Game *game, char *character, int health);
  * @param game Pointer to a game
  * @return A string with the name of the character 
  */
-const char *game_space_get_character_name(Game *game);
+char *game_space_get_character_name(Game *game);
 
 #endif
