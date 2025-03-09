@@ -413,4 +413,13 @@ char *game_get_character_message(Game *game, char *character);
  */
 Status game_character_set_health(Game *game, char *character, int health);
 
+/**
+ * @brief It gets the name of the character in a space
+ * @author Duna Puente
+ * 
+ * @param game Pointer to a game
+ * @return A string with the name of the character 
+ */
+const char *game_space_get_character_name(Game *game);
+
 #endif
