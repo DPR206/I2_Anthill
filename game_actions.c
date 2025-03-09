@@ -133,7 +133,7 @@ Status game_actions_update(Game *game, Command *command)
     break;
 
   case TAKE:
-    game_actions_take(game, char *object);
+    game_actions_take(game, object);
     break;
 
   case DROP:
