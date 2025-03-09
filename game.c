@@ -23,6 +23,7 @@ struct _Game
 {
   Command *last_cmd;
   char last_cmd_status[WORD_SIZE];
+  char last_message[WORD_SIZE];
   Bool finished;
   Player *player;
   Object *objects[MAX_OBJECTS];
@@ -91,6 +92,7 @@ Game *game_create()
   gm->player = NULL;
   gm->last_cmd = command_create();
   strcpy(gm->last_cmd_status, "\0");
+  strcpy(gm->last_message, "\0");
   gm->finished = FALSE;
 
   return gm;
@@ -178,6 +180,18 @@ Status game_destroy(Game *game)
   player_destroy(game->player);
 
   free(game);
+  return OK;
+}
+
+Status game_set_last_message(Game *game, char *message)
+{
+  if (!game || !message)
+  {
+    return ERROR;
+  }
+
+  strcpy(game->last_message, message);
+
   return OK;
 }
 
@@ -303,6 +317,18 @@ Status game_player_set_object(Game *game, Id id)
   }
 
   player_set_object(game->player, id);
+  return OK;
+}
+
+Status game_player_set_health(Game *game, int health)
+{
+  if (!game || health<0)
+  {
+    return ERROR;
+  }
+
+  player_set_health(game->player, health);
+
   return OK;
 }
 
@@ -544,4 +570,86 @@ int game_get_character_health(Game *game, char *character)
     }
   }
   return -1;
+}
+
+Id game_get_character_id(Game *game, char *character)
+{
+  int i;
+
+  if (!game || ! character)
+  {
+    return NO_ID;
+  }
+
+  for (i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
+    {
+      return character_get_id(game->characters[i]);
+    }
+  }
+
+  return NO_ID;
+}
+
+Bool game_get_charatcter_friendly(Game *game, char *character)
+{
+  int i;
+
+  if (!game || !character)
+  {
+    return FALSE;
+  }
+
+  for ( i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    {
+      return character_get_friendly(game->characters[i]);
+    }
+    
+  }
+  
+  return FALSE;
+}
+
+char *game_get_character_message(Game *game, char *character)
+{
+  int i;
+
+  if (!game || !character)
+  {
+    return NULL;
+  }
+
+  for ( i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    {
+      return character_get_message(game->characters[i]);
+    }
+  }
+  
+  return NULL;
+}
+
+Status game_character_set_health(Game *game, char *character, int health)
+{
+  int i;
+
+  if (!game || !character || health<0)
+  {
+    return ERROR;
+  }
+
+  for ( i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    {
+      character_set_health(game->characters[i], health);
+      return OK;
+    }
+  }
+
+  return ERROR;
 }
