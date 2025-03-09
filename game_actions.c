@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 /**
    Private functions
@@ -69,7 +70,7 @@ void game_actions_drop(Game *game);
 /**
  * @brief It moves the player to the space to the left
  * @author Duna Puente
- * 
+ *
  * @param game Pointer to the game
  */
 void game_actions_left(Game *game);
@@ -77,7 +78,7 @@ void game_actions_left(Game *game);
 /**
  * @brief It moves the player to the space to the right
  * @author Duna Puente
- * 
+ *
  * @param game A pointer to the game
  */
 void game_actions_right(Game *game);
@@ -89,7 +90,7 @@ void game_actions_right(Game *game);
  * @param game A pointer to the game
  * @param character The name of the character
  */
-void game_actions_attack(Game *game, char *character);
+void game_actions_attack(Game *game);
 
 /**
  * @brief It lets the player talk to other characters
@@ -98,7 +99,7 @@ void game_actions_attack(Game *game, char *character);
  * @param game Pointer to the game
  * @param character The name of a character
  */
-void game_actions_chat(Game *game, char *character);
+void game_actions_chat(Game *game);
 
 /**
    Game actions implementation
@@ -132,13 +133,29 @@ Status game_actions_update(Game *game, Command *command)
     break;
 
   case TAKE:
-    game_actions_take(game);
+    game_actions_take(game, char *object);
     break;
 
   case DROP:
     game_actions_drop(game);
     break;
+  
+  case LEFT:
+    game_actions_left(game);
+    break;
 
+  case RIGHT:
+    game_actions_right(game);
+    break;
+  
+  case ATTACK:
+    game_actions_attack(game);
+    break;
+  
+  case CHAT:
+    game_actions_chat(game);
+    break;
+  
   default:
     break;
   }
@@ -211,7 +228,7 @@ void game_actions_back(Game *game)
   }
 }
 
-void game_actions_take(Game *game)
+void game_actions_take(Game *game, char *object)
 {
   Space *space = game_get_space(game, game_get_player_location(game));
   Id object_id = game_get_object_id_from_name(game, object);
@@ -260,7 +277,7 @@ void game_actions_drop(Game *game)
 void game_actions_left(Game *game)
 {
 
-  Id current_id = NO_ID, object_id=NO_ID;
+  Id current_id = NO_ID, object_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
@@ -273,21 +290,19 @@ void game_actions_left(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    object_id=game_player_get_object(game);
-    if (object_id!=NO_ID)
+    object_id = game_player_get_object(game);
+    if (object_id != NO_ID)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
-    
   }
 
   return;
-  
 }
 
 void game_actions_right(Game *game)
 {
-  Id current_id = NO_ID, object_id=NO_ID;
+  Id current_id = NO_ID, object_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
@@ -300,26 +315,28 @@ void game_actions_right(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    object_id=game_player_get_object(game);
-    if (object_id!=NO_ID)
+    object_id = game_player_get_object(game);
+    if (object_id != NO_ID)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
-    
   }
 
   return;
 }
 
-void game_actions_attack(Game *game, char *character)
+void game_actions_attack(Game *game)
 {
   int n;
+  char *character=NULL;
   time_t t;
 
   if (!game || !character)
   {
     return;
   }
+
+  character = game_space_get_character_name(game);
 
   if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
       (game_get_charatcter_friendly(game, character) == FALSE))
@@ -342,14 +359,17 @@ void game_actions_attack(Game *game, char *character)
   return;
 }
 
-void game_actions_chat(Game *game, char *character)
+void game_actions_chat(Game *game)
 {
+  char *character=NULL;
   char default_message[] = "This character isn't friendly or there is no character.\n";
 
   if (!game || !character)
   {
     return;
   }
+
+  character = game_space_get_character_name(game);
 
   if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
       (game_get_charatcter_friendly(game, character) == TRUE))
