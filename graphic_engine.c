@@ -110,11 +110,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
-    if (game_get_object_location(game, obj_id) == id_back) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
-      obj = '*';
-    else
-    {
-      obj = ' ';
+    obj = ' ';
+    if (grain_loc == id_back){
+      sprintf(obj, "Grain ");
+    }
+    if (crumb_loc == id_back){
+      sprintf(obj, "Crumb ");
+    }
+    if (leaf_loc == id_back){
+      sprintf(obj, "Leaf ");
+    }
+    if (seed_loc == id_back){
+      sprintf(obj, "Seed ");
     }
     if (spider_loc == id_back)
     {
@@ -140,11 +147,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    if (game_get_object_location(game, obj_id) == id_act) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
-      obj = '*';
-    else
-    {
-      obj = ' ';
+    obj = ' ';
+    if (grain_loc == id_back){
+      sprintf(obj, "Grain ");
+    }
+    if (crumb_loc == id_back){
+      sprintf(obj, "Crumb ");
+    }
+    if (leaf_loc == id_back){
+      sprintf(obj, "Leaf ");
+    }
+    if (seed_loc == id_back){
+      sprintf(obj, "Seed ");
     }
     if (spider_loc == id_act)
     {
@@ -170,11 +184,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    if (game_get_object_location(game, obj_id) == id_next) /*Apaño de obj_id, for para ver si algun onjeto del set structure objects contiene ese location*/
-      obj = '*';
-    else
-    {
-      obj = ' ';
+    obj = ' ';
+    if (grain_loc == id_back){
+      sprintf(obj, "Grain ");
+    }
+    if (crumb_loc == id_back){
+      sprintf(obj, "Crumb ");
+    }
+    if (leaf_loc == id_back){
+      sprintf(obj, "Leaf ");
+    }
+    if (seed_loc == id_back){
+      sprintf(obj, "Seed ");
     }
     if (spider_loc == id_next)
     {
