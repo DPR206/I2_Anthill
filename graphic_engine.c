@@ -75,7 +75,7 @@ void graphic_engine_destroy(Graphic_engine *ge)
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_right = NO_ID, id_left = NO_ID, obj_id = NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_right = NO_ID, id_left = NO_ID;
   Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
   Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
   Id player_object = NO_ID;
@@ -84,7 +84,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  char obj = '\0';
+  const char *obj = " ";
   char str[255];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
