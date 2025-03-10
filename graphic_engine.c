@@ -94,6 +94,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   spider_health = game_get_character_health(game, "Spider");
   ant_gdesc = game_get_character_gdesc(game, "Ant");
   ant_loc = game_get_character_location_from_name(game, "Ant");
+  ant_health = game_get_character_health(game, "Ant");
 
   /* Paint the in the map area */
   screen_area_clear(ge->map);
@@ -110,7 +111,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
-    strcpy(obj, " ");
+    sprintf(obj, " ");
     if (grain_loc == id_back){
       sprintf(obj, "Grain ");
     }
@@ -147,7 +148,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    strcpy(obj, " ");
+    sprintf(obj, " ");
     if (grain_loc == id_act){
       sprintf(obj, "Grain ");
     }
@@ -184,7 +185,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    strcpy(obj, " ");
+    sprintf(obj, " ");
     if (grain_loc == id_next){
       sprintf(obj, "Grain ");
     }
@@ -224,7 +225,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
-  ant_health = game_get_character_health(game, "Ant");
   player_loc = game_get_player_location(game);
   player_health = game_get_player_health(game);
   player_object = game_player_get_object(game);
