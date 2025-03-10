@@ -209,6 +209,25 @@ Status space_set_character(Space *space, Character *character);
 Character *space_get_character(Space *space);
 
 /**
+ * @brief It sets the graphic description of a place
+ * @author Duna Puente
+ * 
+ * @param space Pointer to the space
+ * @param gdesc String with the graphic decription
+ * @return Status of the operation, OK if successful, or ERROR if not
+ */
+Status space_set_gdesc(Space *space, char *gdesc);
+
+/**
+ * @brief It returns the space's graphic description
+ * @author Duna Puente
+ * 
+ * @param space Pointer to the space
+ * @return A pointer to the string with the graphic description
+ */
+char *space_get_gdesc(Space *space);
+
+/**
  * @brief It prints the space information
  * @author Profesores PPROG
  *

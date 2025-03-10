@@ -14,8 +14,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define G_SIZE1 6
-#define G_SIZE2 10
+#define G_SIZE1 5
+#define G_SIZE2 9
  
 /**
  * @brief Space
@@ -61,6 +61,7 @@ Space *space_create(Id id)
   newSpace->west = NO_ID;
   newSpace->objects = set_create();
   newSpace->character= NULL;
+  newSpace->gdesc[0][0]='\0';
 
   return newSpace;
 }
@@ -252,7 +253,55 @@ Character *space_get_character(Space *space){
   return space->character;
 }
 
-Status space_print(Space *space)
+Status space_set_gdesc(Space *space, char *gdesc)
+{
+  int i;
+  char *aux=NULL;
+
+  if (!space || !gdesc)
+  {
+    return ERROR;
+  }
+
+  i=0;
+  strcpy(space->gdesc[i], strtok(gdesc, "|"));
+  while ((aux = strtok(NULL, "|")))
+  {
+    i++;
+    strcpy(space->gdesc[i], aux);
+  }
+  
+  return OK;
+  
+}
+
+char *space_get_gdesc(Space *space)
+{
+  int i;
+  char *space_gdesc=NULL;
+
+  if (!space)
+  {
+    return NULL;
+  }
+  
+  space_gdesc=(char *)calloc((G_SIZE1*G_SIZE2)+(G_SIZE1+1), sizeof(char));
+
+  if (!space_gdesc)
+  {
+    return NULL;
+  }
+
+  for ( i = 0; i < G_SIZE1; i++)
+  {
+    strcat(space_gdesc, space->gdesc[i]);
+    strcat(space_gdesc, "|");
+  }
+
+  return space_gdesc;
+}
+
+Status space_print(Space *space) /*¿hay que cambiar algo para gdesc?*/
 {
   Id idaux = NO_ID;
 
