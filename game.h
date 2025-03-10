@@ -82,6 +82,16 @@ void game_print(Game *game);
  */
 Status game_destroy(Game *game);
 
+/**
+ * @brief It sets the game's last message
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param message A strig with the last message
+ * @return Status of the operation: OK if successful
+ */
+Status game_set_last_message(Game *game, char *message);
+
 
 
 /*Funciones de tipo game_space*/
@@ -203,6 +213,16 @@ Id game_player_get_object(Game *game);
  */
 Status game_player_set_object(Game *game, Id id);
 
+/**
+ * @brief It sets the player's health
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param health The health of the player
+ * @return Status of the operation, OK id successful or ERROR if not  
+ */
+Status game_player_set_health(Game *game, int health);
+
 
 
 /*Funciones de tipo game_object*/
@@ -236,6 +256,16 @@ Id game_get_object_location_from_name(Game *game, char *object);
  * @return const char*, name of the object
  */
 const char *game_get_object_name(Game *game, Id object);
+
+/**
+ * @brief It returns an object's id
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param object Name of the object
+ * @return Id, the id of the object
+ */
+Id game_get_object_id_from_name(Game *game, char *object);
 
 /**
  * @brief It sets the objects location to a specific ID
@@ -352,5 +382,54 @@ Id game_get_character_location(Game *game, Id character);
  * @return int, Health of the character
  */
 int game_get_character_health(Game *game, char *character);
+
+/**
+ * @brief It gets the a character's id
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character
+ * @return Id, the character's id 
+ */
+Id game_get_character_id(Game *game, char *character);
+
+/**
+ * @brief It returns whether the character is friendly or not
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character
+ * @return Bool, if the character is friendly or not
+ */
+Bool game_get_charatcter_friendly(Game *game, char *character);
+
+/**
+ * @brief It returns a character's message
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character
+ * @return A string with the character's message
+ */
+char *game_get_character_message(Game *game, char *character);
+
+/**
+ * @brief It sets the character's health
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character
+ * @param health The health of the character
+ * @return Status of the operation: ERROR if failes, OK if successful 
+ */
+Status game_character_set_health(Game *game, char *character, int health);
+
+/**
+ * @brief It gets the name of the character in a space
+ * @author Duna Puente
+ * 
+ * @param game Pointer to a game
+ * @return A string with the name of the character 
+ */
+char *game_space_get_character_name(Game *game);
 
 #endif

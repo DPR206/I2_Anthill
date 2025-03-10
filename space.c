@@ -3,7 +3,7 @@
  *
  * @file space.c
  * @author Profesores PPROG
- * @version 0
+ * @version 1
  * @date 27-01-2025
  * @copyright GNU Public License
  */
@@ -14,6 +14,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define G_SIZE1 6
+#define G_SIZE2 10
+ 
 /**
  * @brief Space
  *
@@ -29,6 +32,7 @@ struct _Space
   Id west;                  /*!< Id of the space at the west */
   Set *objects;             /*!< Set containing ids of the objects in the space*/
   Character *character;     /*!< Character in the space*/
+  char gdesc[G_SIZE1][G_SIZE2]; /*!< Graphic description of the space */
 };
 
 /** space_create allocates memory for a new space

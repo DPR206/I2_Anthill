@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 /**
    Private functions
@@ -56,7 +57,7 @@ void game_actions_back(Game *game);
  *
  * @param game Pointer to the game
  */
-void game_actions_take(Game *game);
+void game_actions_take(Game *game, char *object);
 
 /**
  * @brief It lets the player drop the object it carries in the space it is in
@@ -69,7 +70,7 @@ void game_actions_drop(Game *game);
 /**
  * @brief It moves the player to the space to the left
  * @author Duna Puente
- * 
+ *
  * @param game Pointer to the game
  */
 void game_actions_left(Game *game);
@@ -77,20 +78,28 @@ void game_actions_left(Game *game);
 /**
  * @brief It moves the player to the space to the right
  * @author Duna Puente
- * 
+ *
  * @param game A pointer to the game
  */
 void game_actions_right(Game *game);
 
 /**
+ * @brief It attacks an unfriendly character
+ * @author Duna Puente
+ *
+ * @param game A pointer to the game
+ * @param character The name of the character
+ */
+void game_actions_attack(Game *game);
+
+/**
  * @brief It lets the player talk to other characters
  * @author Duna Puente
- * 
+ *
  * @param game Pointer to the game
  * @param character The name of a character
- * @return A string with the character's name
  */
-const char *game_actions_chat(Game *game, char *character);
+void game_actions_chat(Game *game);
 
 /**
    Game actions implementation
@@ -100,6 +109,7 @@ const char *game_actions_chat(Game *game, char *character);
 Status game_actions_update(Game *game, Command *command)
 {
   CommandCode cmd;
+  char *object = "grain"; /*Arreglar*/
 
   game_set_last_command(game, command);
 
@@ -124,13 +134,29 @@ Status game_actions_update(Game *game, Command *command)
     break;
 
   case TAKE:
-    game_actions_take(game);
+    game_actions_take(game, object);
     break;
 
   case DROP:
     game_actions_drop(game);
     break;
+  
+  case LEFT:
+    game_actions_left(game);
+    break;
 
+  case RIGHT:
+    game_actions_right(game);
+    break;
+  
+  case ATTACK:
+    game_actions_attack(game);
+    break;
+  
+  case CHAT:
+    game_actions_chat(game);
+    break;
+  
   default:
     break;
   }
@@ -203,10 +229,10 @@ void game_actions_back(Game *game)
   }
 }
 
-void game_actions_take(Game *game) /*Cambiar todo ahora que hay varios objetos*/
+void game_actions_take(Game *game, char *object)
 {
   Space *space = game_get_space(game, game_get_player_location(game));
-  Id object_id = NO_ID; /*game_get_object_id(game);*/
+  Id object_id = game_get_object_id_from_name(game, object);
 
   if (game == NULL)
   {
@@ -252,7 +278,7 @@ void game_actions_drop(Game *game)
 void game_actions_left(Game *game)
 {
 
-  Id current_id = NO_ID, object_id=NO_ID;
+  Id current_id = NO_ID, object_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
@@ -265,21 +291,19 @@ void game_actions_left(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    object_id=game_player_get_object(game);
-    if (object_id!=NO_ID)
+    object_id = game_player_get_object(game);
+    if (object_id != NO_ID)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
-    
   }
 
   return;
-  
 }
 
 void game_actions_right(Game *game)
 {
-  Id current_id = NO_ID, object_id=NO_ID;
+  Id current_id = NO_ID, object_id = NO_ID;
   Id space_id = NO_ID;
 
   space_id = game_get_player_location(game);
@@ -292,34 +316,71 @@ void game_actions_right(Game *game)
   if (current_id != NO_ID)
   {
     game_set_player_location(game, current_id);
-    object_id=game_player_get_object(game);
-    if (object_id!=NO_ID)
+    object_id = game_player_get_object(game);
+    if (object_id != NO_ID)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
-    
   }
 
   return;
 }
 
-const char *game_actions_chat(Game *game, char *character)
+void game_actions_attack(Game *game)
 {
-  char default_message[]="This character isn't friendly or there is no character.\n";
+  int n;
+  char *character=NULL;
+  time_t t;
 
   if (!game || !character)
   {
-    return NULL;
+    return;
   }
 
-  if ((game_get_character_location_from_name(game, character)==game_get_player_location(game)) && 
-      (game_get_charatcter_friendly(game, character)==TRUE))
+  character = game_space_get_character_name(game);
+
+  if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
+      (game_get_charatcter_friendly(game, character) == FALSE))
+  {
+    if (game_get_character_health(game, character) != 0 && game_get_player_health(game) != 0)
+    {
+      srand((unsigned)time(&t));
+      n = 0 + rand() % (9 - 0 + 1);
+      if (0 <= n && n <= 4)
+      {
+        game_player_set_health(game, (game_get_player_health(game) - 1));
+      }
+      else if (5 <= n && n <= 9)
+      {
+        game_character_set_health(game, character, (game_get_character_health(game, character) - 1));
+      }
+    }
+  }
+
+  return;
+}
+
+void game_actions_chat(Game *game)
+{
+  char *character=NULL;
+  char default_message[] = "This character isn't friendly or there is no character.\n";
+
+  if (!game || !character)
+  {
+    return;
+  }
+
+  character = game_space_get_character_name(game);
+
+  if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
+      (game_get_charatcter_friendly(game, character) == TRUE))
   {
     game_set_last_message(game, game_get_character_message(game, character));
-    return game_get_character_message(game, character);
-  } else
+    return;
+  }
+  else
   {
     game_set_last_message(game, default_message);
-    return NULL;
+    return;
   }
 }
