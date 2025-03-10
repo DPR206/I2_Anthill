@@ -34,6 +34,12 @@ struct _Graphic_engine
   Area *map, *descript, *banner, *help, *feedback;
 };
 
+/*Funciones privadas*/
+
+Status graphic_engine_objects_at_space(Game *game, Id space_id, char *obj);
+
+/*Funciones publicas*/
+
 Graphic_engine *graphic_engine_create()
 {
   static Graphic_engine *ge = NULL;
@@ -78,18 +84,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID /*, id_right = NO_ID, id_left = NO_ID*/;
   Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
-  Id obj_id = NO_ID;
   Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
   Id player_object = NO_ID;
   int spider_health = 0, ant_health = 0, player_health = 0;
-  Space *space_act = NULL, *space_back = NULL, *space_next = NULL;
+  Space *space_act = NULL;
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  const char *name = NULL;
   char obj[OBJ_STR];
   char str[255];
-  int i;
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
@@ -259,7 +262,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   printf("prompt:> ");
 }
 
-Status graphic_engine_objects_at_space(Game *game, Id space, char *obj)
+Status graphic_engine_objects_at_space(Game *game, Id space_id, char *obj)
 {
   Space *space=NULL;
   Id obj_id=NO_ID;
@@ -267,7 +270,7 @@ Status graphic_engine_objects_at_space(Game *game, Id space, char *obj)
   char tmp[OBJ_STR];
   int i;
 
-  space= game_get_space(game, space);
+  space= game_get_space(game, space_id);
   if(!space){
     return ERROR;
   }
