@@ -84,7 +84,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  char obj[G_SIZE] = " ";
+  char *obj = NULL;
   char str[255];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
@@ -110,6 +110,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
+    strcpy(obj, " ");
     if (grain_loc == id_back){
       sprintf(obj, "Grain ");
     }
@@ -146,6 +147,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
+    strcpy(obj, " ");
     if (grain_loc == id_act){
       sprintf(obj, "Grain ");
     }
@@ -182,6 +184,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
+    strcpy(obj, " ");
     if (grain_loc == id_next){
       sprintf(obj, "Grain ");
     }
