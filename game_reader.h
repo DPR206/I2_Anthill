@@ -35,14 +35,4 @@ Status game_reader_load_spaces(Game *game, char *filename);
  */
 Status game_reader_load_objects(Game *game, char *filename);
 
-/**
- * @brief It loads characters from a file
- * @author Claudia Saiz
- * 
- * @param game Pointer to the game
- * @param filename Name of the file containing character data
- * @return Status of the operation: ERROR if failed, OK if successful
- */
-Status game_reader_load_characters(Game *game, char *filename);
-
 #endif
