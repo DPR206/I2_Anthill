@@ -683,8 +683,8 @@ char *game_space_get_character_name(Game *game)
   {
     return NULL;
   }
-  
-  character = space_get_character(player_get_location(game->player));
+
+  character = space_get_character(game_get_space(game, player_get_location(game->player)));
 
   if (!character)
   {
