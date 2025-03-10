@@ -435,7 +435,7 @@ const char *game_get_object_name(Game *game, Id object)
 {
   int i;
 
-  if (object == NO_ID)
+  if (!game || object == NO_ID)
   {
     return NULL;
   }

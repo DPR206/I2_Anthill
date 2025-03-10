@@ -77,15 +77,18 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID/*, id_right = NO_ID, id_left = NO_ID*/;
   Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
+  Id obj_id = NO_ID;
   Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
   Id player_object = NO_ID;
   int spider_health = 0, ant_health = 0, player_health = 0;
-  Space *space_act = NULL;
+  Space *space_act = NULL, *space_back=NULL, *space_next=NULL;
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  char *obj = NULL;
+  char *name=NULL;
+  char obj[255]=" ";
   char str[255];
+  int i;
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
@@ -101,29 +104,26 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   if ((id_act = game_get_player_location(game)) != NO_ID)
   {
     space_act = game_get_space(game, id_act);
+    space_back = game_get_space(game, id_back);
+    space_next = game_get_space(game, id_next);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
     /*id_right = space_get_east(space_act);
     id_left = space_get_west(space_act);*/
 
+    for(i=0; i<MAX_SET; i++){
+      obj_id = space_get_objects_id(space_act, i);
+
+      name= game_get_object_name(game, obj_id);
+      if(name!=NULL){
+        strcat(obj, name);
+      }
+    }
     grain_loc = game_get_object_location_from_name(game, "Grain");
     crumb_loc = game_get_object_location_from_name(game, "Crumb");
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
-    sprintf(obj, " ");
-    if (grain_loc == id_back){
-      sprintf(obj, "Grain ");
-    }
-    if (crumb_loc == id_back){
-      sprintf(obj, "Crumb ");
-    }
-    if (leaf_loc == id_back){
-      sprintf(obj, "Leaf ");
-    }
-    if (seed_loc == id_back){
-      sprintf(obj, "Seed ");
-    }
     if (spider_loc == id_back)
     {
       strcpy(character_gdesc, spider_gdesc);
@@ -148,18 +148,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    sprintf(obj, " ");
-    if (grain_loc == id_act){
-      sprintf(obj, "Grain ");
-    }
-    if (crumb_loc == id_act){
-      sprintf(obj, "Crumb ");
-    }
-    if (leaf_loc == id_act){
-      sprintf(obj, "Leaf ");
-    }
-    if (seed_loc == id_act){
-      sprintf(obj, "Seed ");
+    for(i=0; i<MAX_SET; i++){
+      obj_id = space_get_objects_id(space_act, i);
+
+      name= game_get_object_name(game, obj_id);
+      if(name!=NULL){
+        strcat(obj, name);
+      }
     }
     if (spider_loc == id_act)
     {
@@ -185,18 +180,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    sprintf(obj, " ");
-    if (grain_loc == id_next){
-      sprintf(obj, "Grain ");
-    }
-    if (crumb_loc == id_next){
-      sprintf(obj, "Crumb ");
-    }
-    if (leaf_loc == id_next){
-      sprintf(obj, "Leaf ");
-    }
-    if (seed_loc == id_next){
-      sprintf(obj, "Seed ");
+    for(i=0; i<MAX_SET; i++){
+      obj_id = space_get_objects_id(space_act, i);
+
+      name= game_get_object_name(game, obj_id);
+      if(name!=NULL){
+        strcat(obj, name);
+      }
     }
     if (spider_loc == id_next)
     {
