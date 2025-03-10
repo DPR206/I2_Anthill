@@ -76,17 +76,17 @@ void graphic_engine_destroy(Graphic_engine *ge)
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID/*, id_right = NO_ID, id_left = NO_ID*/;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID /*, id_right = NO_ID, id_left = NO_ID*/;
   Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
   Id obj_id = NO_ID;
   Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
   Id player_object = NO_ID;
   int spider_health = 0, ant_health = 0, player_health = 0;
-  Space *space_act = NULL, *space_back=NULL, *space_next=NULL;
+  Space *space_act = NULL, *space_back = NULL, *space_next = NULL;
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  const char *name=NULL;
+  const char *name = NULL;
   char obj[OBJ_STR];
   char str[255];
   int i;
@@ -104,22 +104,13 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   screen_area_clear(ge->map);
   if ((id_act = game_get_player_location(game)) != NO_ID)
   {
-    space_act = game_get_space(game, id_act);
-    space_back = game_get_space(game, id_back);
-    space_next = game_get_space(game, id_next);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
     /*id_right = space_get_east(space_act);
     id_left = space_get_west(space_act);*/
 
-    obj[0]='\0';
-    for(i=0; i<MAX_SET; i++){
-      obj_id = space_get_objects_id(space_act, i);
-
-      name= game_get_object_name(game, obj_id);
-      if(name!=NULL){
-        strcat(obj, name);
-      }
+    if (graphic_engine_objects_at_space(game, id_act, obj)==ERROR){
+      return;
     }
     grain_loc = game_get_object_location_from_name(game, "Grain");
     crumb_loc = game_get_object_location_from_name(game, "Crumb");
@@ -142,7 +133,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     {
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_back);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |%11s|", obj);
+      sprintf(str, "  |%15s|", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
@@ -150,14 +141,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    obj[0]='\0';
-    for(i=0; i<MAX_SET; i++){
-      obj_id = space_get_objects_id(space_back, i);
-
-      name= game_get_object_name(game, obj_id);
-      if(name!=NULL){
-        strcat(obj, name);
-      }
+    if (graphic_engine_objects_at_space(game, id_back, obj)==ERROR){
+      return;
     }
     if (spider_loc == id_act)
     {
@@ -177,20 +162,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  | m0^ %-6s %3d|", character_gdesc, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |%11s|", obj);
+      sprintf(str, "  |%15s|", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
     }
 
-    obj[0]='\0';
-    for(i=0; i<MAX_SET; i++){
-      obj_id = space_get_objects_id(space_next, i);
-
-      name= game_get_object_name(game, obj_id);
-      if(name!=NULL){
-        strcat(obj, name);
-      }
+    if (graphic_engine_objects_at_space(game, id_next, obj)==ERROR){
+      return;
     }
     if (spider_loc == id_next)
     {
@@ -212,7 +191,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_next);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |%11s|", obj);
+      sprintf(str, "  |%15s|", obj);
       screen_area_puts(ge->map, str);
     }
   }
@@ -278,4 +257,34 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   /* Dump to the terminal */
   screen_paint();
   printf("prompt:> ");
+}
+
+Status graphic_engine_objects_at_space(Game *game, Id space, char *obj)
+{
+  Space *space=NULL;
+  Id obj_id=NO_ID;
+  const char *name=NULL;
+  char tmp[OBJ_STR];
+  int i;
+
+  space= game_get_space(game, space);
+  if(!space){
+    return ERROR;
+  }
+
+  tmp[0] = '\0';
+  for (i = 0; i < MAX_SET; i++)
+  {
+    obj_id = space_get_objects_id(space, i);
+
+    name = game_get_object_name(game, obj_id);
+    if (name != NULL)
+    {
+      strncat(tmp, name, OBJ_STR - strlen(obj) - 1);
+      strcat(tmp, " ");
+    } 
+  }
+  strcpy(obj, tmp);
+
+  return OK;
 }
