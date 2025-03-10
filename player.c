@@ -50,7 +50,7 @@ Player *player_create(Id id)
   newplayer->id = id;
   newplayer->name[0] = '\0';
   newplayer->object = NO_ID;
-  newplayer->health=10;
+  newplayer->health=5;
 
   return newplayer;
 }
