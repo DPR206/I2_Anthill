@@ -75,7 +75,7 @@ void graphic_engine_destroy(Graphic_engine *ge)
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID /*, id_right = NO_ID, id_left = NO_ID*/;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID/*, id_right = NO_ID, id_left = NO_ID*/;
   Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
   Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
   Id player_object = NO_ID;
@@ -110,20 +110,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
-    if (grain_loc == id_back)
-    {
+    if (grain_loc == id_back){
       sprintf(obj, "Grain ");
     }
-    if (crumb_loc == id_back)
-    {
+    if (crumb_loc == id_back){
       sprintf(obj, "Crumb ");
     }
-    if (leaf_loc == id_back)
-    {
+    if (leaf_loc == id_back){
       sprintf(obj, "Leaf ");
     }
-    if (seed_loc == id_back)
-    {
+    if (seed_loc == id_back){
       sprintf(obj, "Seed ");
     }
     if (spider_loc == id_back)
@@ -150,20 +146,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    if (grain_loc == id_back)
-    {
+    if (grain_loc == id_act){
       sprintf(obj, "Grain ");
     }
-    if (crumb_loc == id_back)
-    {
+    if (crumb_loc == id_act){
       sprintf(obj, "Crumb ");
     }
-    if (leaf_loc == id_back)
-    {
+    if (leaf_loc == id_act){
       sprintf(obj, "Leaf ");
     }
-    if (seed_loc == id_back)
-    {
+    if (seed_loc == id_act){
       sprintf(obj, "Seed ");
     }
     if (spider_loc == id_act)
@@ -190,20 +182,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    if (grain_loc == id_back)
-    {
+    if (grain_loc == id_next){
       sprintf(obj, "Grain ");
     }
-    if (crumb_loc == id_back)
-    {
+    if (crumb_loc == id_next){
       sprintf(obj, "Crumb ");
     }
-    if (leaf_loc == id_back)
-    {
+    if (leaf_loc == id_next){
       sprintf(obj, "Leaf ");
     }
-    if (seed_loc == id_back)
-    {
+    if (seed_loc == id_next){
       sprintf(obj, "Seed ");
     }
     if (spider_loc == id_next)
