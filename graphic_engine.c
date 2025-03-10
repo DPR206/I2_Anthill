@@ -75,7 +75,7 @@ void graphic_engine_destroy(Graphic_engine *ge)
 
 void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
 {
-  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID, id_right = NO_ID, id_left = NO_ID;
+  Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID/*, id_right = NO_ID, id_left = NO_ID*/;
   Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
   Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
   Id player_object = NO_ID;
@@ -102,15 +102,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     space_act = game_get_space(game, id_act);
     id_back = space_get_north(space_act);
     id_next = space_get_south(space_act);
-    id_right = space_get_east(space_act);
-    id_left = space_get_west(space_act);
+    /*id_right = space_get_east(space_act);
+    id_left = space_get_west(space_act);*/
 
     grain_loc = game_get_object_location_from_name(game, "Grain");
     crumb_loc = game_get_object_location_from_name(game, "Crumb");
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
-    obj = ' ';
     if (grain_loc == id_back){
       sprintf(obj, "Grain ");
     }
@@ -147,7 +146,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    obj = ' ';
     if (grain_loc == id_back){
       sprintf(obj, "Grain ");
     }
@@ -184,7 +182,6 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
-    obj = ' ';
     if (grain_loc == id_back){
       sprintf(obj, "Grain ");
     }
