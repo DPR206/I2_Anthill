@@ -100,6 +100,8 @@ Game *game_create()
 
 Status game_create_from_file(Game *game, char *filename)
 {
+  Character *spider = NULL, *ant = NULL;
+
   if (game == NULL)
   {
     return ERROR;
@@ -114,10 +116,36 @@ Status game_create_from_file(Game *game, char *filename)
   {
     return ERROR;
   }
-  
+
   if (game_add_player(game) == ERROR)
   {
     return ERROR;
+  }
+
+  spider = character_create();
+  if (spider != NULL)
+  {
+    character_set_id(spider, 31);
+    character_set_name(spider, "Spider");
+    character_set_health(spider, 5);
+    character_set_gdesc(spider, "/\\oo/\\");
+    character_set_friendly(spider, FALSE);
+    character_set_message(spider, NULL);
+    space_set_character(game_get_space(game, 121), spider);
+    game_add_character(game, spider);
+  }
+
+  ant = character_create();
+  if (ant != NULL)
+  {
+    character_set_id(ant, 32);
+    character_set_name(ant, "Ant");
+    character_set_health(ant, 5);
+    character_set_gdesc(ant, "^Om");
+    character_set_friendly(ant, TRUE);
+    character_set_message(ant, "Hi!");
+    space_set_character(game_get_space(game, 122), ant);
+    game_add_character(game, ant);
   }
 
   return OK;
@@ -319,7 +347,7 @@ Status game_player_set_object(Game *game, Id id)
 
 Status game_player_set_health(Game *game, int health)
 {
-  if (!game || health<0)
+  if (!game || health < 0)
   {
     return ERROR;
   }
@@ -391,16 +419,15 @@ Id game_get_object_id_from_name(Game *game, char *object)
   {
     return NO_ID;
   }
-  
-  for ( i = 0; i < MAX_OBJECTS; i++)
+
+  for (i = 0; i < MAX_OBJECTS; i++)
   {
-    if (strcmp(object_get_name(game->objects[i]), object)==0)
+    if (strcmp(object_get_name(game->objects[i]), object) == 0)
     {
       return object_get_id(game->objects[i]);
     }
-    
   }
-  
+
   return NO_ID;
 }
 
@@ -594,7 +621,7 @@ Id game_get_character_id(Game *game, char *character)
 {
   int i;
 
-  if (!game || ! character)
+  if (!game || !character)
   {
     return NO_ID;
   }
@@ -619,37 +646,36 @@ Bool game_get_charatcter_friendly(Game *game, char *character)
     return FALSE;
   }
 
-  for ( i = 0; i < MAX_CHARACTERS; i++)
+  for (i = 0; i < MAX_CHARACTERS; i++)
   {
-    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
       return character_get_friendly(game->characters[i]);
     }
-    
   }
-  
+
   return FALSE;
 }
 
 char *game_get_character_message(Game *game, char *character)
 {
   int i;
-  char *message=NULL;
+  char *message = NULL;
 
   if (!game || !character)
   {
     return NULL;
   }
 
-  for ( i = 0; i < MAX_CHARACTERS; i++)
+  for (i = 0; i < MAX_CHARACTERS; i++)
   {
-    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
       strcpy(message, character_get_message(game->characters[i]));
       return message;
     }
   }
-  
+
   return NULL;
 }
 
@@ -657,14 +683,14 @@ Status game_character_set_health(Game *game, char *character, int health)
 {
   int i;
 
-  if (!game || !character || health<0)
+  if (!game || !character || health < 0)
   {
     return ERROR;
   }
 
-  for ( i = 0; i < MAX_CHARACTERS; i++)
+  for (i = 0; i < MAX_CHARACTERS; i++)
   {
-    if (strcmp(character_get_name(game->characters[i]), character)==0)
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
       character_set_health(game->characters[i], health);
       return OK;
@@ -676,8 +702,8 @@ Status game_character_set_health(Game *game, char *character, int health)
 
 char *game_space_get_character_name(Game *game)
 {
-  Character *character=NULL;
-  char *name=NULL;
+  Character *character = NULL;
+  char *name = NULL;
 
   if (!game)
   {
