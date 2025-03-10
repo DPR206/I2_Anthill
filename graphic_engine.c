@@ -84,7 +84,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  const char *obj = " ";
+  char *obj = " ";
   char str[255];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
@@ -139,7 +139,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     {
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_back);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c         |", obj);
+      sprintf(str, "  |  %6s         |", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
@@ -178,7 +178,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  | m0^ %-6s %3d|", character_gdesc, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c         |", obj);
+      sprintf(str, "  |  %6s         |", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
@@ -217,7 +217,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_next);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |     %c         |", obj);
+      sprintf(str, "  | %6s         |", obj);
       screen_area_puts(ge->map, str);
     }
   }
