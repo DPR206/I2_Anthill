@@ -114,10 +114,7 @@ Status game_create_from_file(Game *game, char *filename)
   {
     return ERROR;
   }
-  if (game_reader_load_characters(game, filename) == ERROR)
-  {
-    return ERROR;
-  }
+  
   if (game_add_player(game) == ERROR)
   {
     return ERROR;
