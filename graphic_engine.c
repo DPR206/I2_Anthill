@@ -27,6 +27,7 @@
 #define HEIGHT_HLP 2
 #define HEIGHT_FDB 3
 #define G_SIZE 10
+#define OBJ_STR 20
 
 struct _Graphic_engine
 {
@@ -86,7 +87,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
   const char *name=NULL;
-  char *obj=NULL;
+  char obj[OBJ_STR];
   char str[255];
   int i;
   CommandCode last_cmd = UNKNOWN;
@@ -140,7 +141,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     {
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_back);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |  %6s         |", obj);
+      sprintf(str, "  |%11s|", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
@@ -174,7 +175,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  | m0^ %-6s %3d|", character_gdesc, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |  %6s         |", obj);
+      sprintf(str, "  |%11s|", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
@@ -208,7 +209,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_next);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  | %6s         |", obj);
+      sprintf(str, "  |%11s|", obj);
       screen_area_puts(ge->map, str);
     }
   }
