@@ -112,6 +112,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     /*id_right = space_get_east(space_act);
     id_left = space_get_west(space_act);*/
 
+    obj[0]='\0';
     for(i=0; i<MAX_SET; i++){
       obj_id = space_get_objects_id(space_act, i);
 
@@ -149,6 +150,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
+    obj[0]='\0';
     for(i=0; i<MAX_SET; i++){
       obj_id = space_get_objects_id(space_back, i);
 
@@ -181,6 +183,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
     }
 
+    obj[0]='\0';
     for(i=0; i<MAX_SET; i++){
       obj_id = space_get_objects_id(space_next, i);
 
