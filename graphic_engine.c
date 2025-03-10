@@ -149,7 +149,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     }
 
     for(i=0; i<MAX_SET; i++){
-      obj_id = space_get_objects_id(space_act, i);
+      obj_id = space_get_objects_id(space_back, i);
 
       name= game_get_object_name(game, obj_id);
       if(name!=NULL){
@@ -181,7 +181,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     }
 
     for(i=0; i<MAX_SET; i++){
-      obj_id = space_get_objects_id(space_act, i);
+      obj_id = space_get_objects_id(space_next, i);
 
       name= game_get_object_name(game, obj_id);
       if(name!=NULL){
