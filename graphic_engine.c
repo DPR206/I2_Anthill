@@ -85,8 +85,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  char *name=NULL;
-  char obj[255]=" ";
+  const char *name=NULL;
+  char *obj=NULL;
   char str[255];
   int i;
   CommandCode last_cmd = UNKNOWN;
