@@ -386,6 +386,27 @@ Id game_get_object_location_from_name(Game *game, char *object)
   return NO_ID;
 }
 
+Id game_get_object_id_from_name(Game *game, char *object)
+{
+  int i;
+
+  if (!game || !object)
+  {
+    return NO_ID;
+  }
+  
+  for ( i = 0; i < MAX_OBJECTS; i++)
+  {
+    if (strcmp(object_get_name(game->objects[i]), object)==0)
+    {
+      return object_get_id(game->objects[i]);
+    }
+    
+  }
+  
+  return NO_ID;
+}
+
 const char *game_get_object_name(Game *game, Id object)
 {
   int i;
