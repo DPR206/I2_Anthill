@@ -36,7 +36,7 @@ struct _Graphic_engine
 
 /*Funciones privadas*/
 
-Status graphic_engine_objects_at_space(Game *game, Id space_id, char *obj);
+char *graphic_engine_objects_at_space(Game *game, Id space_id);
 
 /*Funciones publicas*/
 
@@ -91,7 +91,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   const char *spider_gdesc = NULL, *ant_gdesc = NULL;
   const char *command_result = "ERROR";
   char character_gdesc[G_SIZE] = " ";
-  char obj[OBJ_STR];
+  char *obj;
   char str[255];
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
@@ -112,9 +112,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     /*id_right = space_get_east(space_act);
     id_left = space_get_west(space_act);*/
 
-    if (graphic_engine_objects_at_space(game, id_act, obj)==ERROR){
-      return;
-    }
+    obj = graphic_engine_objects_at_space(game, id_back);
     grain_loc = game_get_object_location_from_name(game, "Grain");
     crumb_loc = game_get_object_location_from_name(game, "Crumb");
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
@@ -136,17 +134,16 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     {
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_back);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |%15s|", obj);
+      sprintf(str, "  |%-15s|", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
       sprintf(str, "        ^");
       screen_area_puts(ge->map, str);
     }
+    free(obj);
 
-    if (graphic_engine_objects_at_space(game, id_back, obj)==ERROR){
-      return;
-    }
+    obj = graphic_engine_objects_at_space(game, id_act);
     if (spider_loc == id_act)
     {
       strcpy(character_gdesc, spider_gdesc);
@@ -165,15 +162,14 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  | m0^ %-6s %3d|", character_gdesc, (int)id_act);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |%15s|", obj);
+      sprintf(str, "  |%-15s|", obj);
       screen_area_puts(ge->map, str);
       sprintf(str, "  +---------------+");
       screen_area_puts(ge->map, str);
     }
+    free(obj);
 
-    if (graphic_engine_objects_at_space(game, id_next, obj)==ERROR){
-      return;
-    }
+    obj = graphic_engine_objects_at_space(game, id_next);
     if (spider_loc == id_next)
     {
       strcpy(character_gdesc, spider_gdesc);
@@ -194,10 +190,11 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
       screen_area_puts(ge->map, str);
       sprintf(str, "  |     %-6s %3d|", character_gdesc, (int)id_next);
       screen_area_puts(ge->map, str);
-      sprintf(str, "  |%15s|", obj);
+      sprintf(str, "  |%-15s|", obj);
       screen_area_puts(ge->map, str);
     }
   }
+  free(obj);
 
   /* Paint in the description area */
   screen_area_clear(ge->descript);
@@ -263,32 +260,46 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   printf("prompt:> ");
 }
 
-Status graphic_engine_objects_at_space(Game *game, Id space_id, char *obj)
+char *graphic_engine_objects_at_space(Game *game, Id space_id)
 {
-  Space *space=NULL;
-  Id obj_id=NO_ID;
-  const char *name=NULL;
+  Space *space = NULL;
+  Id obj_id = NO_ID;
+  const char *names[MAX_OBJECTS];
   char tmp[OBJ_STR];
+  char *obj=NULL;
   int i;
 
-  space= game_get_space(game, space_id);
-  if(!space){
-    return ERROR;
+  if (!game || space_id == NO_ID)
+  {
+    return NULL;
+  }
+
+  space = game_get_space(game, space_id);
+  if (!space)
+  {
+    return NULL;
   }
 
   tmp[0] = '\0';
-  for (i = 0; i < MAX_SET; i++)
+  for (i = 0; i < MAX_OBJECTS; i++)
   {
     obj_id = space_get_objects_id(space, i);
 
-    name = game_get_object_name(game, obj_id);
-    if (name != NULL)
+    names[i] = game_get_object_name(game, obj_id);
+    if (names[i] != NULL)
     {
-      strncat(tmp, name, OBJ_STR - strlen(obj) - 1);
+      strcat(tmp, names[i]);
       strcat(tmp, " ");
-    } 
+    }
+  }
+
+  tmp[11]= '\0';
+
+  obj = (char*)calloc(strlen(tmp)+1, sizeof(char));
+  if(!obj){
+    return NULL;
   }
   strcpy(obj, tmp);
 
-  return OK;
+  return obj;
 }
