@@ -220,6 +220,16 @@ Status game_set_last_message(Game *game, char *message)
   return OK;
 }
 
+char *game_get_last_message(Game *game)
+{
+  if (!game)
+  {
+    return NULL;
+  }
+
+  return game->last_message;
+}
+
 Status game_createspace(Game *game)
 {
   int i;
