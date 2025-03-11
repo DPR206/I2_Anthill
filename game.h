@@ -92,7 +92,14 @@ Status game_destroy(Game *game);
  */
 Status game_set_last_message(Game *game, char *message);
 
-
+/**
+ * @brief It returns the last message of the game
+ * @author Duna Puente
+ * 
+ * @param game Pointer to the game
+ * @return Pointer to the string with the last message
+ */
+char *game_get_last_message(Game *game);
 
 /*Funciones de tipo game_space*/
 
