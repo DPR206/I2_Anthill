@@ -140,7 +140,7 @@ Status game_actions_update(Game *game, Command *command)
   case DROP:
     game_actions_drop(game);
     break;
-  
+
   case LEFT:
     game_actions_left(game);
     break;
@@ -148,15 +148,15 @@ Status game_actions_update(Game *game, Command *command)
   case RIGHT:
     game_actions_right(game);
     break;
-  
+
   case ATTACK:
     game_actions_attack(game);
     break;
-  
+
   case CHAT:
     game_actions_chat(game);
     break;
-  
+
   default:
     break;
   }
@@ -296,6 +296,11 @@ void game_actions_left(Game *game)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
+    game_set_last_command_status(game, "OK");
+  }
+  else
+  {
+    game_set_last_command_status(game, "ERROR");
   }
 
   return;
@@ -321,6 +326,11 @@ void game_actions_right(Game *game)
     {
       game_set_object_location(game, object_id, NO_ID);
     }
+    game_set_last_command_status(game, "OK");
+  }
+  else
+  {
+    game_set_last_command_status(game, "ERROR");
   }
 
   return;
@@ -329,10 +339,10 @@ void game_actions_right(Game *game)
 void game_actions_attack(Game *game)
 {
   int n;
-  char *character=NULL;
+  char *character = NULL;
   time_t t;
 
-  if (!game || !character)
+  if (!game)
   {
     return;
   }
@@ -342,45 +352,75 @@ void game_actions_attack(Game *game)
   if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
       (game_get_charatcter_friendly(game, character) == FALSE))
   {
-    if (game_get_character_health(game, character) != 0 && game_get_player_health(game) != 0)
+    if ((game_get_character_health(game, character) != 0) && (game_get_player_health(game) != 0))
     {
       srand((unsigned)time(&t));
       n = 0 + rand() % (9 - 0 + 1);
       if (0 <= n && n <= 4)
       {
         game_player_set_health(game, (game_get_player_health(game) - 1));
+        game_set_last_command_status(game, "OK");
       }
       else if (5 <= n && n <= 9)
       {
         game_character_set_health(game, character, (game_get_character_health(game, character) - 1));
+        game_set_last_command_status(game, "OK");
+      }
+      else
+      {
+        game_set_last_command_status(game, "ERROR");
       }
     }
+    else
+    {
+      game_set_last_command_status(game, "ERROR");
+    }
+  }
+  else
+  {
+    game_set_last_command_status(game, "ERROR");
   }
 
+  free(character);
   return;
 }
 
 void game_actions_chat(Game *game)
 {
-  char *character=NULL;
-  char default_message[] = "This character isn't friendly or there is no character.\n";
+  char *character = NULL, *message=NULL;
+  char default_message[] = "This character isn't friendly or there is no character";
 
-  if (!game || !character)
+  if (!game)
   {
     return;
   }
 
   character = game_space_get_character_name(game);
 
+  /*if (!character)
+  {
+    game_set_last_message(game, default_message);
+    game_set_last_command_status(game, "ERROR");
+  }*/
+  
+
   if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
       (game_get_charatcter_friendly(game, character) == TRUE))
   {
-    game_set_last_message(game, game_get_character_message(game, character));
-    return;
+    message=game_get_character_message(game, character);
+    game_set_last_message(game, message);
+    game_set_last_command_status(game, "OK");
+    free(message);
   }
   else
   {
     game_set_last_message(game, default_message);
-    return;
+    game_set_last_command_status(game, "ERROR");
   }
+
+  if (character)
+  {
+    free(character);
+  }
+  
 }

@@ -681,6 +681,11 @@ char *game_get_character_message(Game *game, char *character)
   {
     if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
+      message = (char *)calloc(strlen(character_get_message(game->characters[i])), sizeof(char));
+      if (!message)
+      {
+        return NULL;
+      }
       strcpy(message, character_get_message(game->characters[i]));
       return message;
     }
@@ -726,7 +731,8 @@ char *game_space_get_character_name(Game *game)
   {
     return NULL;
   }
-
+  
+  name=(char *)calloc(strlen(character_get_name(character)), sizeof(char));
   strcpy(name, character_get_name(character));
   return name;
 }

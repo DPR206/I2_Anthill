@@ -19,7 +19,7 @@
 
 #define MAX_SPACES 100
 #define MAX_OBJECTS 4
-#define MAX_CHARACTERS 10
+#define MAX_CHARACTERS 2
 
 typedef struct _Game Game;
 
@@ -100,6 +100,8 @@ Status game_set_last_message(Game *game, char *message);
  * @return Pointer to the string with the last message
  */
 char *game_get_last_message(Game *game);
+
+
 
 /*Funciones de tipo game_space*/
 

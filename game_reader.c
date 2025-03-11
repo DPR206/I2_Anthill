@@ -47,6 +47,7 @@ Status game_reader_load_spaces(Game *game, char *filename)
         strcat(gdesc, toks);
         strcat(gdesc, "|");
       }
+
 #ifdef DEBUG
       printf("Leido: %ld|%s|%ld|%ld|%ld|%ld\n", id, name, north, east, south, west);
 #endif
@@ -74,13 +75,14 @@ Status game_reader_load_spaces(Game *game, char *filename)
   return status;
 }
 
-Status game_reader_load_objects(Game *game, char *filename){
+Status game_reader_load_objects(Game *game, char *filename)
+{
   FILE *file = NULL;
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  Id id = NO_ID, location=NO_ID;
-  Object *object=NULL;
+  Id id = NO_ID, location = NO_ID;
+  Object *object = NULL;
   Status status = OK;
 
   if (!filename)
@@ -96,16 +98,18 @@ Status game_reader_load_objects(Game *game, char *filename){
 
   while (fgets(line, WORD_SIZE, file))
   {
-    if (strncmp("#o:", line, 3) == 0){
-      toks=strtok(line + 3, "|");
-      id=atol(toks);
+    if (strncmp("#o:", line, 3) == 0)
+    {
+      toks = strtok(line + 3, "|");
+      id = atol(toks);
       toks = strtok(NULL, "|");
       strcpy(name, toks);
       toks = strtok(NULL, "|");
       location = atol(toks);
 
-      object=object_create(id);
-      if(object!=NULL){
+      object = object_create(id);
+      if (object != NULL)
+      {
         object_set_name(object, name);
         space_add_object(game_get_space(game, location), id);
         game_add_object(game, object);
