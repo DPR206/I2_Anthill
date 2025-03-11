@@ -239,7 +239,8 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   }
   sprintf(str, " ");
   screen_area_puts(ge->descript, str);
-  /*Falta poner  message*/
+  sprintf(str, "Message: %s", game_get_last_message(game));
+  screen_area_puts(ge->descript, str);
 
   /* Paint in the banner area */
   screen_area_puts(ge->banner, "    The anthill game ");
