@@ -339,7 +339,7 @@ void game_actions_right(Game *game)
 void game_actions_attack(Game *game)
 {
   int n;
-  char *character = NULL;
+  Character *character=NULL;
   time_t t;
 
   if (!game)
@@ -347,10 +347,10 @@ void game_actions_attack(Game *game)
     return;
   }
 
-  character = game_space_get_character_name(game);
+  character = game_space_get_character(game, game_get_player_location(game));
 
-  if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
-      (game_get_charatcter_friendly(game, character) == FALSE))
+  if ((game_get_character_location(game, character) == game_get_player_location(game)) &&
+      (game_get_character_friendly(game, character) == FALSE))
   {
     if ((game_get_character_health(game, character) != 0) && (game_get_player_health(game) != 0))
     {
@@ -380,14 +380,13 @@ void game_actions_attack(Game *game)
   {
     game_set_last_command_status(game, "ERROR");
   }
-
-  free(character);
+  
   return;
 }
 
 void game_actions_chat(Game *game)
 {
-  char *character = NULL, *message=NULL;
+  Character *character=NULL;
   char default_message[] = "This character isn't friendly or there is no character";
 
   if (!game)
@@ -395,32 +394,24 @@ void game_actions_chat(Game *game)
     return;
   }
 
-  character = game_space_get_character_name(game);
+  character = game_space_get_character(game, game_get_player_location(game));
 
-  /*if (!character)
+  if (!character)
   {
     game_set_last_message(game, default_message);
     game_set_last_command_status(game, "ERROR");
-  }*/
+  }
   
 
-  if ((game_get_character_location_from_name(game, character) == game_get_player_location(game)) &&
-      (game_get_charatcter_friendly(game, character) == TRUE))
+  if ((game_get_character_location(game, character) == game_get_player_location(game)) &&
+      (game_get_character_friendly(game, character) == TRUE))
   {
-    message=game_get_character_message(game, character);
-    game_set_last_message(game, message);
+    game_set_last_message(game, game_get_character_message(game, character));
     game_set_last_command_status(game, "OK");
-    free(message);
   }
   else
   {
     game_set_last_message(game, default_message);
     game_set_last_command_status(game, "ERROR");
   }
-
-  if (character)
-  {
-    free(character);
-  }
-  
 }

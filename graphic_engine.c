@@ -85,6 +85,7 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   Id id_act = NO_ID, id_back = NO_ID, id_next = NO_ID /*, id_right = NO_ID, id_left = NO_ID*/;
   Id grain_loc = NO_ID, crumb_loc = NO_ID, leaf_loc = NO_ID, seed_loc = NO_ID;
   Id spider_loc = NO_ID, ant_loc = NO_ID, player_loc = NO_ID;
+  Character *spider=NULL, *ant=NULL;
   Id player_object = NO_ID;
   int spider_health = 0, ant_health = 0, player_health = 0;
   Space *space_act = NULL;
@@ -96,12 +97,15 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
   CommandCode last_cmd = UNKNOWN;
   extern char *cmd_to_str[N_CMD][N_CMDT];
 
-  spider_gdesc = game_get_character_gdesc(game, "Spider");
-  spider_loc = game_get_character_location_from_name(game, "Spider");
-  spider_health = game_get_character_health(game, "Spider");
-  ant_gdesc = game_get_character_gdesc(game, "Ant");
-  ant_loc = game_get_character_location_from_name(game, "Ant");
-  ant_health = game_get_character_health(game, "Ant");
+  spider=game_get_character_from_name(game, "Spider");
+  ant=game_get_character_from_name(game, "Ant");
+
+  spider_gdesc = game_get_character_gdesc(game, spider);
+  spider_loc = game_get_character_location(game, spider);
+  spider_health = game_get_character_health(game, spider);
+  ant_gdesc = game_get_character_gdesc(game, ant);
+  ant_loc = game_get_character_location(game, ant);
+  ant_health = game_get_character_health(game, ant);
 
 
   /* Paint the in the map area */

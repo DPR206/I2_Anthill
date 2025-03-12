@@ -142,6 +142,6 @@ Status character_set_message(Character *character, char *message);
  * @param character A pointer to the character
  * @return A pointer to the string with the character's message
  */
-const char *character_get_message(Character *character);
+char *character_get_message(Character *character);
 
 #endif

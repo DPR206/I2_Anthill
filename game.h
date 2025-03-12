@@ -360,7 +360,7 @@ Status game_add_character(Game *game, Character *character);
  * @param character Name of the character 
  * @return char*, graphic descrition of the character
  */
-const char *game_get_character_gdesc(Game *game, char *character);
+const char *game_get_character_gdesc(Game *game, Character *character);
 
 /**
  * @brief It gets the location of a character from its name
@@ -373,6 +373,16 @@ const char *game_get_character_gdesc(Game *game, char *character);
 Id game_get_character_location_from_name(Game *game, char *character);
 
 /**
+ * @brief It gets a character from its name
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param character Name of the character
+ * @return Character*, pointer to the character
+ */
+Character *game_get_character_from_name(Game *game, char *character);
+
+/**
  * @brief It gets the location of a character from its id
  * @author Claudia Saiz
  * 
@@ -380,7 +390,7 @@ Id game_get_character_location_from_name(Game *game, char *character);
  * @param character Id of the character
  * @return Id, location of the character
  */
-Id game_get_character_location(Game *game, Id character);
+Id game_get_character_location(Game *game, Character *character);
 
 /**
  * @brief It gets the health of a character fron its name
@@ -390,7 +400,7 @@ Id game_get_character_location(Game *game, Id character);
  * @param character Name of the character
  * @return int, Health of the character
  */
-int game_get_character_health(Game *game, char *character);
+int game_get_character_health(Game *game, Character *character);
 
 /**
  * @brief It gets the a character's id
@@ -400,7 +410,7 @@ int game_get_character_health(Game *game, char *character);
  * @param character Name of the character
  * @return Id, the character's id 
  */
-Id game_get_character_id(Game *game, char *character);
+Id game_get_character_id(Game *game, Character *character);
 
 /**
  * @brief It returns whether the character is friendly or not
@@ -410,7 +420,7 @@ Id game_get_character_id(Game *game, char *character);
  * @param character Name of the character
  * @return Bool, if the character is friendly or not
  */
-Bool game_get_charatcter_friendly(Game *game, char *character);
+Bool game_get_character_friendly(Game *game, Character *character);
 
 /**
  * @brief It returns a character's message
@@ -420,7 +430,7 @@ Bool game_get_charatcter_friendly(Game *game, char *character);
  * @param character Name of the character
  * @return A string with the character's message
  */
-char *game_get_character_message(Game *game, char *character);
+char *game_get_character_message(Game *game, Character *character);
 
 /**
  * @brief It sets the character's health
@@ -430,15 +440,15 @@ char *game_get_character_message(Game *game, char *character);
  * @param health The health of the character
  * @return Status of the operation: ERROR if failes, OK if successful 
  */
-Status game_character_set_health(Game *game, char *character, int health);
+Status game_character_set_health(Game *game, Character *character, int health);
 
 /**
  * @brief It gets the name of the character in a space
  * @author Duna Puente
  * 
  * @param game Pointer to a game
- * @return A string with the name of the character 
+ * @return Pointer to the character in the space or NULL if there is no character
  */
-char *game_space_get_character_name(Game *game);
+Character *game_space_get_character(Game *, Id space);
 
 #endif

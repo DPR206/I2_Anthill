@@ -550,23 +550,14 @@ Status game_add_character(Game *game, Character *character)
   return OK;
 }
 
-const char *game_get_character_gdesc(Game *game, char *character)
+const char *game_get_character_gdesc(Game *game, Character *character)
 {
-  int i;
-
   if (character == NULL || !game)
   {
     return NULL;
   }
 
-  for (i = 0; i < MAX_CHARACTERS; i++)
-  {
-    if (strcmp(character_get_name(game->characters[i]), character) == 0)
-    {
-      return character_get_gdesc(game->characters[i]);
-    }
-  }
-  return NULL;
+  return character_get_gdesc(character);
 }
 
 Id game_get_character_location_from_name(Game *game, char *character)
@@ -582,25 +573,46 @@ Id game_get_character_location_from_name(Game *game, char *character)
   {
     if (strcmp(character_get_name(game->characters[i]), character) == 0)
     {
-      return game_get_character_location(game, character_get_id(game->characters[i]));
+      return game_get_character_location(game, game->characters[i]);
     }
   }
 
   return NO_ID;
 }
 
-Id game_get_character_location(Game *game, Id character)
+Character *game_get_character_from_name(Game *game, char *character)
 {
   int i;
 
-  if (character == NO_ID || !game)
+  if (character == NULL || !game)
+  {
+    return NULL;
+  }
+
+  for (i = 0; i < MAX_CHARACTERS; i++)
+  {
+    if (strcmp(character_get_name(game->characters[i]), character) == 0)
+    {
+      return game->characters[i];
+    }
+  }
+
+  return NULL;
+}
+
+Id game_get_character_location(Game *game, Character *character)
+{
+  int i;
+  Id character_id=character_get_id(character);
+
+  if (character_id == NO_ID || !game)
   {
     return NO_ID;
   }
 
   for (i = 0; i < game->n_spaces; i++)
   {
-    if (character_get_id(space_get_character(game->spaces[i])) == character)
+    if (character_get_id(space_get_character(game->spaces[i])) == character_id)
     {
       return space_get_id(game->spaces[i]);
     }
@@ -608,131 +620,62 @@ Id game_get_character_location(Game *game, Id character)
   return NO_ID;
 }
 
-int game_get_character_health(Game *game, char *character)
+int game_get_character_health(Game *game, Character *character)
 {
-  int i;
-
-  if (character == NULL)
+  if (!game||!character)
   {
     return -1;
   }
 
-  for (i = 0; i < MAX_CHARACTERS; i++)
-  {
-    if (strcmp(character_get_name(game->characters[i]), character) == 0)
-    {
-      return character_get_health(game->characters[i]);
-    }
-  }
-  return -1;
+  return character_get_health(character);
 }
 
-Id game_get_character_id(Game *game, char *character)
+Id game_get_character_id(Game *game, Character *character)
 {
-  int i;
-
   if (!game || !character)
   {
     return NO_ID;
   }
 
-  for (i = 0; i < MAX_CHARACTERS; i++)
-  {
-    if (strcmp(character_get_name(game->characters[i]), character) == 0)
-    {
-      return character_get_id(game->characters[i]);
-    }
-  }
-
-  return NO_ID;
+  return character_get_id(character);
 }
 
-Bool game_get_charatcter_friendly(Game *game, char *character)
+Bool game_get_character_friendly(Game *game, Character *character)
 {
-  int i;
-
   if (!game || !character)
   {
     return FALSE;
   }
 
-  for (i = 0; i < MAX_CHARACTERS; i++)
-  {
-    if (strcmp(character_get_name(game->characters[i]), character) == 0)
-    {
-      return character_get_friendly(game->characters[i]);
-    }
-  }
-
-  return FALSE;
+  return character_get_friendly(character);
 }
 
-char *game_get_character_message(Game *game, char *character)
+char *game_get_character_message(Game *game, Character *character)
 {
-  int i;
-  char *message = NULL;
-
   if (!game || !character)
   {
     return NULL;
   }
 
-  for (i = 0; i < MAX_CHARACTERS; i++)
-  {
-    if (strcmp(character_get_name(game->characters[i]), character) == 0)
-    {
-      message = (char *)calloc(strlen(character_get_message(game->characters[i])), sizeof(char));
-      if (!message)
-      {
-        return NULL;
-      }
-      strcpy(message, character_get_message(game->characters[i]));
-      return message;
-    }
-  }
-
-  return NULL;
+  return character_get_message(character);
 }
 
-Status game_character_set_health(Game *game, char *character, int health)
+Status game_character_set_health(Game *game, Character *character, int health)
 {
-  int i;
-
   if (!game || !character || health < 0)
   {
     return ERROR;
   }
 
-  for (i = 0; i < MAX_CHARACTERS; i++)
-  {
-    if (strcmp(character_get_name(game->characters[i]), character) == 0)
-    {
-      character_set_health(game->characters[i], health);
-      return OK;
-    }
-  }
-
-  return ERROR;
+  return character_set_health(character, health);
 }
 
-char *game_space_get_character_name(Game *game)
+Character *game_space_get_character(Game *game, Id space)
 {
-  Character *character = NULL;
-  char *name = NULL;
-
   if (!game)
   {
     return NULL;
   }
 
-  character = space_get_character(game_get_space(game, player_get_location(game->player)));
-
-  if (!character)
-  {
-    return NULL;
-  }
-  
-  name=(char *)calloc(strlen(character_get_name(character)), sizeof(char));
-  strcpy(name, character_get_name(character));
-  return name;
+  return space_get_character(game_get_space(game, space));
 }

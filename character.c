@@ -197,7 +197,7 @@ Status character_set_message(Character *character, char *message)
     
 }
 
-const char *character_get_message(Character *character) 
+char *character_get_message(Character *character) 
 { 
     /* Error control */
     if (!character)
