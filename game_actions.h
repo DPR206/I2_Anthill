@@ -3,8 +3,8 @@
  *
  * @file game_actions.h
  * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
+ * @version 2
+ * @date 12-03-2025
  * @copyright GNU Public License
  */
 
@@ -19,7 +19,7 @@
 
 /**
  * @brief It updates the game state, calls the corresponding function based on the given command
- * @author Claudia Saiz
+ * @author Duna Puente
  *
  * @param game Pointer to the game
  * @param cmd Pointer to the command that determines the action to perform

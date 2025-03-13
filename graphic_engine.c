@@ -3,8 +3,8 @@
  *
  * @file graphic_engine.c
  * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
+ * @version 2
+ * @date 14-03-2025
  * @copyright GNU Public License
  */
 
@@ -22,7 +22,7 @@
 #define WIDTH_MAP 60
 #define WIDTH_DES 29
 #define WIDTH_BAN 23
-#define HEIGHT_MAP 20
+#define HEIGHT_MAP 29
 #define HEIGHT_BAN 1
 #define HEIGHT_HLP 2
 #define HEIGHT_FDB 3
@@ -37,10 +37,35 @@ struct _Graphic_engine
 
 /*Funciones privadas*/
 
+/**
+ * @brief It modifies a string to contain all of the objects of a space
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param space_id Id of the space
+ * @param object String to contain the names of the objects
+ */
 void graphic_engine_objects_at_space(Game *game, Id space_id, char *object);
 
+/**
+ * @brief It modifies a string to contain the graphic descrition of a character in a space
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param space_id Id of the space
+ * @param character_gdesc String to contain the gdesc of the character
+ */
 void graphic_engine_character_at_space(Game *game, Id space_id, char *character_gdesc);
 
+/**
+ * @brief It prints three consecutive spaces from the id of the space in the middle
+ * @author Claudia Saiz
+ * 
+ * @param ge Pointer to the graphic engine
+ * @param game Pointer to the game
+ * @param space_id Id of the space in the middle
+ * @return Status of the operation
+ */
 Status print_spaces(Graphic_engine *ge, Game *game, Id space_id);
 
 /*Funciones publicas*/
@@ -118,10 +143,21 @@ void graphic_engine_paint_game(Graphic_engine *ge, Game *game)
     leaf_loc = game_get_object_location_from_name(game, "Leaf");
     seed_loc = game_get_object_location_from_name(game, "Seed");
 
-    
     print_spaces(ge, game, id_back);
 
+    if (id_back != NO_ID)
+    {
+      sprintf(str, "%28s^%28s", " ", " ");
+      screen_area_puts(ge->map, str);
+    }
+
     print_spaces(ge, game, id_act);
+
+    if (id_next != NO_ID)
+    {
+      sprintf(str, "%28sv%28s", " ", " ");
+      screen_area_puts(ge->map, str);
+    }
 
     print_spaces(ge, game, id_next);
   }
@@ -264,7 +300,9 @@ void graphic_engine_character_at_space(Game *game, Id space_id, char *character_
   else if (ant_loc == space_id)
   {
     strcpy(character_gdesc, ant_gdesc);
-  } else {
+  }
+  else
+  {
     strcpy(character_gdesc, " ");
   }
 }
@@ -278,8 +316,10 @@ Status print_spaces(Graphic_engine *ge, Game *game, Id space_id)
   char character_gdesc_act[G_SIZE], character_gdesc_left[G_SIZE], character_gdesc_right[G_SIZE];
   char str2_left[SPACE_SIZE] = " ", str2_act[SPACE_SIZE] = " ", str2_right[SPACE_SIZE] = " ";
   char str3_left[SPACE_SIZE] = " ", str3_act[SPACE_SIZE] = " ", str3_right[SPACE_SIZE] = " ";
+  char space_gdesc_left[GD_HEIGHT][SPACE_SIZE], space_gdesc_act[GD_HEIGHT][SPACE_SIZE], space_gdesc_right[GD_HEIGHT][SPACE_SIZE];
   char player[] = "mO^";
   char str[255];
+  int i;
 
   id_right = space_get_east(space_act);
   id_left = space_get_west(space_act);
@@ -287,6 +327,19 @@ Status print_spaces(Graphic_engine *ge, Game *game, Id space_id)
   if (game_get_player_location(game) != space_id)
   {
     strcpy(player, " ");
+  }
+
+  for (i = 0; i < GD_HEIGHT; i++)
+  {
+    strcpy(space_gdesc_left[i], " ");
+  }
+  for (i = 0; i < GD_HEIGHT; i++)
+  {
+    strcpy(space_gdesc_act[i], " ");
+  }
+  for (i = 0; i < GD_HEIGHT; i++)
+  {
+    strcpy(space_gdesc_right[i], " ");
   }
 
   graphic_engine_objects_at_space(game, space_id, obj_act);
@@ -299,21 +352,33 @@ Status print_spaces(Graphic_engine *ge, Game *game, Id space_id)
   if (space_id != NO_ID)
   {
     strcpy(act_border, " +---------------+ ");
-    sprintf(str2_act, " | %3s %-7s%3d| ", player, character_gdesc_act, (int)space_id);
+    sprintf(str2_act, " | %3s %-6s %3d| ", player, character_gdesc_act, (int)space_id);
+    for (i = 0; i < GD_HEIGHT; i++)
+    {
+      sprintf(space_gdesc_act[i], " |%-15s| ", game_get_space_gdesc(game, space_id, i));
+    }
     sprintf(str3_act, " |%-15s| ", obj_act);
   }
 
   if (id_left != NO_ID)
   {
     strcpy(left_border, " +---------------+ ");
-    sprintf(str2_left, " |     %-7s%3d| ", character_gdesc_left, (int)id_left);
+    sprintf(str2_left, " |     %-6s %3d| ", character_gdesc_left, (int)id_left);
+    for (i = 0; i < GD_HEIGHT; i++)
+    {
+      sprintf(space_gdesc_left[i], " |%-15s| ", game_get_space_gdesc(game, id_left, i));
+    }
     sprintf(str3_left, " |%-15s|<", obj_left);
   }
 
   if (id_right != NO_ID)
   {
     strcpy(right_border, " +---------------+ ");
-    sprintf(str2_right, " |     %-7s%3d| ", character_gdesc_right, (int)id_right);
+    sprintf(str2_right, " |     %-6s %3d| ", character_gdesc_right, (int)id_right);
+    for (i = 0; i < GD_HEIGHT; i++)
+    {
+      sprintf(space_gdesc_right[i], " |%-15s| ", game_get_space_gdesc(game, id_right, i));
+    }
     sprintf(str3_right, ">|%-15s| ", obj_right);
   }
 
@@ -321,6 +386,11 @@ Status print_spaces(Graphic_engine *ge, Game *game, Id space_id)
   screen_area_puts(ge->map, str);
   sprintf(str, "%19s%19s%19s", str2_left, str2_act, str2_right);
   screen_area_puts(ge->map, str);
+  for (i = 0; i < GD_HEIGHT; i++)
+  {
+    sprintf(str, "%19s%19s%19s", space_gdesc_left[i], space_gdesc_act[i], space_gdesc_right[i]);
+    screen_area_puts(ge->map, str);
+  }
   sprintf(str, "%19s%19s%19s", str3_left, str3_act, str3_right);
   screen_area_puts(ge->map, str);
   sprintf(str, "%19s%19s%19s", left_border, act_border, right_border);

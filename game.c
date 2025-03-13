@@ -3,8 +3,8 @@
  *
  * @file game.c
  * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
+ * @version 2
+ * @date 14-03-2025
  * @copyright GNU Public License
  */
 
@@ -61,6 +61,10 @@ Id game_get_space_id_at(Game *game, int position)
 /**
    Game interface implementation
 */
+
+/**
+ * Funciones de tipo game
+ */
 
 Game *game_create()
 {
@@ -230,6 +234,10 @@ char *game_get_last_message(Game *game)
   return game->last_message;
 }
 
+/**
+ * Funciones de tipo game_space
+ */
+
 Status game_createspace(Game *game)
 {
   int i;
@@ -296,6 +304,21 @@ Status game_add_newspace(Game *game, Space *space)
 
   return OK;
 }
+
+char *game_get_space_gdesc(Game *game, Id space_id, int line){
+  Space *space=NULL;
+
+  if(!game||space_id==NO_ID){
+    return NULL;
+  }
+  space=game_get_space(game, space_id);
+
+  return space_get_gdesc(space, line);
+}
+
+/**
+ * Funciones de tipo game_player
+ */
 
 Id game_get_player_location(Game *game) { return player_get_location(game->player); }
 
@@ -366,6 +389,10 @@ Status game_player_set_health(Game *game, int health)
 
   return OK;
 }
+
+/**
+ * Funciones de tipo game_object
+ */
 
 Id game_get_object_location(Game *game, Id object)
 {
@@ -493,6 +520,10 @@ Status game_add_object(Game *game, Object *object)
   return OK;
 }
 
+/**
+ * Funciones de tipo game_command
+ */
+
 Command *game_get_last_command(Game *game)
 {
   if (!game)
@@ -536,6 +567,10 @@ Status game_set_last_command_status(Game *game, char *status)
   return OK;
 }
 
+/**
+ * Funciones de tipo game_character
+ */
+
 Status game_add_character(Game *game, Character *character)
 {
 
@@ -552,6 +587,7 @@ Status game_add_character(Game *game, Character *character)
 
 const char *game_get_character_gdesc(Game *game, Character *character)
 {
+
   if (character == NULL || !game)
   {
     return NULL;
@@ -603,7 +639,7 @@ Character *game_get_character_from_name(Game *game, char *character)
 Id game_get_character_location(Game *game, Character *character)
 {
   int i;
-  Id character_id=character_get_id(character);
+  Id character_id = character_get_id(character);
 
   if (character_id == NO_ID || !game)
   {
@@ -622,7 +658,7 @@ Id game_get_character_location(Game *game, Character *character)
 
 int game_get_character_health(Game *game, Character *character)
 {
-  if (!game||!character)
+  if (!game || !character)
   {
     return -1;
   }

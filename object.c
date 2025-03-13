@@ -3,7 +3,7 @@
  *
  * @file object.c
  * @author Claudia Saiz
- * @version 0
+ * @version 1
  * @date 05-02-2025
  * @copyright GNU Public License
  */

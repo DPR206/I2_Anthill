@@ -3,8 +3,8 @@
  *
  * @file game.h
  * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
+ * @version 2
+ * @date 14-03-2025
  * @copyright GNU Public License
  */
 
@@ -25,7 +25,9 @@ typedef struct _Game Game;
 
 
 
-/*Funciones de tipo game*/
+/**
+ * Funciones de tipo game
+*/
 
 /**
  * @brief It creates a new game, initializing all its members
@@ -103,7 +105,9 @@ char *game_get_last_message(Game *game);
 
 
 
-/*Funciones de tipo game_space*/
+/**
+ * Funciones de tipo game_space
+*/
 
 /**
  * @brief It creates a new game space, allocating memory and initializing its members
@@ -162,9 +166,22 @@ Status game_add_numspaces(Game *game);
  */
 Status game_add_newspace(Game *game, Space *space);
 
+/**
+ * @brief It gets one line of the graphic descrition of an specific space
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param space Pointer to the space 
+ * @param line The line of graphic descrition to get
+ * @return char*, one line of the graphic descrition of a space
+ */
+char *game_get_space_gdesc(Game *game, Id space_id, int line);
 
 
-/*Funciones de tipo game_player*/
+
+/**
+ * Funciones de tipo game_player
+*/
 
 /**
  * @brief It gets the id of the space where the player is located
@@ -234,7 +251,9 @@ Status game_player_set_health(Game *game, int health);
 
 
 
-/*Funciones de tipo game_object*/
+/**
+ * Funciones de tipo game_object
+*/
 
 /**
  * @brief It gets the ID of the space where an object is located by its identifier
@@ -298,11 +317,13 @@ Status game_add_object(Game *game, Object *object);
 
 
 
-/*Funciones de tipo game_command*/
+/**
+ * Funciones de tipo game_command
+*/
 
 /**
  * @brief It gets the last command executed
- * @author Profesores PPROG
+ * @author Claudia Saiz
  *
  * @param game Pointer to the game
  * @return Pointer to the last command executed
@@ -311,7 +332,7 @@ Command *game_get_last_command(Game *game);
 
 /**
  * @brief It sets the last command to the provided command
- * @author Profesores PPROG
+ * @author Claudia Saiz
  *
  * @param game Pointer to the game
  * @param command Pointer to the command to set
@@ -333,14 +354,16 @@ const char *game_get_last_command_status(Game *game);
  * @author Claudia Saiz
  * 
  * @param game Pointer to the game
- * @param const char* status to be set
+ * @param char* status to be set
  * @return Status of the operation, OK if successful or ERROR if not
  */
 Status game_set_last_command_status(Game *game, char *status);
 
 
 
-/*Funciones de tipo game_character*/
+/**
+ * Funciones de tipo game_character
+*/
 
 /**
  * @brief It adds a character to the character array of the game
@@ -357,7 +380,7 @@ Status game_add_character(Game *game, Character *character);
  * @author Claudia Saiz
  * 
  * @param game Pointer to the game
- * @param character Name of the character 
+ * @param character Pointer to the character
  * @return char*, graphic descrition of the character
  */
 const char *game_get_character_gdesc(Game *game, Character *character);
@@ -387,7 +410,7 @@ Character *game_get_character_from_name(Game *game, char *character);
  * @author Claudia Saiz
  * 
  * @param game Pointer to the game
- * @param character Id of the character
+ * @param character Pointer to the character
  * @return Id, location of the character
  */
 Id game_get_character_location(Game *game, Character *character);
@@ -397,7 +420,7 @@ Id game_get_character_location(Game *game, Character *character);
  * @author Claudia Saiz
  * 
  * @param game Pointer to the game
- * @param character Name of the character
+ * @param character Pointer to the character
  * @return int, Health of the character
  */
 int game_get_character_health(Game *game, Character *character);
@@ -407,7 +430,7 @@ int game_get_character_health(Game *game, Character *character);
  * @author Duna Puente
  * 
  * @param game Pointer to the game
- * @param character Name of the character
+ * @param character Pointer to the character
  * @return Id, the character's id 
  */
 Id game_get_character_id(Game *game, Character *character);
@@ -417,7 +440,7 @@ Id game_get_character_id(Game *game, Character *character);
  * @author Duna Puente
  * 
  * @param game Pointer to the game
- * @param character Name of the character
+ * @param character Pointer to the character
  * @return Bool, if the character is friendly or not
  */
 Bool game_get_character_friendly(Game *game, Character *character);
@@ -427,16 +450,17 @@ Bool game_get_character_friendly(Game *game, Character *character);
  * @author Duna Puente
  * 
  * @param game Pointer to the game
- * @param character Name of the character
+ * @param character Pointer to the character
  * @return A string with the character's message
  */
 char *game_get_character_message(Game *game, Character *character);
 
 /**
  * @brief It sets the character's health
+ * @author Duna Puente
  * 
  * @param game Pointer to the game
- * @param character Name of the character
+ * @param character Pointer to the character
  * @param health The health of the character
  * @return Status of the operation: ERROR if failes, OK if successful 
  */
@@ -447,6 +471,7 @@ Status game_character_set_health(Game *game, Character *character, int health);
  * @author Duna Puente
  * 
  * @param game Pointer to a game
+ * @param space Id of the space
  * @return Pointer to the character in the space or NULL if there is no character
  */
 Character *game_space_get_character(Game *, Id space);

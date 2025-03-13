@@ -11,8 +11,25 @@
 #ifndef SET_TEST_H
 #define SET_TEST_H
 
+/**
+ * @test Test set creation
+ * @pre 
+ * @post Set is not NULL
+ */
 void test1_set_create();
+
+/**
+ * @test Test set creation
+ * @pre 
+ * @post All set->ids == NO_ID
+ */
 void test2_set_create();
+
+/**
+ * @test Test set creation
+ * @pre  
+ * @post set->nids == 0
+ */
 void test3_set_create();
 void test1_set_add();
 void test2_set_add();

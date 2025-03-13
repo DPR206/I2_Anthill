@@ -3,7 +3,7 @@
  *
  * @file player.h
  * @author Duna Puente
- * @version 0
+ * @version 1
  * @date 10-02-2025
  * @copyright GNU Public License
  */

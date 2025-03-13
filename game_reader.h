@@ -1,10 +1,10 @@
 /**
- * @brief It define the game reader module interface
+ * @brief It defines the game_reader module interface
  * 
  * @file game_reader.h
  * @author Duna Puente
- * @version 0
- * @date 10-02-2025
+ * @version 2
+ * @date 28-02-2025
  * @copyright GNU Public License
  */
 

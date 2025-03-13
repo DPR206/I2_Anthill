@@ -3,8 +3,8 @@
  *
  * @file game_actions.c
  * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
+ * @version 2
+ * @date 12-03-2025
  * @copyright GNU Public License
  */
 
@@ -37,7 +37,7 @@ void game_actions_exit(Game *game);
 
 /**
  * @brief It moves the player to the next space in the game, if available
- * @author Profesores PPROG
+ * @author Duna Puente
  *
  * @param game Pointer to the game
  */
@@ -45,7 +45,7 @@ void game_actions_next(Game *game);
 
 /**
  * @brief It moves the player to the previous space in the game, if available
- * @author Profesores PPROG
+ * @author Duna Puente
  *
  * @param game Pointer to the game
  */
@@ -53,7 +53,7 @@ void game_actions_back(Game *game);
 
 /**
  * @brief It lets the player take the object from a  space
- * @author Claudia Saiz
+ * @author Duna Puente
  *
  * @param game Pointer to the game
  */
@@ -61,7 +61,7 @@ void game_actions_take(Game *game, char *object);
 
 /**
  * @brief It lets the player drop the object it carries in the space it is in
- * @author Claudia Saiz
+ * @author Duna Puente
  *
  * @param game Pointer to the game
  */

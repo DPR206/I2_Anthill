@@ -1,3 +1,13 @@
+/**
+ * @brief It implements the game_reader module
+ *
+ * @file game_reader.c
+ * @author Duna Puente
+ * @version 2
+ * @date 28-02-2025
+ * @copyright GNU Public License
+ */
+
 #include "game_reader.h"
 
 #include <stdio.h>
@@ -10,10 +20,12 @@ Status game_reader_load_spaces(Game *game, char *filename)
   char line[WORD_SIZE] = "";
   char name[WORD_SIZE] = "";
   char *toks = NULL;
-  char gdesc[WORD_SIZE]="";
+  char gdesc[GD_HEIGHT][GD_WIDTH+1];
+  char aux[GD_WIDTH+1];
   Id id = NO_ID, north = NO_ID, east = NO_ID, south = NO_ID, west = NO_ID;
   Space *space = NULL;
   Status status = OK;
+  int i;
 
   if (!filename)
   {
@@ -30,6 +42,7 @@ Status game_reader_load_spaces(Game *game, char *filename)
   {
     if (strncmp("#s:", line, 3) == 0)
     {
+      i=0;
       toks = strtok(line + 3, "|");
       id = atol(toks);
       toks = strtok(NULL, "|");
@@ -42,10 +55,15 @@ Status game_reader_load_spaces(Game *game, char *filename)
       south = atol(toks);
       toks = strtok(NULL, "|");
       west = atol(toks);
-      while ((toks = strtok(NULL, "|")))
-      {
-        strcat(gdesc, toks);
-        strcat(gdesc, "|");
+      for(i=0; i<GD_HEIGHT; i++){
+        toks= strtok(NULL, "|");
+        if(!toks){
+          strcpy(aux, " ");
+        } else {
+          strcpy(aux, toks);
+        }
+        aux[GD_WIDTH + 1]='\0';
+        strcpy(gdesc[i], aux);
       }
 
 #ifdef DEBUG

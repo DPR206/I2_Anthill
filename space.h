@@ -3,8 +3,8 @@
  *
  * @file space.h
  * @author Profesores PPROG
- * @version 0
- * @date 27-01-2025
+ * @version 2
+ * @date 05-03-2025
  * @copyright GNU Public License
  */
 
@@ -14,6 +14,9 @@
 #include "types.h"
 #include "set.h"
 #include "character.h"
+
+#define GD_HEIGHT 5
+#define GD_WIDTH 9
 
 typedef struct _Space Space;
 
@@ -213,19 +216,20 @@ Character *space_get_character(Space *space);
  * @author Duna Puente
  * 
  * @param space Pointer to the space
- * @param gdesc String with the graphic decription
+ * @param gdesc Array of strings with the graphic decription
  * @return Status of the operation, OK if successful, or ERROR if not
  */
-Status space_set_gdesc(Space *space, char *gdesc);
+Status space_set_gdesc(Space *space, char gdesc[GD_HEIGHT][GD_WIDTH + 1]);
 
 /**
- * @brief It returns the space's graphic description
+ * @brief It returns the space's graphic description of an specific line
  * @author Duna Puente
  * 
  * @param space Pointer to the space
+ * @param line Line og gdesc the fu
  * @return A pointer to the string with the graphic description
  */
-char *space_get_gdesc(Space *space);
+char *space_get_gdesc(Space *space, int line);
 
 /**
  * @brief It prints the space information

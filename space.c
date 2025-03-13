@@ -3,8 +3,8 @@
  *
  * @file space.c
  * @author Profesores PPROG
- * @version 1
- * @date 27-01-2025
+ * @version 2
+ * @date 05-03-2025
  * @copyright GNU Public License
  */
 
@@ -14,8 +14,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define G_SIZE1 5
-#define G_SIZE2 9
  
 /**
  * @brief Space
@@ -24,15 +22,15 @@
  */
 struct _Space
 {
-  Id id;                    /*!< Id number of the space, it must be unique */
-  char name[WORD_SIZE + 1]; /*!< Name of the space */
-  Id north;                 /*!< Id of the space at the north */
-  Id south;                 /*!< Id of the space at the south */
-  Id east;                  /*!< Id of the space at the east */
-  Id west;                  /*!< Id of the space at the west */
-  Set *objects;             /*!< Set containing ids of the objects in the space*/
-  Character *character;     /*!< Character in the space*/
-  char gdesc[G_SIZE1][G_SIZE2]; /*!< Graphic description of the space */
+  Id id;                                /*!< Id number of the space, it must be unique */
+  char name[WORD_SIZE + 1];             /*!< Name of the space */
+  Id north;                             /*!< Id of the space at the north */
+  Id south;                             /*!< Id of the space at the south */
+  Id east;                              /*!< Id of the space at the east */
+  Id west;                              /*!< Id of the space at the west */
+  Set *objects;                         /*!< Set containing ids of the objects in the space*/
+  Character *character;                 /*!< Character in the space*/
+  char gdesc[GD_HEIGHT][GD_WIDTH + 1];  /*!< Graphic description of the space */
 };
 
 /** space_create allocates memory for a new space
@@ -253,52 +251,30 @@ Character *space_get_character(Space *space){
   return space->character;
 }
 
-Status space_set_gdesc(Space *space, char *gdesc)
+Status space_set_gdesc(Space *space, char gdesc[GD_HEIGHT][GD_WIDTH + 1])
 {
   int i;
-  char *aux=NULL;
 
-  if (!space || !gdesc)
+  if (!space)
   {
     return ERROR;
   }
 
-  i=0;
-  strcpy(space->gdesc[i], strtok(gdesc, "|"));
-  while ((aux = strtok(NULL, "|")))
-  {
-    i++;
-    strcpy(space->gdesc[i], aux);
+  for(i=0; i<GD_HEIGHT; i++){
+    strcpy(space->gdesc[i], gdesc[i]);
   }
   
-  return OK;
-  
+  return OK; 
 }
 
-char *space_get_gdesc(Space *space)
+char *space_get_gdesc(Space *space, int line)
 {
-  int i;
-  char *space_gdesc=NULL;
-
   if (!space)
   {
     return NULL;
   }
-  
-  space_gdesc=(char *)calloc((G_SIZE1*G_SIZE2)+(G_SIZE1+1), sizeof(char));
 
-  if (!space_gdesc)
-  {
-    return NULL;
-  }
-
-  for ( i = 0; i < G_SIZE1; i++)
-  {
-    strcat(space_gdesc, space->gdesc[i]);
-    strcat(space_gdesc, "|");
-  }
-
-  return space_gdesc;
+  return space->gdesc[line];
 }
 
 Status space_print(Space *space) /*¿hay que cambiar algo para gdesc?*/
