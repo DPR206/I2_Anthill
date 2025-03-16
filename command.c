@@ -16,6 +16,7 @@
 #include <strings.h>
 
 #define CMD_LENGHT 30
+#define STRING_LENGHT 15
 
 /**
  * @brief This table contains the string equivalents of each command
@@ -32,6 +33,7 @@ char *cmd_to_str[N_CMD][N_CMDT] = {{"", "No command"}, {"", "Unknown"}, {"e", "E
 struct _Command
 {
   CommandCode code; /*!< Name of the command */
+  char string[STRING_LENGHT]; /*!<Name of the object */
 };
 
 /** space_create allocates memory for a new space
@@ -86,6 +88,31 @@ CommandCode command_get_code(Command *command)
   return command->code;
 }
 
+Status command_set_string(Command *command, char *string)
+{
+  if (!command || !string)
+  {
+    return ERROR;
+  }
+
+  if (!strcpy(command->string, string))
+  {
+    return ERROR;
+  }
+  
+  return OK;
+}
+
+char *command_get_string(Command *command)
+{
+  if (!command)
+  {
+    return NULL;
+  }
+  
+  return command->string;
+}
+
 Status command_get_user_input(Command *command)
 {
   char input[CMD_LENGHT] = "", *token = NULL;
@@ -116,6 +143,18 @@ Status command_get_user_input(Command *command)
       {
         i++;
       }
+    }
+    if (cmd == TAKE)
+    {
+      token = strtok(NULL, " \n");
+      if (token)
+      {
+        command_set_string(command, token);
+      } else
+      {
+        command_set_string(command, "");
+      }
+      
     }
     return command_set_code(command, cmd);
   }
