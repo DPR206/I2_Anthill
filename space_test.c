@@ -16,7 +16,7 @@
 #include "space_test.h"
 #include "test.h"
 
-#define MAX_TESTS 40
+#define MAX_TESTS 44
 
 /** 
  * @brief Main function for SPACE unit tests. 
@@ -85,7 +85,10 @@ int main(int argc, char** argv) {
   if (all || test == 38) test1_space_at_object();
   if (all || test == 39) test2_space_at_object();
   if (all || test == 40) test3_space_at_object();
-
+  if (all || test == 41) test1_space_set_gdesc();
+  if (all || test == 42) test2_space_set_gdesc();
+  if (all || test == 43) test1_space_get_gdesc();
+  if (all || test == 44) test2_space_get_gdesc();
 
 
   PRINT_PASSED_PERCENTAGE;
@@ -360,5 +363,39 @@ void test3_space_at_object(){
   s=space_create(20);
   space_set_object(s, id);
   PRINT_TEST_RESULT(space_at_object(s, id)==TRUE);
+  space_destroy(s);
+}
+
+void test1_space_set_gdesc()
+{
+  Space *s = NULL;
+  char gdesc[GD_HEIGHT][GD_WIDTH+1]={"test"};
+  PRINT_TEST_RESULT(space_set_gdesc(s, gdesc) == ERROR);
+}
+
+void test2_space_set_gdesc()
+{
+  Space *s = NULL;
+  char gdesc[GD_HEIGHT][GD_WIDTH+1]={"test"};
+  Id id = 25;
+  s = space_create(id);
+  PRINT_TEST_RESULT(space_set_gdesc(s, gdesc) == OK);
+  space_destroy(s);
+}
+
+void test1_space_get_gdesc()
+{
+  Space *s = NULL;
+  int i = 1;
+  PRINT_TEST_RESULT(space_get_gdesc(s, i) == NULL);
+}
+
+void test2_space_get_gdesc()
+{
+  Space *s = NULL;
+  int i = 1;
+  Id id = 25;
+  s = space_create(id);
+  PRINT_TEST_RESULT(space_get_gdesc(s, i) != NULL);
   space_destroy(s);
 }
