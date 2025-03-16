@@ -340,3 +340,16 @@ Status space_print(Space *space) /*¿hay que cambiar algo para gdesc?*/
 
   return OK;
 }
+
+Status space_set_del(Space *space, Id id)
+{
+  /* Error control */
+  if (!space)
+  {
+    return ERROR;
+  }
+
+  set_del(space->objects, id);
+  
+  return OK;
+}
