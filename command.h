@@ -82,6 +82,25 @@ Status command_set_code(Command *command, CommandCode code);
 CommandCode command_get_code(Command *command);
 
 /**
+ * @brief It sets the string of the command
+ * @author Duna Puente
+ * 
+ * @param command Pointer to the command
+ * @param string Pointer to the string
+ * @return Status, OK if  successful, or ERROR if there was a problem with the command. 
+ */
+Status command_set_string(Command *command, char *string);
+
+/**
+ * @brief It gets the string of a command
+ * @author Duna Puente
+ * 
+ * @param command Pointer to the command
+ * @return Pointer to the string of the command
+ */
+char *command_get_string(Command *command);
+
+/**
  * @brief Reads a line of input from the user, and sets the command code to a provided command
  * @author Profesores PPROG
  *
