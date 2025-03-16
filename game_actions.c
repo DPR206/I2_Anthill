@@ -57,7 +57,7 @@ void game_actions_back(Game *game);
  *
  * @param game Pointer to the game
  */
-void game_actions_take(Game *game, char *object);
+void game_actions_take(Game *game);
 
 /**
  * @brief It lets the player drop the object it carries in the space it is in
@@ -109,7 +109,6 @@ void game_actions_chat(Game *game);
 Status game_actions_update(Game *game, Command *command)
 {
   CommandCode cmd;
-  char *object = "grain"; /*Arreglar*/
 
   game_set_last_command(game, command);
 
@@ -134,7 +133,7 @@ Status game_actions_update(Game *game, Command *command)
     break;
 
   case TAKE:
-    game_actions_take(game, object);
+    game_actions_take(game);
     break;
 
   case DROP:
@@ -229,10 +228,10 @@ void game_actions_back(Game *game)
   }
 }
 
-void game_actions_take(Game *game, char *object)
+void game_actions_take(Game *game)
 {
   Space *space = game_get_space(game, game_get_player_location(game));
-  Id object_id = game_get_object_id_from_name(game, object);
+  Id object_id = game_get_object_id_from_name(game, command_get_string(game_get_last_command(game)));
 
   if (game == NULL)
   {
@@ -242,8 +241,7 @@ void game_actions_take(Game *game, char *object)
   if (game_get_player_location(game) == game_get_object_location(game, object_id))
   {
     game_player_set_object(game, object_id);
-    space_set_object(space, NO_ID);
-    game_set_object_location(game, NO_ID, NO_ID);
+    space_set_del(space, object_id);
     game_set_last_command_status(game, "OK");
   }
   else
@@ -256,17 +254,26 @@ void game_actions_drop(Game *game)
 {
   Id player_location = game_get_player_location(game);
   Id object_id = NO_ID;
+  Space *space = NULL;
 
   if (game == NULL)
   {
     return;
   }
 
+  space = game_get_space(game, player_location);
+  
+  if (!space)
+  {
+    return;
+  }
+
   object_id = game_player_get_object(game);
+
   if (object_id != NO_ID)
   {
-    game_set_object_location(game, object_id, player_location);
     game_player_set_object(game, NO_ID);
+    space_set_object(space, object_id);
     game_set_last_command_status(game, "OK");
   }
   else
