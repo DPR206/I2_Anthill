@@ -88,5 +88,9 @@ void test3_space_get_objects_id();
 void test1_space_at_object();
 void test2_space_at_object();
 void test3_space_at_object();
+void test1_space_set_gdesc();
+void test2_space_set_gdesc();
+void test1_space_get_gdesc();
+void test2_space_get_gdesc();
 
 #endif
