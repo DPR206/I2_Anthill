@@ -241,4 +241,14 @@ char *space_get_gdesc(Space *space, int line);
  */
 Status space_print(Space *space);
 
+/**
+ * @brief It deletes an object of the space
+ * @author Duna Puente
+ * 
+ * @param space, Pointer to the space
+ * @param id, Id of the object to delete
+ * @return OK, if everything goes well or ERROR if there was some mistake
+ */
+Status space_set_del(Space *space, Id id);
+
 #endif
