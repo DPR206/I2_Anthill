@@ -145,7 +145,7 @@ const char *character_get_gdesc(Character *character)
 Status character_set_health(Character *character, int health)
 {
     /* Error control */
-    if (!character)
+    if (!character || health < 0)
     {
         return ERROR;
     }
