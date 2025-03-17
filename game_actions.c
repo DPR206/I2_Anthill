@@ -387,7 +387,12 @@ void game_actions_attack(Game *game)
   {
     game_set_last_command_status(game, "ERROR");
   }
-  
+
+   if (game_get_player_health(game) == 0)
+  {
+    game_set_finished(game, TRUE);
+  }
+   
   return;
 }
 
