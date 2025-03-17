@@ -72,7 +72,7 @@ run_space_test:
 	./space_test
 
 clean :
-	rm -rf $(OBJ) $(SET_TEST) $(CHARACTER_TEST) $(SPACE_TEST)
+	rm -rf $(OBJ) $(SET_TEST) $(CHARACTER_TEST) $(SPACE_TEST) $(EXE) 
 
 run: 
 	@echo "Running hormiguero"
