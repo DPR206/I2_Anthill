@@ -61,7 +61,9 @@ int main(int argc, char** argv) {
   if (all || test == 15) test2_set_get_nids();
   if (all || test == 16) test1_set_get_position();
   if (all || test == 17) test2_set_get_position();
- 
+  if (all || test == 18) test1_set_contains();
+  if (all || test == 19) test2_set_contains();
+  if (all || test == 20) test3_set_contains();
 
 
   PRINT_PASSED_PERCENTAGE;
@@ -199,5 +201,29 @@ void test2_set_get_position(){
   set=set_create();
   set_add(set, id);
   PRINT_TEST_RESULT(set_get_position(set, id)==0);
+  set_destroy(set);
+}
+
+void test1_set_contains(){
+  Set *set=NULL;
+  Id id = 5;
+  PRINT_TEST_RESULT(set_contains(set, id)==FALSE);
+}
+
+void test2_set_contains(){
+  Set *set = NULL;
+  Id id1 = 10, id2 = 5;
+  set=set_create();
+  set_add(set, id1);
+  PRINT_TEST_RESULT(set_contains(set, id2)==FALSE);
+  set_destroy(set);
+}
+
+void test3_set_comtains(){
+  Set *set=NULL;
+  Id id1=10;
+  set = set_create();
+  set_add(set, id1);
+  PRINT_TEST_RESULT(set_contains(set, id1)==TRUE);
   set_destroy(set);
 }
