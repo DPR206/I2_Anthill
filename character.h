@@ -3,7 +3,7 @@
  *
  * @file character.h
  * @author Duna Puente
- * @version 0
+ * @version 1
  * @date 03-03-2025
  * @copyright GNU Public License
  */
