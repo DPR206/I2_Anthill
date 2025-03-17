@@ -611,26 +611,6 @@ const char *game_get_character_gdesc(Game *game, Character *character)
   return character_get_gdesc(character);
 }
 
-Id game_get_character_location_from_name(Game *game, char *character)
-{
-  int i;
-
-  if (character == NULL || !game)
-  {
-    return NO_ID;
-  }
-
-  for (i = 0; i < MAX_CHARACTERS; i++)
-  {
-    if (strcmp(character_get_name(game->characters[i]), character) == 0)
-    {
-      return game_get_character_location(game, game->characters[i]);
-    }
-  }
-
-  return NO_ID;
-}
-
 Character *game_get_character_from_name(Game *game, char *character)
 {
   int i;

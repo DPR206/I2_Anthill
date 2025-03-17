@@ -390,7 +390,7 @@ Status game_set_last_command_status(Game *game, char *status);
  * 
  * @param game Pointer to the game
  * @param character Pointer to the character
- * @return Status of the operation: ERROR if failes, OK if successful 
+ * @return Status of the operation: ERROR if fails, OK if successful 
  */
 Status game_add_character(Game *game, Character *character);
 
@@ -403,16 +403,6 @@ Status game_add_character(Game *game, Character *character);
  * @return char*, graphic descrition of the character
  */
 const char *game_get_character_gdesc(Game *game, Character *character);
-
-/**
- * @brief It gets the location of a character from its name
- * @author Claudia Saiz
- * 
- * @param game Pointer to the game
- * @param character Name of the character
- * @return Id, location of the character
- */
-Id game_get_character_location_from_name(Game *game, char *character);
 
 /**
  * @brief It gets a character from its name
