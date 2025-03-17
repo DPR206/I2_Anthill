@@ -449,6 +449,14 @@ Id game_get_object_location_from_name(Game *game, char *object)
   return NO_ID;
 }
 
+Id game_get_object_id_from_position(Game *game, int position){
+  if(!game||position<0||position>MAX_OBJECTS-1){
+    return NO_ID;
+  }
+
+  return object_get_id(game->objects[position]);
+}
+
 Id game_get_object_id_from_name(Game *game, char *object)
 {
   int i;
@@ -506,6 +514,12 @@ Status game_set_object_location(Game *game, Id object, Id location)
   space_set_object(game->spaces[i], object);
 
   return OK;
+}
+
+int game_get_n_objects(Game *game){
+  if(!game) return -1;
+
+  return game->n_objects;
 }
 
 Status game_add_object(Game *game, Object *object)

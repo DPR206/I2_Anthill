@@ -296,6 +296,16 @@ const char *game_get_object_name(Game *game, Id object);
 Id game_get_object_id_from_name(Game *game, char *object);
 
 /**
+ * @brief It gets an object´s Id from its position on the objects array
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @param position of the object in the Object array
+ * @return Id, the Id of the object
+ */
+Id game_get_object_id_from_position(Game *game, int position);
+
+/**
  * @brief It sets the objects location to a specific ID
  * @author Duna Puente
  *
@@ -304,6 +314,15 @@ Id game_get_object_id_from_name(Game *game, char *object);
  * @return Status of the operation: ERROR if no ID, OK if successful
  */
 Status game_set_object_location(Game *game, Id object, Id location);
+
+/**
+ * @brief It gets the number of objects in the game
+ * @author Claudia Saiz
+ * 
+ * @param game Pointer to the game
+ * @return int number of objects in the game, or -1 if there is an error
+ */
+int game_get_n_objects(Game *game);
 
 /**
  * @brief It adds an object to the object array of the game

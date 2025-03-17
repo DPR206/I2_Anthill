@@ -3,8 +3,8 @@
  *
  * @file graphic_engine.h
  * @author Profesores PPROG
- * @version 2
- * @date 14-03-2025
+ * @version 0
+ * @date 27-01-2025
  * @copyright GNU Public License
  */
 
@@ -37,7 +37,7 @@ void graphic_engine_destroy(Graphic_engine *ge);
 
 /**
  * @brief Paints the map, description, banner, help and feedback areas on the screen
- * @author Claudia Saiz
+ * @author Profesores PPROG
  *
  * @param ge The graphic engine being used for the game
  * @param game Pointer to the current game
