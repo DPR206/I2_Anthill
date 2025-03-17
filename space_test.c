@@ -406,6 +406,7 @@ void test2_space_get_character()
   space_set_character(s, character);
   PRINT_TEST_RESULT(space_get_character(s) != NULL);
   space_destroy(s);
+  character_destroy(character);
 }
 
 void test1_space_set_gdesc()
