@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <strings.h>
 
 /**
  * @brief This struct stores all the information of a game
@@ -426,7 +427,7 @@ Id game_get_object_location_from_name(Game *game, char *object)
 
   for (i = 0; i < MAX_OBJECTS; i++)
   {
-    if (strcmp(object_get_name(game->objects[i]), object) == 0)
+    if (strcasecmp(object_get_name(game->objects[i]), object) == 0)
     {
       object_id = object_get_id(game->objects[i]);
     }
@@ -459,7 +460,7 @@ Id game_get_object_id_from_name(Game *game, char *object)
 
   for (i = 0; i < MAX_OBJECTS; i++)
   {
-    if (strcmp(object_get_name(game->objects[i]), object) == 0)
+    if (strcasecmp(object_get_name(game->objects[i]), object) == 0)
     {
       return object_get_id(game->objects[i]);
     }
