@@ -219,7 +219,7 @@ void test2_set_contains(){
   set_destroy(set);
 }
 
-void test3_set_comtains(){
+void test3_set_contains(){
   Set *set=NULL;
   Id id1=10;
   set = set_create();

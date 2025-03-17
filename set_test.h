@@ -149,6 +149,6 @@ void test2_set_contains();
  * @pre Id contained in set
  * @post output == TRUE
  */
-void test3_set_comtains();
+void test3_set_contains();
 
 #endif
