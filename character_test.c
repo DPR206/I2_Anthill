@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 
     if (argc < 2)
     {
-        printf("Running all test for module Set:\n");
+        printf("Running all test for module Character:\n");
     }
     else
     {
@@ -166,7 +166,9 @@ void test1_character_get_id()
 void test2_character_get_id()
 {
     Character *character = NULL;
+    Id id = 1;
     character = character_create();
+    character_set_id(character, id);
     PRINT_TEST_RESULT(character_get_id(character) != NO_ID);
     character_destroy(character);
 }
